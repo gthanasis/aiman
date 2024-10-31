@@ -18,7 +18,12 @@
 # limitations under the License.
 #
 
-if [ "$0" != bash -a "$0" != -bash ] ; then
+if [[ "$0" != bash && "$0" != -bash && "${BASH_SOURCE[0]}" == "$0" ]]; then
+#  echo '--- Debugging Information ---' 1>&2
+#  echo "Value of \$0: $0" 1>&2
+#  echo "Value of \$BASH_SOURCE: ${BASH_SOURCE[0]}" 1>&2
+#  echo "Value of \$BASH_VERSION: $BASH_VERSION" 1>&2
+#  echo "Value of \$- (options): $-" 1>&2
   echo 'The ai-cli-lib activation script must be sourced, not executed.' 1>&2
   exit 1
 fi

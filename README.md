@@ -141,6 +141,18 @@ the program's name appears to The _ai-cli_ library as `rlwrap`.
   For instance, in _bash_ you can do this by starting the line with a
   space character.
 
+### To try this with docker
+```shell
+# Remove the container if it exists, ignoring errors if not
+docker rm -f ai-cli-lib-container || true
+
+# Build the Docker image
+docker build -t ai-cli-lib .
+
+# Run the Docker container with the specified environment variable
+docker run -it --name ai-cli-lib-container -e OPENAI_API_KEY=key-here ai-cli-lib
+```
+
 
 ### Note for macOS users
 Note that macOS ships with the _editline_ line-editing library,

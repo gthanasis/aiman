@@ -52,6 +52,7 @@ static config_t config;
 // API fetch function, e.g. acl_fetch_openai or acl_fetch_llamacpp
 
 static char * (*fetch)(config_t *config, const char *prompt, int history_length);
+char *convert_escape_sequences(const char *str);
 
 /*
  * Add the specified prompt to the RL history, as a comment if the
@@ -81,45 +82,82 @@ add_commented_prompt_to_history(const char *prompt)
 }
 
 /*
- * The user has has asked for AI to be queried on the typed text
- * Replace the user's text with the queried on
+ * The user has asked for AI to be queried on the typed text.
+ * Output the response directly to the terminal, interpreting ANSI escape codes.
  */
 static int
 query_ai(int count, int key)
 {
-	static char *prev_response;
+    static char *prev_response;
 
-	if (prev_response) {
-		free(prev_response);
-		prev_response = NULL;
-	}
+    // Free the previous response if it exists
+    if (prev_response) {
+        free(prev_response);
+        prev_response = NULL;
+    }
 
-	int comment_len = add_commented_prompt_to_history(*rl_line_buffer_ptr);
-	char *response = fetch(&config, *rl_line_buffer_ptr + comment_len,
-	    *history_length_ptr);
-	if (!response)
-		return -1;
-	rl_crlf();
-	rl_on_new_line();
-	rl_delete_text(0, *rl_end_ptr);
-	*rl_point_ptr = 0;
-	if (config.general_response_prefix_set) {
-		rl_insert_text(config.general_response_prefix);
-		rl_insert_text(" ");
-	}
-	rl_insert_text(response);
-	prev_response = response;
-	/*
-	 * The readline_internal_teardown() function will restore
-	 * the original history line iff the line being edited
-	 * was originally in the history, AND the line has changed.
-	 * Avoid this by clearing the undo list.
-	 * This results in the commented prompt rather than the
-	 * ucommented prompt being stored in the history.
-	 */
-	rl_free_undo_list();
-	return 0;
+    // Add the current prompt to the history, as a comment if configured
+    int comment_len = add_commented_prompt_to_history(*rl_line_buffer_ptr);
+
+    // Fetch the response from the AI
+    char *response = fetch(&config, *rl_line_buffer_ptr + comment_len, *history_length_ptr);
+
+    // If the response is NULL, there was an error, so return -1
+    if (!response)
+        return -1;
+
+    // Convert escape sequences in the response
+    char *converted_response = convert_escape_sequences(response);
+
+    // Output the converted response directly to the terminal
+    // Ensure to reset all ANSI sequences afterwards to prevent color bleeding
+    printf("%s\033[0m\n", converted_response);
+    fflush(stdout);
+
+    // Free the converted response if different from original
+    if (converted_response != response) {
+        free(converted_response);
+    }
+
+    // Save the original response for freeing later
+    prev_response = response;
+
+    // Clear the undo list to prevent readline from restoring the original line in history
+    rl_free_undo_list();
+
+    return 0;
 }
+
+/*
+ * Converts escape sequences in the provided string.
+ * Returns a newly allocated string with the modified content.
+ */
+char *convert_escape_sequences(const char *str) {
+    size_t len = strlen(str);
+    char *output = malloc(len + 1);
+    if (!output)
+        return NULL;
+
+    const char *src = str;
+    char *dst = output;
+
+    while (*src) {
+        // Look for double backslashes followed by '033' and replace it with the actual escape character
+        if (src[0] == '\\' && src[1] == '0' && src[2] == '3' && src[3] == '3') {
+            *dst++ = '\033';
+            src += 4;
+        } else if (src[0] == '\\' && src[1] == 'n') {
+            *dst++ = '\n';
+            src += 2;
+        } else {
+            *dst++ = *src++;
+        }
+    }
+    *dst = '\0';
+
+    return output;
+}
+
 
 
 /*
