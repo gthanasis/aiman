@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import { runCommand } from "./commands.ts";
 import readline from "readline";
-import {getHelpForFailedCommand} from './llm.ts'
+import {getShortHelpForFailedCommand, getHelpForFailedCommand} from './llm.ts'
 import ora from "ora";
 import {createProgressIndicator} from './utils.ts'
 
@@ -24,10 +24,10 @@ export async function handleUserInput(input: string, rl: readline.Interface) {
 
 	try {
 		// Execute the command and capture output
-		const { stdout, stderr } = await runCommand(executable, args);
+		const { stdout, stderr, code } = await runCommand(executable, args);
 
 		// // Intercept output and perform async operations
-		await processCommandOutput(command, stdout, stderr);
+		await processCommandOutput(command, stdout, stderr, code);
 
 		rl.prompt();
 	} catch (error: any) {
@@ -43,23 +43,25 @@ export function handleExit() {
 }
 
 // Process command output (async)
-async function processCommandOutput(command: string, stdout: string, stderr: string) {
+async function processCommandOutput(command: string, stdout: string, stderr: string, code: number | null) {
 	const progress = createProgressIndicator(
 		"Fetching help from LLM for the failed command"
 	);
 	if (stderr) {
-		console.error(`\n${chalk.red(stderr)}`);
+		console[code !== 0 ? 'error': 'log'](`\n${chalk.red(stderr)}`);
+	}
+	if (stdout) {
+		console.log(chalk.white(stdout));
+	}
+	if (code !== 0) {
 		progress.start();
 		try {
-			const {cost, help} = await getHelpForFailedCommand({ command, errorOutput: stderr });
+			const {cost, help} = await getShortHelpForFailedCommand({ command, errorOutput: stderr });
 			progress.stop(`Help fetched successfully! ($${cost.toFixed(4)})`, true);
 			console.log(help)
 		} catch (error: any) {
 			progress.stop("Failed to fetch help from LLM", false);
 			console.error(chalk.red(`Error: ${error.message}`));
 		}
-	}
-	if (stdout) {
-		console.log(chalk.white(stdout));
 	}
 }

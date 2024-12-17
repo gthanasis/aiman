@@ -1,6 +1,6 @@
 import { spawn } from "child_process";
 
-export function runCommand(command: string, args: string[]): Promise<{ stdout: string; stderr: string }> {
+export function runCommand(command: string, args: string[]): Promise<{ stdout: string; stderr: string; code: number | null }> {
 	return new Promise((resolve, reject) => {
 		const child = spawn(command, args, { shell: true });
 
@@ -20,7 +20,7 @@ export function runCommand(command: string, args: string[]): Promise<{ stdout: s
 		});
 
 		child.on("close", (code) => {
-			resolve({ stdout, stderr });
+			resolve({ stdout, stderr, code });
 		});
 	});
 }

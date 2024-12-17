@@ -1,10 +1,9 @@
-## Notes
+## Research
 
-### 21 Nov
-- Search for text book assignments on regular expressions
-- Draft a set of user test scenarios
-- Improve the feedback messages from the cli
-- Search for paper or articles for cli/llm/user interface
+1. CLI Command Generation Using Generative AI.pdf
+2. Commands as AI Conversations.pdf
+3. Language Models are General-Purpose Interfaces.pdf
+4. Seq2Seq and Joint Learning Based Unix.pdf
 
 #### Papers (paid)
 - Multi-Modal LLM Driven Computer Interface https://ieeexplore.ieee.org/abstract/document/10714846
@@ -20,4 +19,11 @@
   - Usability and Accuracy: Ensuring commands are reliable and contextually appropriate.
 - Maybe use The Unified Theory of Acceptance and Use of Technology (UTAUT)
 
-### Key points of "CLI command generation using Generative AI"
+### Key points of "Commands as AI Conversations.pdf"
+TODO
+
+### Key points of "Language Models are General-Purpose Interfaces.pdf"
+TODO
+
+### Key points of "Seq2Seq and Joint Learning Based Unix.pdf"
+TODO

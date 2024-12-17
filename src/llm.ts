@@ -124,3 +124,35 @@ ${res.best_practices}
 `
 	}
 }
+export async function getShortHelpForFailedCommand({ command, errorOutput }: { command: string, errorOutput: string }) {
+	const systemPrompt = `
+		You are an experienced tutor specializing in command-line tools. 
+		Your task is to help the user understand why their command failed and guide them toward a correct solution.
+		For the provided command and its error output, please:
+		1. Explain the issue in the fewest words possible that makes sense.
+		2. Provide the corrected command.
+		3. Summarize why it works in the fewest words possible that makes sense.
+		4. Share one tip to avoid this in the future in the fewest words possible that makes sense.
+		
+		System Specifications:
+		${JSON.stringify(getEnvironmentInfo(), null, 2)}
+	`;
+
+	const responseFormat = {
+		error_explanation: "",
+		corrected_command: "",
+		explanation: "",
+		tips: ""
+	}
+
+	const results = await askOpenAI({ systemPrompt, query: `The command was: ${command}\nThe command error output is:\n${errorOutput}`, responseFormat });
+	const res = validateJSONResponse<typeof responseFormat>(results.res, responseFormat);
+	return {
+		cost: results.cost,
+		help: `${chalk.greenBright('✅ Corrected Command:')} ${chalk.bold(res.corrected_command)}
+${chalk.redBright('❌ Error:')} ${res.error_explanation}
+${chalk.yellowBright('💡 Why It Works:')} ${res.explanation}
+${chalk.blueBright('🔧 Tip:')} ${res.tips}
+`
+	}
+}
