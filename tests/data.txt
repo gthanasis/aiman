@@ -1,4 +1,0 @@
-John 100
-Doe 200
-Jane 300
-John 400

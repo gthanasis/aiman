@@ -1,4 +1,0 @@
-INFO: Application started
-ERROR: Failed to connect to database
-INFO: Retrying connection
-ERROR: Connection timeout
