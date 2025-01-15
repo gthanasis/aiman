@@ -17,3 +17,21 @@
 - Search for paper or articles for cli/llm/user interface
   - Check research.md for the papers and articles
 - IDEA: Consider calling function to discover the working directory like ls or pwd
+
+### 19 Dec
+- Check magick lib
+- Maybe add input also
+- Draft metrics for user tests
+  - Try to find what is the best metric upon use case
+  - Frustration?
+  - Time to correct?
+  - Number of errors/tries?
+  - Time?
+
+### 9 Jan
+- Test with 2 users for feedback and collect
+- Ask DI for the thesis timeline
+- Battle test analytics to make sure it is working for the final experiment
+
+
+
