@@ -18,6 +18,9 @@ console.log(chalk.magentaBright("Type 'exit' to quit.\n"));
 rl.prompt();
 
 // Register event listeners
-rl.on("line", (line) => handleUserInput(line, rl));
+rl.on("line", async (line) => {
+	await handleUserInput(line, rl)
+	rl.prompt();
+});
 rl.on("close", handleExit);
 

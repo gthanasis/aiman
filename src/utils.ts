@@ -34,7 +34,7 @@ export function validateJSONResponse<ReturnType = any>(response: any, responseFo
 	try {
 		res = JSON.parse(response);
 	} catch (error: any) {
-		throw new Error(`Response is not a valid JSON: ${error.message}`);
+		throw new Error(`Response is not a valid JSON: ${error.message}. Response: ${response}`);
 	}
 	// Check if the response has the expected structure
 	if (JSON.stringify(Object.keys(res).sort()) !== JSON.stringify(Object.keys(responseFormat).sort())) {

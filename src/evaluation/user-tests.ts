@@ -33,25 +33,35 @@ store.setUserName(name);
 const tests = [
 	new Test({
 		store,
-		description: 'We need to download https:/example.com to output.html!\nCorrect the following command',
-		command: 'curl -o'
+		description: 'We need to download https://example.com to output.html!\nCorrect the following command',
+		command: 'curl -o',
+		correctCommands: [
+			'curl -o output.html https://example.com',
+			'curl -o output.html http://example.com',
+			'curl -o filename.html http://example.com',
+			'curl -o filename.txt https://example.com'
+		]
 	}),
 	new Test({
 		store,
 		description: 'We need to list and sort the files!\nCorrect the following command:',
-		command: 'ls sort'
+		command: 'ls sort',
+		correctCommands: ['ls | sort']
 	}),
 	new Test({
 		store,
 		description: 'We need to find all files that end in .txt!\nCorrect the following command:',
-		command: 'find . --name*.txt'
+		command: 'find . --name*.txt',
+		correctCommands: ['find . -name "*.txt"']
 	}),
 	new Test({
 		store,
 		description: 'We need to list the first 5 lines of a file.txt!\nCorrect the following command:',
-		command: 'head -line=5 file.txt'
+		command: 'head -line=5 file.txt',
+		correctCommands: ['head -n 5 file.txt']
 	})
-]
+];
+
 
 // Run test by awaiting each test
 for (const test of tests) {

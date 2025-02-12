@@ -156,3 +156,36 @@ ${chalk.blueBright('🔧 Tip:')} ${res.tips}
 `
 	}
 }
+export async function compareCommandAndResults(
+	{ correctCommands, userCommand, userCommandOutput }:
+		{ correctCommands: string[], userCommand: string, userCommandOutput: string }): Promise<{equivalent: boolean; explanation: string}> {
+
+	const systemPrompt = `
+		You are an expert in Linux command-line tools. 
+		Your task is to analyze a user-submitted command and compare it to the expected correct command.
+		Don't be to strict, we need to make sure it fixed a broken command or ended up going around the problem
+		vs being in the process of building it. 
+		
+		For the given commands:
+		1. Determine if the user’s command is functionally equivalent to the original command.
+		2. If equivalent, return "equivalent": true, explanation: ''.
+		3. If incorrect, return "equivalent": false, explanation: 'short explanation on why it's not'.
+	`;
+
+	const responseFormat = { equivalent: false, explanation: "" };
+
+	const query = `
+		Possible commands that would work: ${correctCommands.join()}
+		User command: ${userCommand}
+		User command output:\n${userCommandOutput}
+	`;
+
+	try {
+		const results = await askOpenAI({ systemPrompt, query, responseFormat });
+		return validateJSONResponse<typeof responseFormat>(results.res, responseFormat);
+	} catch (error: any) {
+		console.error(error);
+		return { equivalent: false, explanation: "An error occurred while comparing the commands." };
+	}
+}
+

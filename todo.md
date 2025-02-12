@@ -33,5 +33,13 @@
 - Ask DI for the thesis timeline
 - Battle test analytics to make sure it is working for the final experiment
 
-
-
+### 30 Jan
+- Maybe we can measure the time manually and just make going to the next step more prominent, since this is a small scale experiment
+- Decide upon 2 or 3 cases for comparative testing
+- How much info would be ideal? Maybe add it to questioner
+- Add prompts with #
+- Add more cases to make it bigger even similar example to get more info
+- Start categorizing the test cases
+  - Adding more contextual problems
+- Decide "between or within" groups - Evaluate learning effect, eliminate personal diffs
+- Sample is based on users or on interactions?

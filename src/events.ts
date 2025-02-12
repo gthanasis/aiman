@@ -29,7 +29,7 @@ export async function handleUserInput(input: string, rl: readline.Interface) {
 		// // Intercept output and perform async operations
 		await processCommandOutput(command, stdout, stderr, code);
 
-		rl.prompt();
+		return { command, stdout, stderr, code };
 	} catch (error: any) {
 		console.log(chalk.red(`❌ Command execution failed: ${error.message}\n`));
 		rl.prompt();
