@@ -1,0 +1,37 @@
+runId,userName,testName,metricName,metricValue,timestamp
+3ff327aa-3347-4c39-a34b-1f4a24228c4e,Thanasis Gkliatis,We need to download https:/example.com to output.html! Correct the following command,timeTaken,9885ms,2025-01-15T19:15:44.000Z
+3ff327aa-3347-4c39-a34b-1f4a24228c4e,Thanasis Gkliatis,We need to list and sort the files! Correct the following command:,timeTaken,1929ms,2025-01-15T19:15:49.689Z
+3ff327aa-3347-4c39-a34b-1f4a24228c4e,Thanasis Gkliatis,We need to find all files that end in .txt! Correct the following command:,timeTaken,26631ms,2025-01-15T19:16:28.811Z
+3ff327aa-3347-4c39-a34b-1f4a24228c4e,Thanasis Gkliatis,We need to list the first 5 lines of a file.txt! Correct the following command:,timeTaken,10014ms,2025-01-15T19:16:48.050Z
+2c2f6604-b694-4276-8e7b-0153e33767bf,TG,We need to download https:/example.com to output.html! Correct the following command,timeTaken,6015ms,2025-01-15T19:19:06.439Z
+2d7cb7fe-dea8-46f0-bd15-aac594cc45d9,Thanasis G,We need to download https://example.com to output.html! Correct the following command,timeTaken,48932ms,2025-01-30T17:28:02.789Z
+2d7cb7fe-dea8-46f0-bd15-aac594cc45d9,Thanasis G,We need to list and sort the files! Correct the following command:,timeTaken,1185ms,2025-01-30T17:28:18.354Z
+4da703c0-dd98-4d4a-a1ac-89902e86b937,thanasis,We need to download https://example.com to output.html! Correct the following command,timeTaken,30331ms,2025-02-12T21:12:49.646Z
+0c1f4fad-ac61-4a42-8010-802304abfc39,thanasis,We need to download https://example.com to output.html! Correct the following command,timeTaken,238607ms,2025-02-12T21:21:09.144Z
+f8764335-5cb5-42cc-ab51-5354280c0dd4,t,We need to download https://example.com to output.html! Correct the following command,timeTaken,36139ms,2025-02-12T21:22:32.132Z
+539f1e5f-97ca-49bd-ba95-3390f7718e4c,thanasis,We need to download https://example.com to output.html! Correct the following command,timeTaken,183960ms,2025-02-12T21:25:58.831Z
+a322fc6e-640a-4c26-bd5d-40b337817a64,thanasis,We need to download https://example.com to output.html! Correct the following command,timeTaken,87284ms,2025-02-12T21:27:41.560Z
+529debcc-47a7-4b9c-ba98-d8d6e2c90f55,thanasis,We need to download https://example.com to output.html! Correct the following command,timeTaken,182600ms,2025-02-12T21:30:56.658Z
+707e91bf-c66b-4d34-b36a-f195b4b0ddcd,thanasis,We need to download https://example.com to output.html! Correct the following command,timeTaken,145568ms,2025-02-12T21:33:46.178Z
+9cba730d-cacc-4c3a-a5b9-1ed7e4ef16be,t,We need to download https://example.com to output.html! Correct the following command,timeTaken,283453ms,2025-02-12T21:38:42.757Z
+b81c9341-8b78-4ed8-9bee-b8121f6f7f7a,thanasis,We need to download https://example.com to output.html! Correct the following command,timeTaken,12183ms,2025-02-12T21:39:07.188Z
+c55b4753-90ee-4301-a4f4-ced5b99c5310,thanasis,We need to download https://example.com to output.html! Correct the following command,timeTaken,107647ms,2025-02-12T21:42:16.977Z
+ade4fcaa-0b5d-41c1-a340-baf2ae2afd70,thanasis,We need to download https://example.com to output.html! Correct the following command,timeTaken,767ms,2025-02-12T21:42:45.375Z
+0ec64d7f-9008-4155-8653-c8825b508bb5,thanasis,We need to download https://example.com to output.html! Correct the following command,timeTaken,20616ms,2025-02-12T21:44:01.369Z
+b5265ce4-e607-432d-947a-d7c330115dd7,thanasis,We need to download https://example.com to output.html! Correct the following command,timeTaken,14170ms,2025-02-12T21:44:56.333Z
+b5265ce4-e607-432d-947a-d7c330115dd7,thanasis,We need to list and sort the files! Correct the following command:,timeTaken,3528ms,2025-02-12T21:45:04.513Z
+b5265ce4-e607-432d-947a-d7c330115dd7,thanasis,We need to find all files that end in .txt! Correct the following command:,timeTaken,88593ms,2025-02-12T21:46:41.860Z
+adb49f4e-591b-4529-a736-3834e21141d7,thanasis,We need to download https://example.com to output.html! Correct the following command,timeTaken,15069ms,2025-02-12T21:47:09.269Z
+adb49f4e-591b-4529-a736-3834e21141d7,thanasis,We need to list and sort the files! Correct the following command:,timeTaken,13470ms,2025-02-12T21:47:27.469Z
+adb49f4e-591b-4529-a736-3834e21141d7,thanasis,We need to find all files that end in .txt! Correct the following command:,timeTaken,95817ms,2025-02-12T21:49:09.595Z
+35d5bb34-2a70-42ed-87a9-1e5b46fc5657,thanasis,We need to download https://example.com to output.html! Correct the following command,timeTaken,13466ms,2025-02-12T21:50:05.660Z
+35d5bb34-2a70-42ed-87a9-1e5b46fc5657,thanasis,We need to list and sort the files! Correct the following command:,timeTaken,11246ms,2025-02-12T21:50:20.853Z
+35d5bb34-2a70-42ed-87a9-1e5b46fc5657,thanasis,We need to find all files that end in .txt! Correct the following command:,timeTaken,13918ms,2025-02-12T21:50:42.681Z
+35d5bb34-2a70-42ed-87a9-1e5b46fc5657,thanasis,We need to list the first 5 lines of a file.txt! Correct the following command:,timeTaken,12030ms,2025-02-12T21:50:58.299Z
+a92f4977-65e6-423f-a08e-235b86d66aae,thanasis,We need to download https://example.com to output.html! Correct the following command,timeTaken,40482ms,2025-02-12T21:58:43.460Z
+a92f4977-65e6-423f-a08e-235b86d66aae,thanasis,We need to list and sort the files! Correct the following command:,timeTaken,3527ms,2025-02-12T21:58:51.246Z
+a92f4977-65e6-423f-a08e-235b86d66aae,thanasis,We need to find all files that end in .txt! Correct the following command:,timeTaken,5192ms,2025-02-12T21:59:04.761Z
+a92f4977-65e6-423f-a08e-235b86d66aae,thanasis,We need to list the first 5 lines of a file.txt! Correct the following command:,timeTaken,22926ms,2025-02-12T21:59:38.067Z
+a92f4977-65e6-423f-a08e-235b86d66aae,thanasis,We need to count the number of lines in file.txt! Correct the following command:,timeTaken,53072ms,2025-02-12T22:00:39.637Z
+a92f4977-65e6-423f-a08e-235b86d66aae,thanasis,We need to check disk usage of the current directory! Correct the following command:,timeTaken,24167ms,2025-02-12T22:01:31.151Z
+a92f4977-65e6-423f-a08e-235b86d66aae,thanasis,We need to list all active network connections! Correct the following command:,timeTaken,20836ms,2025-02-12T22:01:56.212Z

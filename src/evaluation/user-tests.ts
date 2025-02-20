@@ -59,6 +59,87 @@ const tests = [
 		description: 'We need to list the first 5 lines of a file.txt!\nCorrect the following command:',
 		command: 'head -line=5 file.txt',
 		correctCommands: ['head -n 5 file.txt']
+	}),
+	new Test({
+		store,
+		description: 'We need to count the number of lines in file.txt!\nCorrect the following command:',
+		command: 'wc -k file.txt',
+		correctCommands: [
+			'wc -l file.txt',
+			'cat file.txt | wc -l'
+		]
+	}),
+	new Test({
+		store,
+		description: 'We need to check disk usage of the current directory!\nCorrect the following command:',
+		command: 'du h .',
+		correctCommands: [
+			'du -h .',
+			'du -sh .'
+		]
+	}),
+	new Test({
+		store,
+		description: 'We need to create a new directory called projects!\nCorrect the following command:',
+		command: 'mkdir projects -p',
+		correctCommands: [
+			'mkdir -p projects',
+			'mkdir projects'
+		]
+	}),
+	new Test({
+		store,
+		description: 'We need to check the currently logged-in users!\nCorrect the following command:',
+		command: 'who all',
+		correctCommands: [
+			'who',
+			'who -a'
+		]
+	}),
+	new Test({
+		store,
+		description: 'We need to display the last 10 lines of a file named file.txt!\nCorrect the following command:',
+		command: 'tail --lines=10 file.txt',
+		correctCommands: [
+			'tail -n 10 file.txt',
+			'tail -10 file.txt'
+		]
+	}),
+	// new Test({
+	// 	store,
+	// 	description: 'We need to compress a directory named data using gzip!\nCorrect the following command:',
+	// 	command: 'gzip data',
+	// 	correctCommands: [
+	// 		'tar -czvf data.tar.gz data',
+	// 		'zip -r data.zip data'
+	// 	]
+	// }),
+	new Test({
+		store,
+		description: 'We need to find all processes running by user "john"!\nCorrect the following command:',
+		command: 'ps -U john all',
+		correctCommands: [
+			'ps -u john',
+			'ps aux | grep john'
+		]
+	}),
+	new Test({
+		store,
+		description: 'We need to schedule a command to run in 10 minutes using at!\nCorrect the following command:',
+		command: 'at now+10 command.sh',
+		correctCommands: [
+			'echo "command.sh" | at now +10 minutes',
+			'echo "sh command.sh" | at now +10 min'
+		]
+	}),
+	new Test({
+		store,
+		description: 'We need to display disk space usage in human-readable format!\nCorrect the following command:',
+		command: 'df size -h',
+		correctCommands: [
+			'df -h',
+			'df -Th'
+		]
 	})
 ];
 
