@@ -47,3 +47,5 @@
 ### 20 Feb
 1. Add a table with more parameters in the thesis doc (price, os to be installed, readline)
 2. UIST -> to prevent the experiment.
+
+

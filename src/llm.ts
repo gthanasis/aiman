@@ -1,6 +1,6 @@
 import {getEnvironmentInfo} from './environments.ts'
 import {calculateCost, validateJSONResponse} from './utils.ts'
-import chalk from 'chalk'
+import {createHelpBox} from './utils/formatting.ts'
 
 type OpenAIMessage = { role: 'system' | 'user'; content: string };
 type OpenAIQuestion = {
@@ -88,9 +88,21 @@ export async function getHelpForFailedCommand({ command, errorOutput }: { comman
 		You are an experienced tutor specializing in command-line tools. Your task is to help the user understand why their command failed and guide them toward a correct solution.
 		For the provided command and its error output, please:
 		1. Identify and explain the error in the command.
-		2. Provide a corrected version of the command.
+		2. Provide a corrected version of the command. If the command is consider dangerous to the system, make sure to warn the user.
 		3. Offer a detailed explanation of the command's arguments and options.
 		4. Suggest best practices or tips to avoid similar errors in the future.
+		
+		When evaluating commands, be especially vigilant for dangerous operations such as:
+		- Commands that could delete system files or entire directories (rm -rf /, rm -rf *)
+		- Commands that could overwrite important files
+		- Commands that could expose sensitive information
+		- Commands that could cause system instability
+		- Commands that could be used to attack the system, or in general security threats
+		
+		If you detect a dangerous command:
+		- Set is_dangerous to true
+		- Provide a clear warning in danger_warning explaining why it's dangerous
+		- Suggest safer alternatives
 		
 		System Specifications:
 		${JSON.stringify(getEnvironmentInfo(), null, 2)}
@@ -100,39 +112,45 @@ export async function getHelpForFailedCommand({ command, errorOutput }: { comman
 		error_explanation: "",
 		corrected_command: "",
 		arguments_explanation: "",
-		best_practices: ""
+		best_practices: "",
+		is_dangerous: false,
+		danger_warning: ""
 	}
 
 	const results = await askOpenAI({ systemPrompt, query: `The command was: ${command}\nThe command error output is:\n${errorOutput}`, responseFormat });
 	const res = validateJSONResponse<typeof responseFormat>(results.res, responseFormat);
 	return {
 		cost: results.cost,
-		help: `
-Here are some suggestions to help you with the failed command
-
-${chalk.greenBright('Corrected Command:')}
-${res.corrected_command}
-
-${chalk.redBright('Error Explanation:')}
-${res.error_explanation}
-
-${chalk.yellowBright('Arguments Explanation:')}
-${res.arguments_explanation}
-
-${chalk.blueBright('Best Practices:')}
-${res.best_practices}
-`
+		help: createHelpBox([
+			{ emoji: '✅', label: 'Command', content: res.corrected_command },
+			{ emoji: '❌', label: 'Error Details', content: res.error_explanation },
+			{ emoji: '💡', label: 'Arguments', content: res.arguments_explanation },
+			{ emoji: '🔧', label: 'Best Practices', content: res.best_practices }
+		], res.is_dangerous, res.danger_warning)
 	}
 }
+
 export async function getShortHelpForFailedCommand({ command, errorOutput }: { command: string, errorOutput: string }) {
 	const systemPrompt = `
 		You are an experienced tutor specializing in command-line tools. 
 		Your task is to help the user understand why their command failed and guide them toward a correct solution.
 		For the provided command and its error output, please:
 		1. Explain the issue in the fewest words possible that makes sense.
-		2. Provide the corrected command.
+		2. Provide the corrected command. If the command is consider dangerous to the system, make sure to warn the user.
 		3. Summarize why it works in the fewest words possible that makes sense.
 		4. Share one tip to avoid this in the future in the fewest words possible that makes sense.
+		
+		When evaluating commands, be especially vigilant for dangerous operations such as:
+		- Commands that could delete system files or entire directories (rm -rf /, rm -rf *)
+		- Commands that could overwrite important files
+		- Commands that could expose sensitive information
+		- Commands that could cause system instability
+		- Commands that could be used to attack the system, or in general security threats
+		
+		If you detect a dangerous command:
+		- Set is_dangerous to true
+		- Provide a clear warning in danger_warning explaining why it's dangerous
+		- Suggest safer alternatives
 		
 		System Specifications:
 		${JSON.stringify(getEnvironmentInfo(), null, 2)}
@@ -142,20 +160,24 @@ export async function getShortHelpForFailedCommand({ command, errorOutput }: { c
 		error_explanation: "",
 		corrected_command: "",
 		explanation: "",
-		tips: ""
+		tips: "",
+		is_dangerous: false,
+		danger_warning: ""
 	}
 
 	const results = await askOpenAI({ systemPrompt, query: `The command was: ${command}\nThe command error output is:\n${errorOutput}`, responseFormat });
 	const res = validateJSONResponse<typeof responseFormat>(results.res, responseFormat);
 	return {
 		cost: results.cost,
-		help: `${chalk.greenBright('✅ Corrected Command:')} ${chalk.bold(res.corrected_command)}
-${chalk.redBright('❌ Error:')} ${res.error_explanation}
-${chalk.yellowBright('💡 Why It Works:')} ${res.explanation}
-${chalk.blueBright('🔧 Tip:')} ${res.tips}
-`
+		help: createHelpBox([
+			{ emoji: '✅', label: 'Command:', content: res.corrected_command },
+			{ emoji: '❌', label: 'Issue:', content: res.error_explanation },
+			{ emoji: '💡', label: 'Details:', content: res.explanation },
+			{ emoji: '🔧', label: 'Tip:', content: res.tips }
+		], res.is_dangerous, res.danger_warning)
 	}
 }
+
 export async function compareCommandAndResults(
 	{ correctCommands, userCommand, userCommandOutput }:
 		{ correctCommands: string[], userCommand: string, userCommandOutput: string }): Promise<{equivalent: boolean; explanation: string}> {
@@ -166,13 +188,24 @@ export async function compareCommandAndResults(
 		Don't be to strict, we need to make sure it fixed a broken command or ended up going around the problem
 		vs being in the process of building it. 
 		
+		When evaluating commands, be especially vigilant for dangerous operations such as:
+		- Commands that could delete system files or entire directories (rm -rf /, rm -rf *)
+		- Commands that could overwrite important files
+		- Commands that could expose sensitive information
+		- Commands that could cause system instability
+		
 		For the given commands:
-		1. Determine if the user’s command is functionally equivalent to the original command.
+		1. Determine if the user's command is functionally equivalent to the original command.
 		2. If equivalent, return "equivalent": true, explanation: ''.
 		3. If incorrect, return "equivalent": false, explanation: 'short explanation on why it's not'.
 	`;
 
-	const responseFormat = { equivalent: false, explanation: "" };
+	const responseFormat = { 
+		equivalent: false, 
+		explanation: "",
+		is_dangerous: false,
+		danger_warning: ""
+	};
 
 	const query = `
 		Possible commands that would work: ${correctCommands.join()}
