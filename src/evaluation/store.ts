@@ -71,6 +71,7 @@ interface SessionData {
 	tests: TestResult[];
 	preQuestionnaire?: PreQuestionnaire;
 	postQuestionnaire?: PostQuestionnaire;
+	conditionOrder?: 'traditional-first' | 'ai-first';
 }
 
 export class Store {
@@ -80,6 +81,7 @@ export class Store {
 	private sessionStartTime: number;
 	private currentTest: TestResult | null = null;
 	private sessionData: SessionData;
+	private allSessions: SessionData[] = [];
 
 	constructor(storeFilePath: string) {
 		this.storeFilePath = storeFilePath;
@@ -103,10 +105,19 @@ export class Store {
 		// Load existing data if file exists
 		if (fs.existsSync(storeFilePath)) {
 			try {
-				const existingData = JSON.parse(fs.readFileSync(storeFilePath, 'utf8'));
-				this.sessionData = existingData;
+				const fileData = fs.readFileSync(storeFilePath, 'utf8');
+				const existingData = JSON.parse(fileData);
+				
+				// Check if data is an array (new format) or single object (old format)
+				if (Array.isArray(existingData)) {
+					this.allSessions = existingData;
+				} else {
+					// If it's a single object, convert to array
+					this.allSessions = [existingData];
+				}
 			} catch (error) {
 				console.error('Error loading existing data:', error);
+				this.allSessions = [];
 			}
 		}
 	}
@@ -182,11 +193,40 @@ export class Store {
 		this.saveData();
 	}
 
+	public setConditionOrder(order: 'traditional-first' | 'ai-first') {
+		this.sessionData.conditionOrder = order;
+		this.saveData();
+	}
+
+	public getLastUserConditionOrder(): 'traditional-first' | 'ai-first' | undefined {
+		const previousSessions = this.allSessions.filter(session => session.runId !== this.runId);
+		
+		if (previousSessions.length === 0) {
+			return undefined;
+		}
+		
+		previousSessions.sort((a, b) => 
+			new Date(b.startTime).getTime() - new Date(a.startTime).getTime()
+		);
+		
+		return previousSessions[0].conditionOrder;
+	}
+
 	private saveData() {
 		try {
+			const existingIndex = this.allSessions.findIndex(
+				session => session.runId === this.sessionData.runId
+			);
+			
+			if (existingIndex >= 0) {
+				this.allSessions[existingIndex] = this.sessionData;
+			} else {
+				this.allSessions.push(this.sessionData);
+			}
+			
 			fs.writeFileSync(
 				this.storeFilePath,
-				JSON.stringify(this.sessionData, null, 2),
+				JSON.stringify(this.allSessions, null, 2),
 				'utf8'
 			);
 		} catch (error) {

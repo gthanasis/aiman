@@ -71,6 +71,7 @@ interface SessionData {
     tests: TestResult[];
     preQuestionnaire?: Questionnaire;
     postQuestionnaire?: PostQuestionnaire;
+    conditionOrder?: 'traditional-first' | 'ai-first';
 }
 
 interface Analytics {
@@ -126,8 +127,70 @@ interface Analytics {
 }
 
 function analyzeResults(filePath: string): Analytics {
-    const data: SessionData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    const fileData = fs.readFileSync(filePath, 'utf8');
+    let sessions: SessionData[] = [];
     
+    try {
+        const jsonData = JSON.parse(fileData);
+        
+        // Check if the data is an array or a single session object
+        if (Array.isArray(jsonData)) {
+            sessions = jsonData;
+        } else {
+            sessions = [jsonData]; // Convert single object to array
+        }
+    } catch (error) {
+        console.error('Error parsing results file:', error);
+        return createEmptyAnalytics();
+    }
+    
+    // If no sessions, return empty analytics
+    if (sessions.length === 0) {
+        return createEmptyAnalytics();
+    }
+    
+    // For now, we'll just analyze the most recent session
+    // This can be expanded to do cross-session analysis as needed
+    const mostRecentSession = sessions.sort((a, b) => 
+        new Date(b.startTime).getTime() - new Date(a.startTime).getTime()
+    )[0];
+    
+    return analyzeSession(mostRecentSession);
+}
+
+// Helper function to create empty analytics
+function createEmptyAnalytics(): Analytics {
+    return {
+        efficiency: {
+            averageTimePerTest: 0,
+            averageTimePerAttempt: 0,
+            fastestTest: { testName: '', timeMs: 0 },
+            slowestTest: { testName: '', timeMs: 0 },
+            timeDistribution: {
+                under30s: 0,
+                under1min: 0,
+                over1min: 0
+            }
+        },
+        effectiveness: {
+            successRate: 0,
+            averageAttemptsPerTest: 0,
+            errorDistribution: {},
+            mostCommonErrors: [],
+            commandProgression: {
+                averageCommandsToSuccess: 0,
+                mostCommonFirstCommands: []
+            }
+        },
+        patterns: {
+            errorPatterns: [],
+            commandPatterns: []
+        }
+    };
+}
+
+// Analyze a single session
+function analyzeSession(data: SessionData): Analytics {
     // Initialize analytics
     const analytics: Analytics = {
         efficiency: {
@@ -335,6 +398,7 @@ function generateReport(analytics: Analytics): string {
 // Main execution
 const resultsPath = path.join(process.cwd(), 'output', 'results.json');
 try {
+    // Analyze the most recent session
     const analytics = analyzeResults(resultsPath);
     const report = generateReport(analytics);
     console.log(report);
@@ -342,6 +406,43 @@ try {
     // Save report to file
     const reportPath = path.join(process.cwd(), 'output', 'analytics-report.txt');
     fs.writeFileSync(reportPath, report);
+    
+    // Add condition order statistics
+    try {
+        const fileData = fs.readFileSync(resultsPath, 'utf8');
+        const sessions = Array.isArray(JSON.parse(fileData)) 
+            ? JSON.parse(fileData) 
+            : [JSON.parse(fileData)];
+            
+        // Count condition orders
+        const conditionStats = {
+            total: sessions.length,
+            traditionalFirst: 0,
+            aiFirst: 0,
+            unspecified: 0
+        };
+        
+        sessions.forEach((session: SessionData) => {
+            if (session.conditionOrder === 'traditional-first') {
+                conditionStats.traditionalFirst++;
+            } else if (session.conditionOrder === 'ai-first') {
+                conditionStats.aiFirst++;
+            } else {
+                conditionStats.unspecified++;
+            }
+        });
+        
+        // Display condition order statistics
+        console.log('\n--- Condition Order Statistics ---');
+        console.log(`Total sessions: ${conditionStats.total}`);
+        console.log(`Traditional CLI first: ${conditionStats.traditionalFirst} (${(conditionStats.traditionalFirst / conditionStats.total * 100).toFixed(1)}%)`);
+        console.log(`AI-assisted CLI first: ${conditionStats.aiFirst} (${(conditionStats.aiFirst / conditionStats.total * 100).toFixed(1)}%)`);
+        console.log(`Unspecified order: ${conditionStats.unspecified} (${(conditionStats.unspecified / conditionStats.total * 100).toFixed(1)}%)`);
+        
+    } catch (error) {
+        console.error('Error generating condition statistics:', error);
+    }
+    
     console.log(`\nReport saved to: ${reportPath}`);
 } catch (error) {
     console.error('Error analyzing results:', error);

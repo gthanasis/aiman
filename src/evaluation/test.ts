@@ -27,7 +27,7 @@ export class Test {
 	private store: Store;
 	private rl: readline.Interface | null = null;
 	private startTypingTime: number | null = null;
-	private isLlmAssisted: boolean;
+	public isLlmAssisted: boolean;
 
 	constructor({ store, description, command, correctCommands, isLlmAssisted = true }: TestProps) {
 		this.store = store;
@@ -129,29 +129,10 @@ export class Test {
 		const progress = createProgressIndicator("Assessing command output");
 		
 		if (stderr) {
-			console.log(boxen(
-				chalk.hex(colors.danger)(stderr),
-				{
-					padding: 1,
-					margin: { top: 1, bottom: 0 },
-					borderStyle: 'round',
-					borderColor: '#B22222', // Fire Brick
-					float: 'center'
-				}
-			));
+			console[code !== 0 ? 'error': 'log'](`\n${chalk.red(stderr)}`);
 		}
-		
 		if (stdout) {
-			console.log(boxen(
-				chalk.white(stdout),
-				{
-					padding: 1,
-					margin: { top: 0, bottom: 1 },
-					borderStyle: 'round',
-					borderColor: '#708090', // Slate Gray
-					float: 'center'
-				}
-			));
+			console.log(chalk.white(stdout));
 		}
 		
 		progress.start();
