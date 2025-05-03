@@ -24,11 +24,52 @@ interface TestResult {
 	endTime: string;
 }
 
+interface PreQuestionnaire {
+	demographics: {
+		age: string;
+		gender: string;
+		education: string;
+	};
+	professional: {
+		role: string;
+		experience: string;
+		field: string;
+	};
+	cliProficiency: {
+		usageFrequency: string;
+		proficiencyLevel: number;
+		environments: string[];
+	};
+	aiExperience: {
+		hasUsedAI: boolean;
+		experienceDescription?: string;
+	};
+	learningPreferences: {
+		preferredMethod: string;
+	};
+}
+
+interface PostQuestionnaire {
+	satisfaction: {
+		easeOfUse: number;
+		confidence: number;
+		frustration: number;
+	};
+	effectiveness: {
+		taskCompletion: number;
+		errorHandling: number;
+		learning: number;
+	};
+	comments: string;
+}
+
 interface SessionData {
 	runId: string;
 	userName: string;
 	startTime: string;
 	tests: TestResult[];
+	preQuestionnaire?: PreQuestionnaire;
+	postQuestionnaire?: PostQuestionnaire;
 }
 
 export class Store {
@@ -126,6 +167,16 @@ export class Store {
 		this.currentTest.endTime = new Date().toISOString();
 		this.sessionData.tests.push(this.currentTest);
 		this.currentTest = null;
+		this.saveData();
+	}
+
+	public setPreQuestionnaire(questionnaire: PreQuestionnaire) {
+		this.sessionData.preQuestionnaire = questionnaire;
+		this.saveData();
+	}
+
+	public setPostQuestionnaire(questionnaire: PostQuestionnaire) {
+		this.sessionData.postQuestionnaire = questionnaire;
 		this.saveData();
 	}
 

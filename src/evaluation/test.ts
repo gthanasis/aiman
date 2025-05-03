@@ -4,6 +4,13 @@ import readline from 'readline'
 import {handleUserInput} from '../events.ts'
 import {compareCommandAndResults} from '../llm.ts'
 import {createProgressIndicator} from '../utils.ts'
+import {
+	createTaskChallengeBox,
+	createSuccessBox,
+	colors,
+	styledPrompt
+} from '../utils/formatting.ts'
+import boxen from 'boxen'
 
 interface TestProps {
 	store: Store;
@@ -31,7 +38,7 @@ export class Test {
 		this.rl = readline.createInterface({
 			input: process.stdin,
 			output: process.stdout,
-			prompt: chalk.greenBright("> "),
+			prompt: chalk.hex(colors.cyan).bold("❯ "), // Use colors from central palette
 		});
 		return new Promise<void>((resolve) => {
 			this.print();
@@ -93,10 +100,11 @@ export class Test {
 	}
 
 	private print() {
-		console.log(chalk.white("\n========================================================"));
-		console.log(chalk.blueBright(this.description));
-		console.log(chalk.white(this.command));
-		console.log(chalk.white(`=====================${chalk.yellow(`[To continue/skip, type 'exit']`)}====\n`));
+		// Use the centralized formatting function
+		const challengeBox = createTaskChallengeBox(this.description, this.command);
+		
+		console.log(challengeBox.header);
+		console.log(challengeBox.content);
 	}
 
 	private async assessCommand(
@@ -106,15 +114,39 @@ export class Test {
 		code: number | null,
 		correctCommands: string[]) {
 		if (correctCommands.includes(command)) {
+			// Use the centralized success box formatting
+			console.log(createSuccessBox('✅ CORRECT SOLUTION! Great job!'));
 			return true;
 		}
+		
 		const progress = createProgressIndicator("Assessing command output");
+		
 		if (stderr) {
-			console[code !== 0 ? 'error': 'log'](`\n${chalk.red(stderr)}`);
+			console.log(boxen(
+				chalk.hex(colors.danger)(stderr),
+				{
+					padding: 1,
+					margin: { top: 1, bottom: 0 },
+					borderStyle: 'round',
+					borderColor: '#B22222', // Fire Brick
+					float: 'center'
+				}
+			));
 		}
+		
 		if (stdout) {
-			console.log(chalk.white(stdout));
+			console.log(boxen(
+				chalk.white(stdout),
+				{
+					padding: 1,
+					margin: { top: 0, bottom: 1 },
+					borderStyle: 'round',
+					borderColor: '#708090', // Slate Gray
+					float: 'center'
+				}
+			));
 		}
+		
 		progress.start();
 		try {
 			const { equivalent, explanation } = await compareCommandAndResults({
@@ -122,10 +154,14 @@ export class Test {
 				userCommand: command,
 				userCommandOutput: stdout
 			});
-			equivalent
-				? progress.stop(`Test passed`, true)
-				: progress.stop(`Try again: ${explanation}`, true);
-			return equivalent;
+			
+			if (equivalent) {
+				progress.stop(`Test passed`, true);
+				return true;
+			} else {
+				progress.stop(`Try again: ${explanation}`, false);
+				return false;
+			}
 		} catch (error: any) {
 			progress.stop("Failed to assess command", false);
 			console.error(chalk.red(`Error: ${error.message}`));

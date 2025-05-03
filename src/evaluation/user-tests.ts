@@ -1,35 +1,95 @@
 import chalk from "chalk";
 import { Store } from "./store.ts";
 import { input } from '@inquirer/prompts';
-import {Test} from './test.ts'
+import { Test } from './test.ts';
+import { QuestionnaireManager } from './questionnaire.ts';
+import { 
+    createTitleBanner, 
+    createInfoBox, 
+    createDangerBox, 
+    createNotificationBox, 
+    styledPrompt,
+    Section 
+} from '../utils/formatting.ts';
+
+// Parse command line arguments
+const args = process.argv.slice(2);
+const skipQuestionnaires = args.includes('--skip-questionnaires') || args.includes('-s');
+const testCountArg = args.find(arg => arg.startsWith('--test-count=') || arg.startsWith('-t='));
+let testCount = 10; // Default number of tests
+
+// Show help if requested
+if (args.includes('--help') || args.includes('-h')) {
+    console.log(chalk.bold('\nCLI Usability Study - Command Line Options:'));
+    console.log(chalk.cyan('  --skip-questionnaires, -s') + ': Skip pre and post questionnaires');
+    console.log(chalk.cyan('  --test-count=N, -t=N') + ':   Specify the number of tests to run (1-10)');
+    console.log(chalk.cyan('  --help, -h') + ':             Show this help text\n');
+    process.exit(0);
+}
+
+if (testCountArg) {
+    const countValue = testCountArg.split('=')[1];
+    const parsedCount = parseInt(countValue, 10);
+    if (!isNaN(parsedCount) && parsedCount > 0) {
+        testCount = parsedCount;
+    } else {
+        console.log(chalk.yellow(`Invalid test count: ${countValue}. Using default of 10.`));
+    }
+}
 
 const store = new Store('./output/results.json');
-console.clear();
-
-// Banner message
-console.log(chalk.white("\n=============================================="));
-console.log(chalk.blueBright("Welcome to the TypeScript CLI Tool test suite"));
-console.log(chalk.white("==============================================\n"));
-
-const name = await input({ message: 'Enter your full name' });
+const questionnaireManager = new QuestionnaireManager(store);
 
 console.clear();
-console.log(chalk.blueBright(`Hello, ${name}`));
-console.log(chalk.white(`This test is intended to simulate a user interacting with a CLI tool.
-You will be asked to complete several tasks and will be presented with a cli interface.\n`));
-console.log(chalk.blueBright("Instructions:"));
-console.log(chalk.white(`- Most of the tasks are basically broken commands that you need to fix.
-- In the experimental CLI each failed command will try to fetch help from LLM.
-- Type 'exit' to close the session when the task has been completed.`));
-console.log(chalk.yellow(`! Your actions will be recorded and stored for further analysis. !\n`))
 
-// Ask a user if he agrees to proceed
-const proceed = await input({ message: 'Do you agree to proceed? (yes/no)' });
-if (proceed !== 'yes') {
-	console.log(chalk.red('Goodbye!'));
-	process.exit(0);
+// Use the centralized title banner function
+console.log(createTitleBanner('CLI USABILITY STUDY'));
+
+// Combined study information and data collection in one box
+const combinedInfoSections: Section[] = [
+    {
+        emoji: "🔍",
+        label: "About This Study",
+        content: "This test evaluates how users interact with different CLI interfaces. You'll complete a series of command-line tasks in a structured environment."
+    },
+    {
+        emoji: "📋",
+        label: "Task Instructions",
+        content: "• You will fix broken commands as they appear\n• The experimental CLI provides AI assistance for failed commands\n• Type 'exit' to complete a task and continue"
+    },
+    {
+        emoji: "📊",
+        label: "Data Collection Notice",
+        content: "For research purposes, we'll record:\n• Commands and errors\n• Task completion times\n• Survey responses\n• Success rates and patterns"
+    }
+];
+
+// Use the centralized info box function with combined sections
+console.log(createInfoBox(combinedInfoSections, 'STUDY INFORMATION'));
+
+// Skip questionnaires and consent if flag is provided
+let proceed = 'yes';
+
+if (!skipQuestionnaires) {
+    // Consent prompt with centralized notification box
+    console.log(createNotificationBox('Do you consent to participate and allow data collection?'));
+
+    proceed = await input({ 
+      message: styledPrompt('Enter "yes" to continue or "no" to exit:', '#FFFFFF') 
+    });
 }
-store.setUserName(name);
+
+if (proceed.toLowerCase() !== 'yes' && !skipQuestionnaires) {
+    console.log(createDangerBox('You have declined to participate. The study has been terminated.'));
+    process.exit(0);
+}
+
+// Run pre-questionnaire unless skipped
+if (!skipQuestionnaires) {
+    await questionnaireManager.runPreQuestionnaire();
+}
+
+// Test definitions
 const tests = [
 	new Test({
 		store,
@@ -116,9 +176,32 @@ const tests = [
 	})
 ];
 
+// Run tests, limiting to the specified count
+const testsToRun = tests.slice(0, testCount);
 
 // Run test by awaiting each test
-for (const test of tests) {
+for (const test of testsToRun) {
 	console.clear();
 	await test.run();
+}
+
+// Run post-questionnaire unless skipped
+if (!skipQuestionnaires) {
+    await questionnaireManager.runPostQuestionnaire();
+
+    // Use the centralized title banner function
+    console.log(createTitleBanner('THANK YOU FOR YOUR PARTICIPATION!'));
+
+    // Final message with centralized info box
+    const completionSections: Section[] = [
+        {
+            emoji: "📈",
+            label: "Research Impact",
+            content: "Your responses will help improve CLI usability and AI assistance methods. We appreciate your valuable contribution to this research."
+        }
+    ];
+
+    console.log(createInfoBox(completionSections, 'STUDY COMPLETION'));
+} else {
+    console.log(createTitleBanner('TEST COMPLETED'));
 }

@@ -19,8 +19,8 @@ export function calculateCost(response: ChatCompletionResponse): number {
 	const completionTokens = response.usage.completion_tokens;
 
 	// Pricing details for GPT-4 (adjust if needed)
-	const promptRatePerThousand = 0.03; // $ per 1k prompt tokens
-	const completionRatePerThousand = 0.06; // $ per 1k completion tokens
+	const promptRatePerThousand = 0.003; // $0.003 per 1k prompt tokens
+	const completionRatePerThousand = 0.009; // $0.009 per 1k completion tokens
 
 	const promptCost = (promptTokens / 1000) * promptRatePerThousand;
 	const completionCost = (completionTokens / 1000) * completionRatePerThousand;

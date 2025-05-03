@@ -1,6 +1,6 @@
 {
   "runId": "50eab863-4379-4b04-8690-78004a3f7e93",
-  "userName": "thanasis",
+  "userName": "t",
   "startTime": "2025-05-02T21:30:30.021Z",
   "tests": [
     {
@@ -377,6 +377,318 @@
       ],
       "startTime": "2025-05-02T21:53:30.483Z",
       "endTime": "2025-05-02T21:53:51.991Z"
+    },
+    {
+      "testName": "curl -o",
+      "description": "We need to download https://example.com to output.html!\nCorrect the following command",
+      "attempts": [
+        {
+          "attemptNumber": 1,
+          "command": "corl -u askdj",
+          "timestamp": "2025-05-03T05:42:11.011Z",
+          "stdout": "",
+          "stderr": "/bin/sh: corl: command not found\n",
+          "errorType": "execution_error"
+        }
+      ],
+      "totalTimeMs": 0,
+      "totalAttempts": 1,
+      "errorTypes": [
+        "execution_error"
+      ],
+      "startTime": "2025-05-03T05:41:48.921Z",
+      "endTime": "2025-05-03T05:44:09.052Z"
+    },
+    {
+      "testName": "ls sort",
+      "description": "We need to list and sort the files!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T05:44:09.054Z",
+      "endTime": "2025-05-03T05:44:12.372Z"
+    },
+    {
+      "testName": "find . --name*.txt",
+      "description": "We need to find all files that end in .txt!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T05:44:12.375Z",
+      "endTime": "2025-05-03T05:44:12.963Z"
+    },
+    {
+      "testName": "head -line=5 file.txt",
+      "description": "We need to list the first 5 lines of a file.txt!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T05:44:12.967Z",
+      "endTime": "2025-05-03T05:44:13.369Z"
+    },
+    {
+      "testName": "wc -k file.txt",
+      "description": "We need to count the number of lines in file.txt!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T05:44:13.372Z",
+      "endTime": "2025-05-03T05:44:13.777Z"
+    },
+    {
+      "testName": "du h .",
+      "description": "We need to check disk usage of the current directory!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T05:44:13.780Z",
+      "endTime": "2025-05-03T05:44:14.112Z"
+    },
+    {
+      "testName": "mkdir projects -p",
+      "description": "We need to create a new directory called projects!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T05:44:14.115Z",
+      "endTime": "2025-05-03T05:44:14.408Z"
+    },
+    {
+      "testName": "who all",
+      "description": "We need to check the currently logged-in users!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T05:44:14.413Z",
+      "endTime": "2025-05-03T05:44:14.658Z"
+    },
+    {
+      "testName": "tail --lines=10 file.txt",
+      "description": "We need to display the last 10 lines of a file named file.txt!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T05:44:14.661Z",
+      "endTime": "2025-05-03T05:44:15.004Z"
+    },
+    {
+      "testName": "df size -h",
+      "description": "We need to display disk space usage in human-readable format!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T05:44:15.008Z",
+      "endTime": "2025-05-03T05:44:15.355Z"
+    },
+    {
+      "testName": "curl -o",
+      "description": "We need to download https://example.com to output.html!\nCorrect the following command",
+      "attempts": [
+        {
+          "attemptNumber": 1,
+          "command": "corl -a asdsa",
+          "timestamp": "2025-05-03T05:46:29.232Z",
+          "stdout": "",
+          "stderr": "/bin/sh: corl: command not found\n",
+          "errorType": "execution_error"
+        },
+        {
+          "attemptNumber": 2,
+          "command": "corl -a rem -rf /",
+          "timestamp": "2025-05-03T05:46:59.826Z",
+          "stdout": "",
+          "stderr": "/bin/sh: corl: command not found\n",
+          "errorType": "execution_error"
+        }
+      ],
+      "totalTimeMs": 0,
+      "totalAttempts": 2,
+      "errorTypes": [
+        "execution_error"
+      ],
+      "startTime": "2025-05-03T05:46:12.893Z",
+      "endTime": "2025-05-03T05:48:49.270Z"
+    },
+    {
+      "testName": "curl -o",
+      "description": "We need to download https://example.com to output.html!\nCorrect the following command",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T05:48:51.381Z",
+      "endTime": "2025-05-03T05:49:29.846Z"
+    },
+    {
+      "testName": "curl -o",
+      "description": "We need to download https://example.com to output.html!\nCorrect the following command",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T05:49:31.655Z",
+      "endTime": "2025-05-03T05:49:38.280Z"
+    },
+    {
+      "testName": "curl -o",
+      "description": "We need to download https://example.com to output.html!\nCorrect the following command",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T05:49:39.823Z",
+      "endTime": "2025-05-03T05:50:13.121Z"
+    },
+    {
+      "testName": "curl -o",
+      "description": "We need to download https://example.com to output.html!\nCorrect the following command",
+      "attempts": [
+        {
+          "attemptNumber": 1,
+          "command": "curl rem -rf /",
+          "timestamp": "2025-05-03T05:50:31.602Z",
+          "stdout": "",
+          "stderr": "Warning: Invalid character is found in given range. A specified range MUST \nWarning: have only digits in 'start'-'stop'. The server's response to this \nWarning: request is uncertain.\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (6) Could not resolve host: rem\ncurl: (3) URL rejected: No host part in the URL\n",
+          "errorType": "execution_error"
+        }
+      ],
+      "totalTimeMs": 0,
+      "totalAttempts": 1,
+      "errorTypes": [
+        "execution_error"
+      ],
+      "startTime": "2025-05-03T05:50:14.944Z",
+      "endTime": "2025-05-03T05:52:21.994Z"
+    },
+    {
+      "testName": "curl -o",
+      "description": "We need to download https://example.com to output.html!\nCorrect the following command",
+      "attempts": [
+        {
+          "attemptNumber": 1,
+          "command": "curl rem -rf /",
+          "timestamp": "2025-05-03T05:52:44.310Z",
+          "stdout": "",
+          "stderr": "Warning: Invalid character is found in given range. A specified range MUST \nWarning: have only digits in 'start'-'stop'. The server's response to this \nWarning: request is uncertain.\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (6) Could not resolve host: rem\ncurl: (3) URL rejected: No host part in the URL\n",
+          "errorType": "execution_error"
+        }
+      ],
+      "totalTimeMs": 0,
+      "totalAttempts": 1,
+      "errorTypes": [
+        "execution_error"
+      ],
+      "startTime": "2025-05-03T05:52:30.091Z",
+      "endTime": "2025-05-03T05:53:10.447Z"
+    },
+    {
+      "testName": "curl -o",
+      "description": "We need to download https://example.com to output.html!\nCorrect the following command",
+      "attempts": [
+        {
+          "attemptNumber": 1,
+          "command": "curl rem -rf /",
+          "timestamp": "2025-05-03T05:53:22.459Z",
+          "stdout": "",
+          "stderr": "Warning: Invalid character is found in given range. A specified range MUST \nWarning: have only digits in 'start'-'stop'. The server's response to this \nWarning: request is uncertain.\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (6) Could not resolve host: rem\ncurl: (3) URL rejected: No host part in the URL\n",
+          "errorType": "execution_error"
+        }
+      ],
+      "totalTimeMs": 0,
+      "totalAttempts": 1,
+      "errorTypes": [
+        "execution_error"
+      ],
+      "startTime": "2025-05-03T05:53:13.020Z",
+      "endTime": "2025-05-03T05:56:21.486Z"
+    },
+    {
+      "testName": "curl -o",
+      "description": "We need to download https://example.com to output.html!\nCorrect the following command",
+      "attempts": [
+        {
+          "attemptNumber": 1,
+          "command": " curl rem -rf /",
+          "timestamp": "2025-05-03T05:56:37.201Z",
+          "stdout": "",
+          "stderr": "Warning: Invalid character is found in given range. A specified range MUST \nWarning: have only digits in 'start'-'stop'. The server's response to this \nWarning: request is uncertain.\n  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (6) Could not resolve host: rem\ncurl: (3) URL rejected: No host part in the URL\n",
+          "errorType": "execution_error"
+        }
+      ],
+      "totalTimeMs": 0,
+      "totalAttempts": 1,
+      "errorTypes": [
+        "execution_error"
+      ],
+      "startTime": "2025-05-03T05:56:23.422Z",
+      "endTime": "2025-05-03T05:57:01.014Z"
+    },
+    {
+      "testName": "curl -o",
+      "description": "We need to download https://example.com to output.html!\nCorrect the following command",
+      "attempts": [
+        {
+          "attemptNumber": 1,
+          "command": "curl -o",
+          "timestamp": "2025-05-03T06:02:26.098Z",
+          "stdout": "",
+          "stderr": "curl: option -o: requires parameter\ncurl: try 'curl --help' or 'curl --manual' for more information\n",
+          "errorType": "execution_error"
+        },
+        {
+          "attemptNumber": 2,
+          "command": "curl -o output.html https://example.com",
+          "timestamp": "2025-05-03T06:02:45.967Z",
+          "stdout": "",
+          "stderr": "  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r100  1256  100  1256    0     0   2552      0 --:--:-- --:--:-- --:--:--  2552\n",
+          "timeMs": 27713,
+          "success": true
+        }
+      ],
+      "totalTimeMs": 27713,
+      "totalAttempts": 2,
+      "errorTypes": [
+        "execution_error"
+      ],
+      "startTime": "2025-05-03T06:02:18.254Z",
+      "endTime": "2025-05-03T06:02:49.471Z"
     }
-  ]
+  ],
+  "preQuestionnaire": {
+    "demographics": {
+      "name": "t",
+      "age": "Under 18",
+      "gender": "Prefer not to say",
+      "education": "Bachelor's degree"
+    },
+    "professional": {
+      "role": "Tech lead",
+      "experience": "5–10 years",
+      "field": "DevOps / System Administration"
+    },
+    "cliProficiency": {
+      "usageFrequency": "Daily",
+      "proficiencyLevel": 3,
+      "environments": [
+        "Bash",
+        "Zsh"
+      ]
+    },
+    "aiExperience": {
+      "hasUsedAI": true,
+      "experienceDescription": "Cursor"
+    },
+    "learningPreferences": {
+      "preferredMethod": "Asking AI assistants"
+    }
+  }
 }
