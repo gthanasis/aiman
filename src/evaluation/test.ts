@@ -17,6 +17,7 @@ interface TestProps {
 	description: string;
 	command: string;
 	correctCommands: string[];
+	isLlmAssisted?: boolean;
 }
 
 export class Test {
@@ -26,12 +27,14 @@ export class Test {
 	private store: Store;
 	private rl: readline.Interface | null = null;
 	private startTypingTime: number | null = null;
+	private isLlmAssisted: boolean;
 
-	constructor({ store, description, command, correctCommands }: TestProps) {
+	constructor({ store, description, command, correctCommands, isLlmAssisted = true }: TestProps) {
 		this.store = store;
 		this.description = description;
 		this.command = command;
 		this.correctCommands = correctCommands;
+		this.isLlmAssisted = isLlmAssisted;
 	}
 
 	run() {
@@ -44,10 +47,10 @@ export class Test {
 			this.print();
 			this.promptReadline();
 			this.startTypingTime = Date.now();
-			this.store.startTest(this.command, this.description);
+			this.store.startTest(this.command, this.description, this.isLlmAssisted);
 
 			this.rl?.on("line", async (line) => {
-				const out = await handleUserInput(line, this.rl!);
+				const out = await handleUserInput(line, this.rl!, this.isLlmAssisted);
 				if (!out || out?.code !== 0) {
 					this.store.addAttempt(
 						line,
@@ -101,7 +104,11 @@ export class Test {
 
 	private print() {
 		// Use the centralized formatting function
-		const challengeBox = createTaskChallengeBox(this.description, this.command);
+		const challengeBox = createTaskChallengeBox(
+			this.description, 
+			this.command,
+			this.isLlmAssisted ? '🤖 LLM Assistance Enabled' : '👤 No LLM Assistance'
+		);
 		
 		console.log(challengeBox.header);
 		console.log(challengeBox.content);

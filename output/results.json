@@ -661,6 +661,166 @@
       ],
       "startTime": "2025-05-03T06:02:18.254Z",
       "endTime": "2025-05-03T06:02:49.471Z"
+    },
+    {
+      "testName": "ls sort",
+      "description": "We need to list and sort the files!\nCorrect the following command:",
+      "attempts": [
+        {
+          "attemptNumber": 1,
+          "command": "ls | sort",
+          "timestamp": "2025-05-03T06:03:12.952Z",
+          "stdout": "README.md\nfile.txt\nfilename\nfilename.html\nnode_modules\noutput\noutput.html\noutput.txt\noutputfile\noutputfile.html\npackage.json\npapers\nprojects\nresearch.md\nsrc\ntodo.md\ntsconfig.json\nuser-feedback.md\nuser-tests.md\nyarn.lock\n",
+          "stderr": "",
+          "timeMs": 23475,
+          "success": true
+        }
+      ],
+      "totalTimeMs": 23475,
+      "totalAttempts": 1,
+      "errorTypes": [],
+      "startTime": "2025-05-03T06:02:49.477Z",
+      "endTime": "2025-05-03T06:03:16.454Z"
+    },
+    {
+      "testName": "curl -o",
+      "description": "We need to download https://example.com to output.html!\nCorrect the following command",
+      "attempts": [
+        {
+          "attemptNumber": 1,
+          "command": "curl -o output.html https://example.com",
+          "timestamp": "2025-05-03T06:25:53.212Z",
+          "stdout": "",
+          "stderr": "  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\r100  1256  100  1256    0     0   2038      0 --:--:-- --:--:-- --:--:--  2035\n",
+          "timeMs": 33675,
+          "success": true
+        }
+      ],
+      "totalTimeMs": 33675,
+      "totalAttempts": 1,
+      "errorTypes": [],
+      "startTime": "2025-05-03T06:25:19.537Z",
+      "endTime": "2025-05-03T06:25:56.715Z",
+      "isLlmAssisted": true
+    },
+    {
+      "testName": "ls sort",
+      "description": "We need to list and sort the files!\nCorrect the following command:",
+      "attempts": [
+        {
+          "attemptNumber": 1,
+          "command": "ls sort",
+          "timestamp": "2025-05-03T06:25:59.909Z",
+          "stdout": "",
+          "stderr": "ls: sort: No such file or directory\n",
+          "errorType": "execution_error"
+        },
+        {
+          "attemptNumber": 2,
+          "command": "ls | sort",
+          "timestamp": "2025-05-03T06:26:03.224Z",
+          "stdout": "README.md\nfile.txt\nfilename\nfilename.html\nnode_modules\noutput\noutput.html\noutput.txt\noutputfile\noutputfile.html\npackage.json\npapers\nprojects\nresearch.md\nsrc\ntodo.md\ntsconfig.json\nuser-feedback.md\nuser-tests.md\nyarn.lock\n",
+          "stderr": "",
+          "timeMs": 6502,
+          "success": true
+        }
+      ],
+      "totalTimeMs": 6502,
+      "totalAttempts": 2,
+      "errorTypes": [
+        "execution_error"
+      ],
+      "startTime": "2025-05-03T06:25:56.722Z",
+      "endTime": "2025-05-03T06:26:06.726Z",
+      "isLlmAssisted": false
+    },
+    {
+      "testName": "find . --name*.txt",
+      "description": "We need to find all files that end in .txt!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T06:26:06.735Z",
+      "endTime": "2025-05-03T06:26:45.940Z",
+      "isLlmAssisted": true
+    },
+    {
+      "testName": "head -line=5 file.txt",
+      "description": "We need to list the first 5 lines of a file.txt!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T06:26:45.943Z",
+      "endTime": "2025-05-03T06:26:46.390Z",
+      "isLlmAssisted": true
+    },
+    {
+      "testName": "wc -k file.txt",
+      "description": "We need to count the number of lines in file.txt!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T06:26:46.393Z",
+      "endTime": "2025-05-03T06:26:46.722Z",
+      "isLlmAssisted": true
+    },
+    {
+      "testName": "du h .",
+      "description": "We need to check disk usage of the current directory!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T06:26:46.725Z",
+      "endTime": "2025-05-03T06:26:46.916Z",
+      "isLlmAssisted": true
+    },
+    {
+      "testName": "mkdir projects -p",
+      "description": "We need to create a new directory called projects!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T06:26:46.921Z",
+      "endTime": "2025-05-03T06:26:47.088Z",
+      "isLlmAssisted": true
+    },
+    {
+      "testName": "who all",
+      "description": "We need to check the currently logged-in users!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T06:26:47.090Z",
+      "endTime": "2025-05-03T06:26:47.272Z",
+      "isLlmAssisted": true
+    },
+    {
+      "testName": "tail --lines=10 file.txt",
+      "description": "We need to display the last 10 lines of a file named file.txt!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T06:26:47.276Z",
+      "endTime": "2025-05-03T06:26:47.460Z",
+      "isLlmAssisted": true
+    },
+    {
+      "testName": "df size -h",
+      "description": "We need to display disk space usage in human-readable format!\nCorrect the following command:",
+      "attempts": [],
+      "totalTimeMs": 0,
+      "totalAttempts": 0,
+      "errorTypes": [],
+      "startTime": "2025-05-03T06:26:47.464Z",
+      "endTime": "2025-05-03T06:26:47.651Z",
+      "isLlmAssisted": true
     }
   ],
   "preQuestionnaire": {
@@ -690,5 +850,18 @@
     "learningPreferences": {
       "preferredMethod": "Asking AI assistants"
     }
+  },
+  "postQuestionnaire": {
+    "satisfaction": {
+      "easeOfUse": 5,
+      "confidence": 5,
+      "frustration": 1
+    },
+    "effectiveness": {
+      "taskCompletion": 3,
+      "errorHandling": 5,
+      "learning": 3
+    },
+    "comments": ""
   }
 }

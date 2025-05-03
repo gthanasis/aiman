@@ -190,8 +190,13 @@ export function styledPrompt(message: string, color = colors.primary) {
 /**
  * Creates a task challenge box specifically for the test suite
  */
-export function createTaskChallengeBox(description: string, command: string) {
-    const combined = `📝 Task Description:\n${description}\n\n🔄 Command To Fix:\n${chalk.hex(colors.warning)(command)}\n\n${chalk.bold('Type your corrected command below or "exit" to continue')}`;
+export function createTaskChallengeBox(description: string, command: string, assistanceStatus?: string) {
+    let combined = `📝 Task Description:\n${description}\n\n🔄 Command To Fix:\n${chalk.hex(colors.warning)(command)}\n\n${chalk.bold('Type your corrected command below or "exit" to continue')}`;
+    
+    // Add assistance status if provided
+    if (assistanceStatus) {
+        combined += `\n\n${chalk.italic.hex(colors.secondary)(assistanceStatus)}`;
+    }
     
     return {
         header: boxen(

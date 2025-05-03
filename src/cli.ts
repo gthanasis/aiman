@@ -9,6 +9,18 @@ const rl = readline.createInterface({
 	prompt: chalk.greenBright("> "),
 });
 
+// Parse command line arguments for LLM assistance
+const args = process.argv.slice(2);
+const noLlmAssistance = args.includes('--no-llm') || args.includes('-n');
+
+// Show help if requested
+if (args.includes('--help') || args.includes('-h')) {
+	console.log(chalk.bold('\nTypeScript CLI Tool - Command Line Options:'));
+	console.log(chalk.cyan('  --no-llm, -n') + ': Disable LLM assistance');
+	console.log(chalk.cyan('  --help, -h') + ': Show this help text\n');
+	process.exit(0);
+}
+
 // Banner message
 console.log(chalk.blueBright("Welcome to the TypeScript CLI Tool!"));
 console.log(chalk.yellow("Type commands to execute them in the OS shell."));
@@ -19,7 +31,7 @@ rl.prompt();
 
 // Register event listeners
 rl.on("line", async (line) => {
-	await handleUserInput(line, rl)
+	await handleUserInput(line, rl, !noLlmAssistance)
 	rl.prompt();
 });
 rl.on("close", handleExit);

@@ -6,7 +6,7 @@ import ora from "ora";
 import {createProgressIndicator} from './utils.ts'
 
 // Handle user input
-export async function handleUserInput(input: string, rl: readline.Interface) {
+export async function handleUserInput(input: string, rl: readline.Interface, isLlmAssisted: boolean = true) {
 	const command = input.trim();
 
 	if (!command) {
@@ -26,8 +26,18 @@ export async function handleUserInput(input: string, rl: readline.Interface) {
 		// Execute the command and capture output
 		const { stdout, stderr, code } = await runCommand(executable, args);
 
-		// // Intercept output and perform async operations
-		await processCommandOutput(command, stdout, stderr, code);
+		// Intercept output and perform async operations if LLM assistance is enabled
+		if (isLlmAssisted) {
+			await processCommandOutput(command, stdout, stderr, code);
+		} else {
+			// Just output results without LLM assistance
+			if (stderr) {
+				console[code !== 0 ? 'error': 'log'](`\n${chalk.red(stderr)}`);
+			}
+			if (stdout) {
+				console.log(chalk.white(stdout));
+			}
+		}
 
 		return { command, stdout, stderr, code };
 	} catch (error: any) {

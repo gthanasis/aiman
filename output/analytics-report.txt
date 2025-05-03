@@ -3,9 +3,9 @@ AI-CLI Evaluation Analytics Report
 
 1. Efficiency Analysis
 ---------------------
-Average Time per Test: 104.44s
-Average Time per Attempt: 46.42s
-Fastest Test: ps -U john all (0.00s)
+Average Time per Test: 108.71s
+Average Time per Attempt: 56.72s
+Fastest Test: who all (10.77s)
 Slowest Test: ls sort (1034.76s)
 
 Time Distribution:
@@ -15,15 +15,15 @@ Time Distribution:
 
 2. Effectiveness Analysis
 ------------------------
-Success Rate: 83.33%
-Average Attempts per Test: 2.25
+Success Rate: 100.00%
+Average Attempts per Test: 1.92
 
 Most Common Errors:
-- execution_error: 9 occurrences
+- execution_error: 8 occurrences
 - incorrect_command: 1 occurrences
 
 Command Progression:
-Average Commands to Success: 2.70
+Average Commands to Success: 1.92
 
 Most Common First Commands:
 - corl -i askdj: 1 times
@@ -59,3 +59,20 @@ Command Patterns:
 - who all:
   Success: who
   Common Mistakes: who all
+
+4. User Experience
+------------------
+
+Satisfaction Metrics:
+- Ease of Use: 5.00/5
+- Confidence: 5.00/5
+- Frustration: 1.00/5
+
+Effectiveness Metrics:
+- Task Completion: 3.00/5
+- Error Handling: 5.00/5
+- Learning: 3.00/5
+
+User Background Correlation:
+- CLI Proficiency Level: 3/5
+- Success Rate: 100.00%

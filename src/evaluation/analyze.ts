@@ -21,6 +21,47 @@ interface TestResult {
     errorTypes: string[];
     startTime: string;
     endTime: string;
+    isLlmAssisted: boolean;
+}
+
+interface Questionnaire {
+    demographics: {
+        name: string;
+        age: string;
+        gender: string;
+        education: string;
+    };
+    professional: {
+        role: string;
+        experience: string;
+        field: string;
+    };
+    cliProficiency: {
+        usageFrequency: string;
+        proficiencyLevel: number;
+        environments: string[];
+    };
+    aiExperience: {
+        hasUsedAI: boolean;
+        experienceDescription: string;
+    };
+    learningPreferences: {
+        preferredMethod: string;
+    };
+}
+
+interface PostQuestionnaire {
+    satisfaction: {
+        easeOfUse: number;
+        confidence: number;
+        frustration: number;
+    };
+    effectiveness: {
+        taskCompletion: number;
+        errorHandling: number;
+        learning: number;
+    };
+    comments: string;
 }
 
 interface SessionData {
@@ -28,6 +69,8 @@ interface SessionData {
     userName: string;
     startTime: string;
     tests: TestResult[];
+    preQuestionnaire?: Questionnaire;
+    postQuestionnaire?: PostQuestionnaire;
 }
 
 interface Analytics {
@@ -62,6 +105,23 @@ interface Analytics {
             successfulCommand: string;
             commonMistakes: string[];
         }>;
+    };
+    userExperience?: {
+        satisfaction: {
+            averageEaseOfUse: number;
+            averageConfidence: number;
+            averageFrustration: number;
+        };
+        effectiveness: {
+            averageTaskCompletion: number;
+            averageErrorHandling: number;
+            averageLearning: number;
+        };
+        demographicDistribution: Record<string, number>;
+        proficiencyCorrelation: {
+            proficiencyLevel: number;
+            successRate: number;
+        };
     };
 }
 
@@ -104,7 +164,10 @@ function analyzeResults(filePath: string): Analytics {
     const firstCommands: Record<string, number> = {};
     const errorCounts: Record<string, number> = {};
 
-    data.tests.forEach(test => {
+    // Get the completed tests (those with time > 0)
+    const completedTests = data.tests.filter(test => test.totalTimeMs > 0);
+
+    completedTests.forEach(test => {
         // Time metrics
         totalTime += test.totalTimeMs;
         totalAttempts += test.totalAttempts;
@@ -157,10 +220,10 @@ function analyzeResults(filePath: string): Analytics {
     });
 
     // Calculate averages
-    analytics.efficiency.averageTimePerTest = totalTime / data.tests.length;
+    analytics.efficiency.averageTimePerTest = totalTime / completedTests.length;
     analytics.efficiency.averageTimePerAttempt = totalTime / totalAttempts;
-    analytics.effectiveness.successRate = (successfulTests / data.tests.length) * 100;
-    analytics.effectiveness.averageAttemptsPerTest = totalAttempts / data.tests.length;
+    analytics.effectiveness.successRate = (successfulTests / completedTests.length) * 100;
+    analytics.effectiveness.averageAttemptsPerTest = totalAttempts / completedTests.length;
 
     // Process error distribution
     analytics.effectiveness.errorDistribution = errorCounts;
@@ -170,11 +233,35 @@ function analyzeResults(filePath: string): Analytics {
 
     // Process command progression
     analytics.effectiveness.commandProgression.averageCommandsToSuccess = 
-        totalAttempts / successfulTests;
+        successfulTests > 0 ? totalAttempts / successfulTests : 0;
     analytics.effectiveness.commandProgression.mostCommonFirstCommands = 
         Object.entries(firstCommands)
             .map(([command, count]) => ({ command, count }))
             .sort((a, b) => b.count - a.count);
+
+    // Add user experience analytics if available
+    if (data.postQuestionnaire) {
+        analytics.userExperience = {
+            satisfaction: {
+                averageEaseOfUse: data.postQuestionnaire.satisfaction.easeOfUse,
+                averageConfidence: data.postQuestionnaire.satisfaction.confidence,
+                averageFrustration: data.postQuestionnaire.satisfaction.frustration
+            },
+            effectiveness: {
+                averageTaskCompletion: data.postQuestionnaire.effectiveness.taskCompletion,
+                averageErrorHandling: data.postQuestionnaire.effectiveness.errorHandling,
+                averageLearning: data.postQuestionnaire.effectiveness.learning
+            },
+            demographicDistribution: {
+                age: data.preQuestionnaire?.demographics.age ? 1 : 0,
+                education: data.preQuestionnaire?.demographics.education ? 1 : 0
+            },
+            proficiencyCorrelation: {
+                proficiencyLevel: data.preQuestionnaire?.cliProficiency.proficiencyLevel || 0,
+                successRate: analytics.effectiveness.successRate
+            }
+        };
+    }
 
     return analytics;
 }
@@ -221,9 +308,28 @@ function generateReport(analytics: Analytics): string {
         ...analytics.patterns.commandPatterns
             .slice(0, 5)
             .map(p => `- ${p.testName}:\n  Success: ${p.successfulCommand}\n  Common Mistakes: ${p.commonMistakes.join(", ")}`)
-    ].join("\n");
+    ];
 
-    return report;
+    // Add user experience section if available
+    if (analytics.userExperience) {
+        report.push(
+            "\n4. User Experience",
+            "------------------",
+            "\nSatisfaction Metrics:",
+            `- Ease of Use: ${analytics.userExperience.satisfaction.averageEaseOfUse.toFixed(2)}/5`,
+            `- Confidence: ${analytics.userExperience.satisfaction.averageConfidence.toFixed(2)}/5`,
+            `- Frustration: ${analytics.userExperience.satisfaction.averageFrustration.toFixed(2)}/5`,
+            "\nEffectiveness Metrics:",
+            `- Task Completion: ${analytics.userExperience.effectiveness.averageTaskCompletion.toFixed(2)}/5`,
+            `- Error Handling: ${analytics.userExperience.effectiveness.averageErrorHandling.toFixed(2)}/5`,
+            `- Learning: ${analytics.userExperience.effectiveness.averageLearning.toFixed(2)}/5`,
+            "\nUser Background Correlation:",
+            `- CLI Proficiency Level: ${analytics.userExperience.proficiencyCorrelation.proficiencyLevel}/5`,
+            `- Success Rate: ${analytics.userExperience.proficiencyCorrelation.successRate.toFixed(2)}%`
+        );
+    }
+
+    return report.join("\n");
 }
 
 // Main execution

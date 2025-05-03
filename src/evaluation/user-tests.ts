@@ -16,6 +16,7 @@ import {
 const args = process.argv.slice(2);
 const skipQuestionnaires = args.includes('--skip-questionnaires') || args.includes('-s');
 const testCountArg = args.find(arg => arg.startsWith('--test-count=') || arg.startsWith('-t='));
+const noLlmAssistance = args.includes('--no-llm') || args.includes('-n');
 let testCount = 10; // Default number of tests
 
 // Show help if requested
@@ -23,6 +24,7 @@ if (args.includes('--help') || args.includes('-h')) {
     console.log(chalk.bold('\nCLI Usability Study - Command Line Options:'));
     console.log(chalk.cyan('  --skip-questionnaires, -s') + ': Skip pre and post questionnaires');
     console.log(chalk.cyan('  --test-count=N, -t=N') + ':   Specify the number of tests to run (1-10)');
+    console.log(chalk.cyan('  --no-llm, -n') + ':           Run tests without LLM assistance by default');
     console.log(chalk.cyan('  --help, -h') + ':             Show this help text\n');
     process.exit(0);
 }
@@ -100,25 +102,29 @@ const tests = [
 			'curl -o output.html http://example.com',
 			'curl -o filename.html http://example.com',
 			'curl -o filename.txt https://example.com'
-		]
+		],
+		isLlmAssisted: !noLlmAssistance
 	}),
 	new Test({
 		store,
 		description: 'We need to list and sort the files!\nCorrect the following command:',
 		command: 'ls sort',
-		correctCommands: ['ls | sort']
+		correctCommands: ['ls | sort'],
+		isLlmAssisted: false // No LLM assistance for this test
 	}),
 	new Test({
 		store,
 		description: 'We need to find all files that end in .txt!\nCorrect the following command:',
 		command: 'find . --name*.txt',
-		correctCommands: ['find . -name "*.txt"']
+		correctCommands: ['find . -name "*.txt"'],
+		isLlmAssisted: true // Always use LLM for this test
 	}),
 	new Test({
 		store,
 		description: 'We need to list the first 5 lines of a file.txt!\nCorrect the following command:',
 		command: 'head -line=5 file.txt',
-		correctCommands: ['head -n 5 file.txt']
+		correctCommands: ['head -n 5 file.txt'],
+		isLlmAssisted: !noLlmAssistance
 	}),
 	new Test({
 		store,
@@ -127,7 +133,8 @@ const tests = [
 		correctCommands: [
 			'wc -l file.txt',
 			'cat file.txt | wc -l'
-		]
+		],
+		isLlmAssisted: !noLlmAssistance
 	}),
 	new Test({
 		store,
@@ -136,7 +143,8 @@ const tests = [
 		correctCommands: [
 			'du -h .',
 			'du -sh .'
-		]
+		],
+		isLlmAssisted: !noLlmAssistance
 	}),
 	new Test({
 		store,
@@ -145,7 +153,8 @@ const tests = [
 		correctCommands: [
 			'mkdir -p projects',
 			'mkdir projects'
-		]
+		],
+		isLlmAssisted: !noLlmAssistance
 	}),
 	new Test({
 		store,
@@ -154,7 +163,8 @@ const tests = [
 		correctCommands: [
 			'who',
 			'who -a'
-		]
+		],
+		isLlmAssisted: !noLlmAssistance
 	}),
 	new Test({
 		store,
@@ -163,7 +173,8 @@ const tests = [
 		correctCommands: [
 			'tail -n 10 file.txt',
 			'tail -10 file.txt'
-		]
+		],
+		isLlmAssisted: !noLlmAssistance
 	}),
 	new Test({
 		store,
@@ -172,7 +183,8 @@ const tests = [
 		correctCommands: [
 			'df -h',
 			'df -Th'
-		]
+		],
+		isLlmAssisted: !noLlmAssistance
 	})
 ];
 

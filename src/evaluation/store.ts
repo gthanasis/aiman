@@ -22,6 +22,7 @@ interface TestResult {
 	errorTypes: string[];
 	startTime: string;
 	endTime: string;
+	isLlmAssisted: boolean;
 }
 
 interface PreQuestionnaire {
@@ -116,7 +117,7 @@ export class Store {
 		this.saveData();
 	}
 
-	public startTest(testName: string, description: string) {
+	public startTest(testName: string, description: string, isLlmAssisted: boolean = true) {
 		this.currentTest = {
 			testName,
 			description,
@@ -125,7 +126,8 @@ export class Store {
 			totalAttempts: 0,
 			errorTypes: [],
 			startTime: new Date().toISOString(),
-			endTime: ''
+			endTime: '',
+			isLlmAssisted
 		};
 	}
 
