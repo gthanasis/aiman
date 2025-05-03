@@ -1,0 +1,61 @@
+AI-CLI Evaluation Analytics Report
+==================================
+
+1. Efficiency Analysis
+---------------------
+Average Time per Test: 104.44s
+Average Time per Attempt: 46.42s
+Fastest Test: ps -U john all (0.00s)
+Slowest Test: ls sort (1034.76s)
+
+Time Distribution:
+- Under 30s: 9 tests
+- Under 1min: 1 tests
+- Over 1min: 2 tests
+
+2. Effectiveness Analysis
+------------------------
+Success Rate: 83.33%
+Average Attempts per Test: 2.25
+
+Most Common Errors:
+- execution_error: 9 occurrences
+- incorrect_command: 1 occurrences
+
+Command Progression:
+Average Commands to Success: 2.70
+
+Most Common First Commands:
+- corl -i askdj: 1 times
+- ls sort: 1 times
+- head -n 5 file.txt: 1 times
+- wc -f file.txt: 1 times
+- du -h .: 1 times
+
+
+3. Pattern Analysis
+------------------
+
+Common Error Patterns:
+- curl -o: execution_error
+- ls sort: execution_error
+- find . --name*.txt: execution_error
+- wc -k file.txt: execution_error -> incorrect_command
+- who all: execution_error
+
+Command Patterns:
+- curl -o:
+  Success: curl https://example.com -o output.html
+  Common Mistakes: corl -i askdj, curl -o https://example.com to output.html!
+- ls sort:
+  Success: ls | sort
+  Common Mistakes: ls sort
+- find . --name*.txt:
+  Success: find . -name '*.txt'
+  Common Mistakes: , find . --name "*.txt"
+- wc -k file.txt:
+  Success: wc -l file.txt
+  Common Mistakes: wc -f file.txt, wc file.txt
+- who all:
+  Success: who
+  Common Mistakes: who all

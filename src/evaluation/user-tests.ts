@@ -3,7 +3,7 @@ import { Store } from "./store.ts";
 import { input } from '@inquirer/prompts';
 import {Test} from './test.ts'
 
-const store = new Store('./output/results.csv');
+const store = new Store('./output/results.json');
 console.clear();
 
 // Banner message
@@ -103,33 +103,6 @@ const tests = [
 		correctCommands: [
 			'tail -n 10 file.txt',
 			'tail -10 file.txt'
-		]
-	}),
-	// new Test({
-	// 	store,
-	// 	description: 'We need to compress a directory named data using gzip!\nCorrect the following command:',
-	// 	command: 'gzip data',
-	// 	correctCommands: [
-	// 		'tar -czvf data.tar.gz data',
-	// 		'zip -r data.zip data'
-	// 	]
-	// }),
-	new Test({
-		store,
-		description: 'We need to find all processes running by user "john"!\nCorrect the following command:',
-		command: 'ps -U john all',
-		correctCommands: [
-			'ps -u john',
-			'ps aux | grep john'
-		]
-	}),
-	new Test({
-		store,
-		description: 'We need to schedule a command to run in 10 minutes using at!\nCorrect the following command:',
-		command: 'at now+10 command.sh',
-		correctCommands: [
-			'echo "command.sh" | at now +10 minutes',
-			'echo "sh command.sh" | at now +10 min'
 		]
 	}),
 	new Test({

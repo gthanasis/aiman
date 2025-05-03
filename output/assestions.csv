@@ -1,9 +1,0 @@
-runId,userName,testName,metricName,metricValue,timestamp
-9c91db5c-2761-4433-a32e-4b6e70ecef26,Panos Bletsos,We need to download https:/example.com to output.html! Correct the following command,timeTaken,628983ms,2025-01-15T20:17:56.124Z
-9c91db5c-2761-4433-a32e-4b6e70ecef26,Panos Bletsos,We need to list and sort the files! Correct the following command:,timeTaken,365997ms,2025-01-15T20:24:13.779Z
-9c91db5c-2761-4433-a32e-4b6e70ecef26,Panos Bletsos,We need to find all files that end in .txt! Correct the following command:,timeTaken,54565ms,2025-01-15T20:25:31.076Z
-9c91db5c-2761-4433-a32e-4b6e70ecef26,Panos Bletsos,We need to list the first 5 lines of a file.txt! Correct the following command:,timeTaken,46003ms,2025-01-15T20:26:37.630Z
-bfd765e3-f1a1-4396-9fef-aa4e148141ab,Nikos Oikonomou,We need to download https:/example.com to output.html! Correct the following command,timeTaken,148197ms,2025-01-16T11:08:30.992Z
-bfd765e3-f1a1-4396-9fef-aa4e148141ab,Nikos Oikonomou,We need to list and sort the files! Correct the following command:,timeTaken,151396ms,2025-01-16T11:11:20.039Z
-bfd765e3-f1a1-4396-9fef-aa4e148141ab,Nikos Oikonomou,We need to find all files that end in .txt! Correct the following command:,timeTaken,27505ms,2025-01-16T11:11:55.888Z
-bfd765e3-f1a1-4396-9fef-aa4e148141ab,Nikos Oikonomou,We need to list the first 5 lines of a file.txt! Correct the following command:,timeTaken,546219ms,2025-01-16T11:21:16.884Z

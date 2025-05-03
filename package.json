@@ -7,7 +7,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "node --no-warnings --loader ts-node/esm src/cli.ts",
-    "user:test": "node --no-warnings --loader ts-node/esm src/evaluation/user-tests.ts"
+    "user:test": "node --no-warnings --loader ts-node/esm src/evaluation/user-tests.ts",
+    "analyze": "node --no-warnings --loader ts-node/esm src/evaluation/analyze.ts"
   },
   "dependencies": {
     "@inquirer/prompts": "^7.2.1",

@@ -36,25 +36,49 @@ export class Test {
 		return new Promise<void>((resolve) => {
 			this.print();
 			this.promptReadline();
+			this.startTypingTime = Date.now();
+			this.store.startTest(this.command, this.description);
+
 			this.rl?.on("line", async (line) => {
-				if (!this.startTypingTime) {
-					this.startTypingTime = Date.now(); // Record the time when the user starts typing
-				}
 				const out = await handleUserInput(line, this.rl!);
 				if (!out || out?.code !== 0) {
+					this.store.addAttempt(
+						line,
+						out?.stdout,
+						out?.stderr,
+						'execution_error'
+					);
 					this.rl?.prompt();
 					return;
 				}
+				
 				const { command, code, stderr, stdout } = out;
 				const pass = await this.assessCommand(command, stdout, stderr, code, this.correctCommands);
-				pass ? setTimeout(() => this.closeReadline(), 3500) : this.promptReadline();
-			});
-			this.rl?.on("close", () => {
-				if (this.startTypingTime) {
-					const timeTaken = `${Date.now() - this.startTypingTime}ms`;
-					const sanitizedDescription = this.description.replace(/\n/g, ' ');
-					this.store.addMetricForTest(sanitizedDescription, 'timeTaken', timeTaken);
+				
+				if (pass) {
+					const timeMs = Date.now() - this.startTypingTime!;
+					this.store.addAttempt(
+						line,
+						stdout,
+						stderr,
+						undefined,
+						timeMs,
+						true
+					);
+					setTimeout(() => this.closeReadline(), 3500);
+				} else {
+					this.store.addAttempt(
+						line,
+						stdout,
+						stderr,
+						'incorrect_command'
+					);
+					this.promptReadline();
 				}
+			});
+
+			this.rl?.on("close", () => {
+				this.store.endTest();
 				return resolve();
 			});
 		})
@@ -63,15 +87,18 @@ export class Test {
 	private promptReadline() {
 		this.rl?.prompt();
 	}
+
 	private closeReadline() {
 		this.rl?.close();
 	}
-	private print () {
+
+	private print() {
 		console.log(chalk.white("\n========================================================"));
 		console.log(chalk.blueBright(this.description));
 		console.log(chalk.white(this.command));
 		console.log(chalk.white(`=====================${chalk.yellow(`[To continue/skip, type 'exit']`)}====\n`));
 	}
+
 	private async assessCommand(
 		command: string,
 		stdout: string,
@@ -79,11 +106,9 @@ export class Test {
 		code: number | null,
 		correctCommands: string[]) {
 		if (correctCommands.includes(command)) {
-			return true
+			return true;
 		}
-		const progress = createProgressIndicator(
-			"Assessing command output"
-		);
+		const progress = createProgressIndicator("Assessing command output");
 		if (stderr) {
 			console[code !== 0 ? 'error': 'log'](`\n${chalk.red(stderr)}`);
 		}
@@ -100,12 +125,11 @@ export class Test {
 			equivalent
 				? progress.stop(`Test passed`, true)
 				: progress.stop(`Try again: ${explanation}`, true);
-			return equivalent
+			return equivalent;
 		} catch (error: any) {
 			progress.stop("Failed to assess command", false);
 			console.error(chalk.red(`Error: ${error.message}`));
-			return false
+			return false;
 		}
 	}
-
 }
