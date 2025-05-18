@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import { PostQuestionnaire } from './questionnaire';
 
 interface TestAttempt {
 	attemptNumber: number;
@@ -23,45 +24,7 @@ interface TestResult {
 	startTime: string;
 	endTime: string;
 	isLlmAssisted: boolean;
-}
-
-interface PreQuestionnaire {
-	demographics: {
-		age: string;
-		gender: string;
-		education: string;
-	};
-	professional: {
-		role: string;
-		experience: string;
-		field: string;
-	};
-	cliProficiency: {
-		usageFrequency: string;
-		proficiencyLevel: number;
-		environments: string[];
-	};
-	aiExperience: {
-		hasUsedAI: boolean;
-		experienceDescription?: string;
-	};
-	learningPreferences: {
-		preferredMethod: string;
-	};
-}
-
-interface PostQuestionnaire {
-	satisfaction: {
-		easeOfUse: number;
-		confidence: number;
-		frustration: number;
-	};
-	effectiveness: {
-		taskCompletion: number;
-		errorHandling: number;
-		learning: number;
-	};
-	comments: string;
+	category?: string;
 }
 
 interface SessionData {
@@ -69,8 +32,8 @@ interface SessionData {
 	userName: string;
 	startTime: string;
 	tests: TestResult[];
-	preQuestionnaire?: PreQuestionnaire;
-	postQuestionnaire?: PostQuestionnaire;
+	preQuestionnaire?: any;
+	postQuestionnaire?: any;
 	conditionOrder?: 'traditional-first' | 'ai-first';
 }
 
@@ -128,7 +91,7 @@ export class Store {
 		this.saveData();
 	}
 
-	public startTest(testName: string, description: string, isLlmAssisted: boolean = true) {
+	public startTest(testName: string, description: string, isLlmAssisted: boolean = true, category?: string) {
 		this.currentTest = {
 			testName,
 			description,
@@ -138,7 +101,8 @@ export class Store {
 			errorTypes: [],
 			startTime: new Date().toISOString(),
 			endTime: '',
-			isLlmAssisted
+			isLlmAssisted,
+			category
 		};
 	}
 
@@ -183,12 +147,12 @@ export class Store {
 		this.saveData();
 	}
 
-	public setPreQuestionnaire(questionnaire: PreQuestionnaire) {
+	public setPreQuestionnaire(questionnaire: any) {
 		this.sessionData.preQuestionnaire = questionnaire;
 		this.saveData();
 	}
 
-	public setPostQuestionnaire(questionnaire: PostQuestionnaire) {
+	public setPostQuestionnaire(questionnaire: any) {
 		this.sessionData.postQuestionnaire = questionnaire;
 		this.saveData();
 	}

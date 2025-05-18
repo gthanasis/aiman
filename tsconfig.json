@@ -1,12 +1,18 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
+    "module": "Node16",
     "target": "ESNext",
     "strict": true,
     "esModuleInterop": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "Node16",
     "allowImportingTsExtensions": true,
-    "outDir": "./dist"
+    "noEmit": true,
+    "outDir": "./dist",
+    "resolveJsonModule": true
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]

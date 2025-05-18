@@ -64,7 +64,8 @@ export const colors = {
     purple: '#9370DB',     // Medium Purple
     cyan: '#00CED1',       // Turquoise
     headerText: '#FFFFFF', // White
-    lightBg: '#F0F8FF'     // Alice Blue
+    lightBg: '#F0F8FF',     // Alice Blue
+    white: '#FFFFFF'
 };
 
 // Define a standard box width to be used across all components
@@ -190,12 +191,12 @@ export function styledPrompt(message: string, color = colors.primary) {
 /**
  * Creates a task challenge box specifically for the test suite
  */
-export function createTaskChallengeBox(description: string, command: string, assistanceStatus?: string) {
+export function createTaskChallengeBox(description: string, command: string, category?: string) {
     let combined = `📝 Task Description:\n${description}\n\n🔄 Command To Fix:\n${chalk.hex(colors.warning)(command)}\n\n${chalk.bold('Type your corrected command below or "exit" to continue')}`;
     
-    // Add assistance status if provided
-    if (assistanceStatus) {
-        combined += `\n\n${chalk.italic.hex(colors.secondary)(assistanceStatus)}`;
+    // Add category if provided
+    if (category) {
+        combined += `\n${chalk.italic.hex(colors.info)(`Category: ${category}`)}`;
     }
     
     return {

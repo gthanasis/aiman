@@ -10,14 +10,12 @@ import {
 	colors,
 	styledPrompt
 } from '../utils/formatting.ts'
-import boxen from 'boxen'
+import { TestConfig } from './config/tests.config.ts'
+import { wordingConfig } from './config/wording.config.ts'
 
 interface TestProps {
 	store: Store;
-	description: string;
-	command: string;
-	correctCommands: string[];
-	isLlmAssisted?: boolean;
+	config: TestConfig;
 }
 
 export class Test {
@@ -28,26 +26,30 @@ export class Test {
 	private rl: readline.Interface | null = null;
 	private startTypingTime: number | null = null;
 	public isLlmAssisted: boolean;
+	public category: string;
+	public name: string;
 
-	constructor({ store, description, command, correctCommands, isLlmAssisted = true }: TestProps) {
+	constructor({ store, config }: TestProps) {
 		this.store = store;
-		this.description = description;
-		this.command = command;
-		this.correctCommands = correctCommands;
-		this.isLlmAssisted = isLlmAssisted;
+		this.name = config.name;
+		this.description = config.description;
+		this.command = config.command;
+		this.correctCommands = config.correctCommands;
+		this.isLlmAssisted = config.isLlmAssisted;
+		this.category = config.category;
 	}
 
 	run() {
 		this.rl = readline.createInterface({
 			input: process.stdin,
 			output: process.stdout,
-			prompt: chalk.hex(colors.cyan).bold("❯ "), // Use colors from central palette
+			prompt: chalk.hex(colors.cyan).bold(wordingConfig.test.promptSymbol + " "), 
 		});
 		return new Promise<void>((resolve) => {
 			this.print();
 			this.promptReadline();
 			this.startTypingTime = Date.now();
-			this.store.startTest(this.command, this.description, this.isLlmAssisted);
+			this.store.startTest(this.name, this.description, this.isLlmAssisted, this.category);
 
 			this.rl?.on("line", async (line) => {
 				const out = await handleUserInput(line, this.rl!, this.isLlmAssisted);
@@ -107,7 +109,7 @@ export class Test {
 		const challengeBox = createTaskChallengeBox(
 			this.description, 
 			this.command,
-			this.isLlmAssisted ? '🤖 LLM Assistance Enabled' : '👤 No LLM Assistance'
+			this.category
 		);
 		
 		console.log(challengeBox.header);
@@ -122,11 +124,11 @@ export class Test {
 		correctCommands: string[]) {
 		if (correctCommands.includes(command)) {
 			// Use the centralized success box formatting
-			console.log(createSuccessBox('✅ CORRECT SOLUTION! Great job!'));
+			console.log(createSuccessBox(wordingConfig.test.correctSolutionMessage));
 			return true;
 		}
 		
-		const progress = createProgressIndicator("Assessing command output");
+		const progress = createProgressIndicator(wordingConfig.test.assessingMessage);
 		
 		if (stderr) {
 			console[code !== 0 ? 'error': 'log'](`\n${chalk.red(stderr)}`);
@@ -144,14 +146,14 @@ export class Test {
 			});
 			
 			if (equivalent) {
-				progress.stop(`Test passed`, true);
+				progress.stop(wordingConfig.test.passedMessage, true);
 				return true;
 			} else {
-				progress.stop(`Try again: ${explanation}`, false);
+				progress.stop(`${wordingConfig.test.tryAgainPrefix} ${explanation}`, false);
 				return false;
 			}
 		} catch (error: any) {
-			progress.stop("Failed to assess command", false);
+			progress.stop(wordingConfig.test.failedAssessmentMessage, false);
 			console.error(chalk.red(`Error: ${error.message}`));
 			return false;
 		}

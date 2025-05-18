@@ -6,17 +6,20 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "dev": "node --no-warnings --loader ts-node/esm src/cli.ts",
-    "user:test": "node --no-warnings --loader ts-node/esm src/evaluation/user-tests.ts",
-    "analyze": "node --no-warnings --loader ts-node/esm src/evaluation/analyze.ts",
-    "test:quick": "node --no-warnings --loader ts-node/esm src/evaluation/user-tests.ts --skip-questionnaires",
-    "test:single": "node --no-warnings --loader ts-node/esm src/evaluation/user-tests.ts --test-count=1 --skip-questionnaires",
-    "test:help": "node --no-warnings --loader ts-node/esm src/evaluation/user-tests.ts --help"
+    "dev": "node --loader ts-node/esm src/cli.ts",
+    "user:test": "node --loader ts-node/esm src/evaluation/user-tests.ts",
+    "analyze": "node --loader ts-node/esm src/evaluation/analyze.ts",
+    "test:quick": "node --loader ts-node/esm src/evaluation/user-tests.ts --skip-questionnaires",
+    "test:single": "node --loader ts-node/esm src/evaluation/user-tests.ts --test-count=1 --skip-questionnaires",
+    "test:help": "node --loader ts-node/esm src/evaluation/user-tests.ts --help",
+    "test:docker": "docker build -t aiman . && docker run -it --rm -v $(pwd)/output:/app/output aiman /bin/sh",
+    "test:docker:run": "docker run -it --rm -v $(pwd)/output:/app/output aiman /bin/sh"
   },
   "dependencies": {
     "@inquirer/prompts": "^7.2.1",
     "@types/node": "^22.9.1",
     "@types/uuid": "^10.0.0",
+    "boxen": "^8.0.1",
     "chalk": "^5.3.0",
     "ora": "^8.1.1",
     "readline": "^1.3.0",

@@ -48,4 +48,30 @@
 1. Add a table with more parameters in the thesis doc (price, os to be installed, readline)
 2. UIST -> to prevent the experiment.
 
+### 3 May - new TODOs:
+1. Implement a timeout
+2. ✅ Get from research the commands we gather and update user-test
+3. Deploy the experiment to digital ocean
+4. ✅ Create a list of who is going to run this
+  ----------
+  1. Panos - Pilot
+  2. Oikonomou - Pilot
+  ----------
+  1. Anastasis - Actual Test
+  2. Zach - Actual Test
+  3. Koutsafikis - Actual Test
+  4. Maria - Actual Test
+  5. Dennis - Actual Test
+  ----------
+5. Run the experiment
+6. Analyze results
+7. Write the final paragraphs about the results we found
+8. ✅ Export questionaires to be more customizable - Extract to json?
+9. ✅ Remove indication of LLM enabled vs Traditional
+10. ✅ Remove effectivness from questionaire
 
+11. Shoud we move this to satisfaction? ✔ Rate the effectiveness in handling errors
+  Question: Is it right that while we are within group we ask people about the satisfaction?
+
+12. End up with 5 questions for personal satisfaction
+13. Increase difficulty in all commands since we will be testing in more experienced users
