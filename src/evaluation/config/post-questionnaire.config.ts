@@ -1,4 +1,23 @@
-import { QuestionConfig, QuestionOption } from './pre-questionnaire.config';
+// Define our own interfaces temporarily to avoid import issues
+export interface QuestionOption {
+  value: string | number | boolean;
+  label?: string;
+}
+
+export interface QuestionConfig {
+  id: string;
+  section: string;
+  sectionIcon?: string;
+  sectionColor?: string;
+  type: 'input' | 'select' | 'multi-select';
+  question: string;
+  options?: QuestionOption[];
+  isRequired?: boolean;
+  dependsOn?: {
+    questionId: string;
+    value: any;
+  };
+}
 
 export const postQuestionnaireConfig: QuestionConfig[] = [
   // Satisfaction section
