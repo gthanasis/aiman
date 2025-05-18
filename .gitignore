@@ -3,3 +3,5 @@ papers
 .DS_Store
 output/
 docs/
+.idea
+.idea/
