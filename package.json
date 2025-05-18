@@ -12,8 +12,7 @@
     "test:quick": "node --loader ts-node/esm src/evaluation/user-tests.ts --skip-questionnaires",
     "test:single": "node --loader ts-node/esm src/evaluation/user-tests.ts --test-count=1 --skip-questionnaires",
     "test:help": "node --loader ts-node/esm src/evaluation/user-tests.ts --help",
-    "test:docker": "docker build -t aiman . && docker run -it --rm -v $(pwd)/output:/app/output aiman /bin/sh",
-    "test:docker:run": "docker run -it --rm -v $(pwd)/output:/app/output aiman /bin/sh"
+    "test:docker": "docker build --no-cache -t aiman . && docker run -it --rm -e OPENAI_API_KEY -v $(pwd)/output:/app/output aiman /bin/sh"
   },
   "dependencies": {
     "@inquirer/prompts": "^7.2.1",
