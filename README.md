@@ -1,7 +1,5 @@
 # AIMAN: AI-assisted CLI Testing Framework
 
-![Build Status](https://img.shields.io/github/actions/workflow/status/gthanasis/aiman/main.yml?branch=main)
-
 AIMAN began as a proof of concept for an AI-assisted command line interface and evolved into a comprehensive HCI testing framework. It provides researchers with tools to evaluate how AI assistance affects CLI usability through structured experiments.
 
 ## Overview
