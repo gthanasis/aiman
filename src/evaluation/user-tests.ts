@@ -121,6 +121,9 @@ async function main() {
     //----------------------------------------------
     for (const test of testsToRun) {
         console.clear();
+        // run pre command
+        await test.runPreCommand();
+        // run test
         await test.run();
     }
 

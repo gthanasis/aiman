@@ -72,7 +72,7 @@ export const wordingConfig = {
         
         taskInstructionsLabel: 'Task Instructions',
         taskInstructionsEmoji: '📋',
-        taskInstructionsContent: "• You will fix broken commands as they appear\n• The experimental CLI provides AI assistance for failed commands\n",
+        taskInstructionsContent: "• You will fix broken commands as they appear\n• The experimental CLI provides AI assistance for failed commands\n• Click ctrl+c to discard the current test and continue with the next one\n",
         
         dataCollectionLabel: 'Data Collection Notice',
         dataCollectionEmoji: '📊',

@@ -5,6 +5,7 @@ export interface TestConfig {
   correctCommands: string[];
   isLlmAssisted: boolean;
   category: string;
+  preCommand?: string;
 }
 
 /**
@@ -28,164 +29,167 @@ export interface TestConfig {
 export const tests: TestConfig[] = [
 	// File navigation
 	{
-	  name: 'cd_to_script_directory',
-	  description: "You're writing a shell script and want it to change directory to wherever the script file is located, regardless of where it's called from.\nCorrect the following command:",
-	  command: 'cd $0',
-	  correctCommands: ['cd "$(dirname "$0")"', 'cd $(dirname "${BASH_SOURCE[0]}")'],
+	  name: 'change_directory_with_spaces',
+	  description: "We need to change to the directory named 'Project Files' which contains spaces!\nCorrect the following command:",
+	  command: 'cd Project\ Files',
+	  correctCommands: ['cd "Project Files"', "cd 'Project Files'", 'cd Project\\ Files'],
 	  isLlmAssisted: true,
-	  category: 'File navigation'
+	  category: 'File navigation',
+	  preCommand: 'mkdir -p "Project Files"'
 	},
 	{
-	  name: 'list_with_hidden_files_sorted',
-	  description: 'You need to list all files, including hidden ones, sorted by modification time descending.\nCorrect the following command:',
-	  command: 'ls all --sort=time',
-	  correctCommands: ['ls -lat', 'ls -ltA'],
+	  name: 'list_files_by_size',
+	  description: 'We need to list all files sorted by size (largest first) with human-readable sizes!\nCorrect the following command:',
+	  command: 'ls -lS --size-human',
+	  correctCommands: ['ls -lhS', 'ls -lah --sort=size', 'ls -la --sort=size -h'],
 	  isLlmAssisted: true,
-	  category: 'File navigation'
-	},
-	{
-	  name: 'resolve_physical_path',
-	  description: 'You want to see the physical path (no symlinks) of your current directory.\nCorrect the following command:',
-	  command: 'pwd logical',
-	  correctCommands: ['pwd -P'],
-	  isLlmAssisted: true,
-	  category: 'File navigation'
+	  category: 'File navigation',
+	  preCommand: 'dd if=/dev/zero of=large.bin bs=1M count=10 2>/dev/null; dd if=/dev/zero of=medium.bin bs=1M count=5 2>/dev/null; dd if=/dev/zero of=small.bin bs=10k count=1 2>/dev/null'
 	},
   
 	// File management
 	{
-	  name: 'mkdir_parents_verbose',
-	  description: "You want to create nested directories and see what's being created.\nCorrect the following command:",
-	  command: 'mkdir src/components/utils',
-	  correctCommands: ['mkdir -pv src/components/utils'],
+		name: 'find_large_old_files',
+		description: 'We need to find all files larger than 1MB that have not been accessed in the last 30 days and list them with their sizes!\nCorrect the following command:',
+		command: 'find . -size +1M -atime 30 -ls',
+		correctCommands: ['find . -size +1M -atime +30 -ls', 'find . -type f -size +1M -atime +30 -ls', 'find . -size +1M -atime +30 -exec ls -lh {} \\;'],
+		isLlmAssisted: true,
+		category: 'File management',
+		preCommand: 'touch -d "60 days ago" largefile.dat && dd if=/dev/zero of=largefile.dat bs=1M count=2 2>/dev/null && touch -d "60 days ago" largefile.dat'
+	},
+	{
+	  name: 'create_nested_directory_if_missing',
+	  description: "We need to create a directory structure for a new project, but only create directories that don't already exist!\nCorrect the following command:",
+	  command: 'mkdir src/components/buttons src/components/forms src/utils',
+	  correctCommands: ['mkdir -p src/components/buttons src/components/forms src/utils'],
 	  isLlmAssisted: false,
-	  category: 'File management'
+	  category: 'File management',
+	  preCommand: 'mkdir -p src/components'
 	},
 	{
 	  name: 'safe_copy_overwrite',
-	  description: 'You want to copy a file interactively only if the target exists.\nCorrect the following command:',
-	  command: 'cp file.txt backup.txt --interactive',
+	  description: 'We need to copy a file interactively only if the target exists!\nCorrect the following command:',
+	  command: 'cp -i backup.txt file.txt',
 	  correctCommands: ['cp -i file.txt backup.txt'],
 	  isLlmAssisted: false,
-	  category: 'File management'
+	  category: 'File management',
+	  preCommand: 'touch file.txt'
 	},
 	{
-	  name: 'move_all_with_progress',
-	  description: 'You want to move all files from one directory to another with a visible progress bar.\nCorrect the following command:',
-	  command: 'mv * /backup --verbose',
-	  correctCommands: ['rsync -a --info=progress2 ./ /backup/'],
+	  name: 'copy_unique_lines',
+	  description: 'We need to copy only unique lines from file1.txt to file2.txt (removing duplicates)!\nCorrect the following command:',
+	  command: 'cat file1.txt | unique > file2.txt',
+	  correctCommands: ['cat file1.txt | uniq > file2.txt', 'sort file1.txt | uniq > file2.txt', 'awk \'!seen[$0]++\' file1.txt > file2.txt'],
 	  isLlmAssisted: true,
-	  category: 'File management'
+	  category: 'File management',
+	  preCommand: 'echo -e "apple\nbanana\ncherry\nbanana\napple\ndate\ncherry" > file1.txt'
 	},
   
 	// File search & text search
 	{
-	  name: 'find_exclude_path',
-	  description: 'Find all Python files, excluding node_modules.\nCorrect the following command:',
-	  command: 'find . -name "*.py" -exclude node_modules',
-	  correctCommands: ['find . -path "./node_modules" -prune -o -name "*.py" -print'],
+	  name: 'find_recent_text_files',
+	  description: 'We need to find all .txt files modified in the last 7 days!\nCorrect the following command:',
+	  command: 'find . -name "*.txt" -mtime < 7',
+	  correctCommands: ['find . -name "*.txt" -mtime -7', 'find . -name "*.txt" -mtime 0', 'find . -name "*.txt" -mtime -7 -daystart'],
 	  isLlmAssisted: true,
-	  category: 'File search'
+	  category: 'File search',
+	  preCommand: 'touch test1.txt test2.txt example.log'
 	},
 	{
-	  name: 'grep_multiline_match',
-	  description: 'You want to search for multiline patterns across log files.\nCorrect the following command:',
-	  command: 'grep -e "Exception.*Caused by"',
-	  correctCommands: ['grep -Pzo "Exception(.|\n)*?Caused by" *.log'],
+	  name: 'grep_with_context',
+	  description: 'We need to search for the word "error" in log files with grep, showing 2 lines of context before and after each match!\nCorrect the following command:',
+	  command: 'grep -c 2 "error" *.log',
+	  correctCommands: ['grep -B 2 -A 2 "error" *.log', 'grep -C 2 "error" *.log', 'grep --context=2 "error" *.log'],
 	  isLlmAssisted: true,
-	  category: 'Text search'
+	  category: 'Text search',
+	  preCommand: 'for i in {1..10}; do echo "Line $i"; done > app.log && echo "Line 11 with an error message" >> app.log && for i in {12..15}; do echo "Line $i"; done >> app.log'
 	},
   
 	// File viewing
 	{
-	  name: 'tail_follow_json',
-	  description: "You're trying to follow updates in a growing JSON file.\nCorrect the following command:",
-	  command: 'tail json.log',
-	  correctCommands: ['tail -f json.log | jq .'],
+	  name: 'view_specific_lines',
+	  description: "We need to extract lines 7-12 from a log file!\nCorrect the following command:",
+	  command: 'head -n 12 log.txt | tail -n 7',
+	  correctCommands: ['head -n 12 log.txt | tail -n 6', 'sed -n "7,12p" log.txt', 'awk "NR>=7 && NR<=12" log.txt'],
 	  isLlmAssisted: true,
-	  category: 'File viewing'
+	  category: 'File viewing',
+	  preCommand: 'for i in {1..20}; do echo "Line $i" >> log.txt; done'
 	},
 	{
-	  name: 'preview_large_file_fast',
-	  description: 'You want to preview the first 100 lines of a large file quickly without loading the whole file.\nCorrect the following command:',
-	  command: 'less -n 100 bigfile.txt',
-	  correctCommands: ['head -n 100 bigfile.txt'],
+	  name: 'monitor_log_changes',
+	  description: 'We need to continuously monitor new entries in a log file, highlighting any lines containing "ERROR"!\nCorrect the following command:',
+	  command: 'tail -f app.log | grep --color error',
+	  correctCommands: ['tail -f app.log | grep --color=auto -i "ERROR"', 'tail -f app.log | grep --color=always -i "ERROR"', 'tail -f app.log | GREP_COLORS="ms=01;31" grep --color=always -i "ERROR"'],
 	  isLlmAssisted: false,
-	  category: 'File viewing'
+	  category: 'File viewing',
+	  preCommand: 'echo "Starting application..." > app.log && echo "INFO: Configuration loaded" >> app.log && echo "System initialized" >> app.log'
 	},
   
 	// Text processing
 	{
-	  name: 'cut_utf8_column',
-	  description: 'You want to extract the second column from a UTF-8 file where columns are separated by `·` (middle dot).\nCorrect the following command:',
-	  command: 'cut -f2 file.txt',
-	  correctCommands: ['cut -d "·" -f2 file.txt'],
+	  name: 'count_non_empty_lines',
+	  description: 'We need to count the number of non-empty lines in the log file!\nCorrect the following command:',
+	  command: 'grep -v ^$ logfile.txt | wc -l',
+	  correctCommands: ['grep -v "^$" logfile.txt | wc -l', 'sed "/^$/d" logfile.txt | wc -l', 'awk "NF" logfile.txt | wc -l', 'awk "NF > 0" logfile.txt | wc -l'],
 	  isLlmAssisted: true,
-	  category: 'Text processing'
+	  category: 'Text processing',
+	  preCommand: 'echo "Line 1" > logfile.txt && echo "" >> logfile.txt && echo "Line 3" >> logfile.txt && echo "" >> logfile.txt && echo "Line 5" >> logfile.txt'
 	},
 	{
-	  name: 'sort_human_numerical',
-	  description: 'You want to sort files by size in human-readable format correctly.\nCorrect the following command:',
-	  command: 'ls -lh | sort -k5n',
-	  correctCommands: ['ls -lh | sort -h -k5'],
+	  name: 'sort_csv_by_number',
+	  description: 'We need to sort this CSV file by the numeric values in the second column (descending order)!\nCorrect the following command:',
+	  command: 'sort -k2 -r data.csv',
+	  correctCommands: ['sort -t, -k2,2nr data.csv', 'sort -t, -k2nr data.csv', 'sort --field-separator=, -k2,2nr data.csv'],
 	  isLlmAssisted: true,
-	  category: 'Text processing'
+	  category: 'Text processing',
+	  preCommand: 'echo "apple,5,red" > data.csv && echo "banana,10,yellow" >> data.csv && echo "cherry,7,red" >> data.csv && echo "date,2,brown" >> data.csv'
 	},
   
 	// System information
 	{
-	  name: 'disk_usage_inode_check',
-	  description: 'You want to check inode exhaustion for all mounted filesystems.\nCorrect the following command:',
-	  command: 'df --inodes',
-	  correctCommands: ['df -i'],
+	  name: 'find_largest_subdirectories',
+	  description: 'We need to find the top 3 largest subdirectories and show their sizes in human-readable format!\nCorrect the following command:',
+	  command: 'du -h | sort -hr | head -3',
+	  correctCommands: ['du -h --max-depth=1 | sort -hr | head -3', 'du -h --max-depth=1 . | sort -hr | head -n 3', 'du -d 1 -h | sort -hr | head -3'],
 	  isLlmAssisted: false,
-	  category: 'Disk usage'
+	  category: 'Disk usage',
+	  preCommand: 'mkdir -p dir1 dir2 dir3 && dd if=/dev/zero of=dir1/file1 bs=1M count=5 2>/dev/null && dd if=/dev/zero of=dir2/file2 bs=1M count=10 2>/dev/null && dd if=/dev/zero of=dir3/file3 bs=1M count=2 2>/dev/null'
 	},
 	{
-	  name: 'check_large_files',
-	  description: 'You want to find all files over 1GB in the current directory tree.\nCorrect the following command:',
-	  command: 'ls -lh * > 1G',
-	  correctCommands: ['find . -type f -size +1G -exec ls -lh {} +'],
-	  isLlmAssisted: true,
+	  name: 'find_low_disk_space',
+	  description: 'We need to identify filesystems with less than 20% free space remaining!\nCorrect the following command:',
+	  command: 'df -h | awk \'$5 > "80%"\'',
+	  correctCommands: ['df -h | awk \'$5 > "80%"\'', 'df -h | awk \'{if(NR>1)if($5+0>80)print}\' ', 'df -h | grep -E "[8-9][0-9]%|100%"'],
+	  isLlmAssisted: false,
 	  category: 'Disk space'
 	},
   
 	// Process management
 	{
-	  name: 'kill_by_memory',
-	  description: 'You want to kill the process consuming the most memory.\nCorrect the following command:',
-	  command: 'kill -9 maxmem',
-	  correctCommands: ['kill -9 $(ps aux --sort=-%mem | awk \'NR==2{print $2}\')'],
-	  isLlmAssisted: true,
+	  name: 'find_memory_intensive_processes',
+	  description: 'We need to find the top 5 processes consuming the most memory!\nCorrect the following command:',
+	  command: 'ps aux | sort -k4 -r | head -5',
+	  correctCommands: ['ps aux --sort=-%mem | head -5', 'ps aux | sort -k4nr | head -5', 'ps -eo pid,ppid,cmd,%mem --sort=-%mem | head -5'],
+	  isLlmAssisted: false,
 	  category: 'Process management'
 	},
   
 	// Networking
 	{
-	  name: 'check_open_ports',
-	  description: 'You want to see all currently listening ports and their associated services.\nCorrect the following command:',
-	  command: 'netstat -p',
-	  correctCommands: ['ss -tuln', 'lsof -i -P -n'],
+	  name: 'download_with_retry',
+	  description: 'We need to download a file, automatically retrying up to 3 times if it fails, and showing a progress bar!\nCorrect the following command:',
+	  command: 'curl --retry 3 -o data.json https://api.example.com/data',
+	  correctCommands: ['curl --retry 3 --progress-bar -o data.json https://api.example.com/data', 'curl -L --retry 3 --progress-bar -o data.json https://api.example.com/data', 'wget -t 3 --show-progress -O data.json https://api.example.com/data'],
 	  isLlmAssisted: true,
 	  category: 'Networking'
 	},
-  
-	// Advanced
 	{
-	  name: 'extract_tar_from_url',
-	  description: 'You want to download and extract a `.tar.gz` file from a URL in one step.\nCorrect the following command:',
-	  command: 'wget archive.tar.gz | tar -xzf',
-	  correctCommands: ['curl -L http://example.com/archive.tar.gz | tar xz'],
-	  isLlmAssisted: true,
-	  category: 'Archiving'
-	},
-	{
-	  name: 'run_background_limit_cpu',
-	  description: 'You want to run a script in the background while limiting it to 20% CPU.\nCorrect the following command:',
-	  command: './heavy-task.sh & cpu-limit 20',
-	  correctCommands: ['cpulimit -l 20 -- ./heavy-task.sh &'],
-	  isLlmAssisted: true,
-	  category: 'Output splitting'
+	  name: 'find_user_login_history',
+	  description: 'We need to see login history for a specific user (jsmith) during the last week!\nCorrect the following command:',
+	  command: 'last jsmith | head -n 7',
+	  correctCommands: ['last jsmith -s -7days', 'last jsmith -t $(date -d "7 days ago" +\\%Y\\%m\\%d)', 'last jsmith | grep -E "$(date +"%b %d"|%d" +"%b")" | head -n 20'],
+	  isLlmAssisted: false,
+	  category: 'System information'
 	}
   ];
   

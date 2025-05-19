@@ -13,6 +13,7 @@ import {
 import { TestConfig } from './config/tests.config.ts'
 import { wordingConfig } from './config/wording.config.ts'
 import { getCommandsFromPath, createCompleter } from '../utils/completer.ts'
+import { execSync } from 'child_process'
 
 interface TestProps {
 	store: Store;
@@ -30,6 +31,7 @@ export class Test {
 	public category: string;
 	public name: string;
 	private availableCommands: string[] = [];
+	private preCommand: string | null = null;
 
 	constructor({ store, config }: TestProps) {
 		this.store = store;
@@ -40,6 +42,13 @@ export class Test {
 		this.isLlmAssisted = config.isLlmAssisted;
 		this.category = config.category;
 		this.availableCommands = getCommandsFromPath();
+		this.preCommand = config.preCommand || null;
+	}
+
+	runPreCommand() {
+		if (this.preCommand) {
+			execSync(this.preCommand);
+		}
 	}
 
 	run() {
@@ -69,6 +78,10 @@ export class Test {
 				}
 				
 				const { command, code, stderr, stdout } = out;
+				if (!this.isSimilarCommand(command, this.correctCommands)) {
+					this.promptReadline();
+					return;
+				}
 				const pass = await this.assessCommand(command, stdout, stderr, code, this.correctCommands);
 				
 				if (pass) {
@@ -155,5 +168,48 @@ export class Test {
 			console.error(chalk.red(`Error: ${error.message}`));
 			return false;
 		}
+	}
+
+		/**
+	 * Calculates similarity between two strings (0-1)
+	 * Uses Levenshtein distance normalized to string length
+	 */
+	private calculateSimilarity(str1: string, str2: string): number {
+		// Convert both strings to lowercase for case-insensitive comparison
+		const s1 = str1.toLowerCase();
+		const s2 = str2.toLowerCase();
+		
+		// Calculate Levenshtein distance
+		const track = Array(s2.length + 1).fill(null).map(() => 
+			Array(s1.length + 1).fill(null));
+		
+		for (let i = 0; i <= s1.length; i += 1) {
+			track[0][i] = i;
+		}
+		
+		for (let j = 0; j <= s2.length; j += 1) {
+			track[j][0] = j;
+		}
+		
+		for (let j = 1; j <= s2.length; j += 1) {
+			for (let i = 1; i <= s1.length; i += 1) {
+				const indicator = s1[i - 1] === s2[j - 1] ? 0 : 1;
+				track[j][i] = Math.min(
+					track[j][i - 1] + 1, // deletion
+					track[j - 1][i] + 1, // insertion
+					track[j - 1][i - 1] + indicator, // substitution
+				);
+			}
+		}
+		
+		const distance = track[s2.length][s1.length];
+		const maxLength = Math.max(s1.length, s2.length);
+		
+		// Return similarity as 1 - normalized distance
+		return maxLength === 0 ? 1 : 1 - distance / maxLength;
+	}
+
+	private isSimilarCommand(command: string, correctCommands: string[]): boolean {
+		return correctCommands.some(correctCommand => this.calculateSimilarity(command, correctCommand) > 0.8);
 	}
 }
