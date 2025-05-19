@@ -12,6 +12,7 @@ import {
 } from '../utils/formatting.ts'
 import { TestConfig } from './config/tests.config.ts'
 import { wordingConfig } from './config/wording.config.ts'
+import { getCommandsFromPath, createCompleter } from '../utils/completer.ts'
 
 interface TestProps {
 	store: Store;
@@ -28,6 +29,7 @@ export class Test {
 	public isLlmAssisted: boolean;
 	public category: string;
 	public name: string;
+	private availableCommands: string[] = [];
 
 	constructor({ store, config }: TestProps) {
 		this.store = store;
@@ -37,6 +39,7 @@ export class Test {
 		this.correctCommands = config.correctCommands;
 		this.isLlmAssisted = config.isLlmAssisted;
 		this.category = config.category;
+		this.availableCommands = getCommandsFromPath();
 	}
 
 	run() {
@@ -44,6 +47,7 @@ export class Test {
 			input: process.stdin,
 			output: process.stdout,
 			prompt: chalk.hex(colors.cyan).bold(wordingConfig.test.promptSymbol + " "), 
+			completer: createCompleter(this.availableCommands)
 		});
 		return new Promise<void>((resolve) => {
 			this.print();
@@ -129,15 +133,8 @@ export class Test {
 		}
 		
 		const progress = createProgressIndicator(wordingConfig.test.assessingMessage);
-		
-		if (stderr) {
-			console[code !== 0 ? 'error': 'log'](`\n${chalk.red(stderr)}`);
-		}
-		if (stdout) {
-			console.log(chalk.white(stdout));
-		}
-		
 		progress.start();
+		
 		try {
 			const { equivalent, explanation } = await compareCommandAndResults({
 				correctCommands: correctCommands,
@@ -149,7 +146,8 @@ export class Test {
 				progress.stop(wordingConfig.test.passedMessage, true);
 				return true;
 			} else {
-				progress.stop(`${wordingConfig.test.tryAgainPrefix} ${explanation}`, false);
+				// Use a generic message that doesn't give hints
+				progress.stop(wordingConfig.test.tryAgain, false);
 				return false;
 			}
 		} catch (error: any) {

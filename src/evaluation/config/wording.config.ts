@@ -51,6 +51,7 @@ export const wordingConfig = {
         assessingMessage: 'Assessing command output',
         passedMessage: 'Test passed',
         tryAgainPrefix: 'Try again:',
+        tryAgain: 'Try again. This command does not solve the task.',
         failedAssessmentMessage: 'Failed to assess command',
         llmEnabledLabel: '🤖 LLM Assistance Enabled',
         llmDisabledLabel: '👤 No LLM Assistance'
@@ -71,7 +72,7 @@ export const wordingConfig = {
         
         taskInstructionsLabel: 'Task Instructions',
         taskInstructionsEmoji: '📋',
-        taskInstructionsContent: "• You will fix broken commands as they appear\n• The experimental CLI provides AI assistance for failed commands\n• Type 'exit' to complete a task and continue",
+        taskInstructionsContent: "• You will fix broken commands as they appear\n• The experimental CLI provides AI assistance for failed commands\n",
         
         dataCollectionLabel: 'Data Collection Notice',
         dataCollectionEmoji: '📊',

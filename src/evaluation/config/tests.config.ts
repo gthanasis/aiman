@@ -5,7 +5,6 @@ export interface TestConfig {
   correctCommands: string[];
   isLlmAssisted: boolean;
   category: string;
-  preCommand?: string; // Optional setup command to run before the test
 }
 
 /**
@@ -29,13 +28,12 @@ export interface TestConfig {
 export const tests: TestConfig[] = [
 	// File navigation
 	{
-	  name: 'cd_symlink_loop',
-	  description: "You're trying to navigate into a directory, but the path is part of a symlink loop.\nCorrect the following command:",
-	  command: 'cd /mnt/data/loop',
-	  correctCommands: ['cd -P /mnt/data/loop'],
+	  name: 'cd_to_script_directory',
+	  description: "You're writing a shell script and want it to change directory to wherever the script file is located, regardless of where it's called from.\nCorrect the following command:",
+	  command: 'cd $0',
+	  correctCommands: ['cd "$(dirname "$0")"', 'cd $(dirname "${BASH_SOURCE[0]}")'],
 	  isLlmAssisted: true,
-	  category: 'File navigation',
-	  preCommand: 'mkdir -p /tmp/test_dir/loop && ln -sf /tmp/test_dir/loop /tmp/test_dir/loop/link'
+	  category: 'File navigation'
 	},
 	{
 	  name: 'list_with_hidden_files_sorted',
@@ -43,8 +41,7 @@ export const tests: TestConfig[] = [
 	  command: 'ls all --sort=time',
 	  correctCommands: ['ls -lat', 'ls -ltA'],
 	  isLlmAssisted: true,
-	  category: 'File navigation',
-	  preCommand: 'touch .hidden_file regular_file && touch -t 202001010000 older_file'
+	  category: 'File navigation'
 	},
 	{
 	  name: 'resolve_physical_path',
@@ -52,8 +49,7 @@ export const tests: TestConfig[] = [
 	  command: 'pwd logical',
 	  correctCommands: ['pwd -P'],
 	  isLlmAssisted: true,
-	  category: 'File navigation',
-	  preCommand: 'mkdir -p /tmp/test_dir/actual && ln -sf /tmp/test_dir/actual /tmp/test_dir/symlink && cd /tmp/test_dir/symlink'
+	  category: 'File navigation'
 	},
   
 	// File management
@@ -63,8 +59,7 @@ export const tests: TestConfig[] = [
 	  command: 'mkdir src/components/utils',
 	  correctCommands: ['mkdir -pv src/components/utils'],
 	  isLlmAssisted: false,
-	  category: 'File management',
-	  preCommand: 'rm -rf src'
+	  category: 'File management'
 	},
 	{
 	  name: 'safe_copy_overwrite',
@@ -72,8 +67,7 @@ export const tests: TestConfig[] = [
 	  command: 'cp file.txt backup.txt --interactive',
 	  correctCommands: ['cp -i file.txt backup.txt'],
 	  isLlmAssisted: false,
-	  category: 'File management',
-	  preCommand: 'echo "original content" > file.txt && echo "backup content" > backup.txt'
+	  category: 'File management'
 	},
 	{
 	  name: 'move_all_with_progress',
@@ -81,8 +75,7 @@ export const tests: TestConfig[] = [
 	  command: 'mv * /backup --verbose',
 	  correctCommands: ['rsync -a --info=progress2 ./ /backup/'],
 	  isLlmAssisted: true,
-	  category: 'File management',
-	  preCommand: 'mkdir -p source backup && for i in {1..10}; do dd if=/dev/zero of=source/file$i bs=1M count=10; done && cd source'
+	  category: 'File management'
 	},
   
 	// File search & text search
@@ -92,8 +85,7 @@ export const tests: TestConfig[] = [
 	  command: 'find . -name "*.py" -exclude node_modules',
 	  correctCommands: ['find . -path "./node_modules" -prune -o -name "*.py" -print'],
 	  isLlmAssisted: true,
-	  category: 'File search',
-	  preCommand: 'mkdir -p node_modules src/utils && touch test.py src/main.py node_modules/setup.py src/utils/helpers.py'
+	  category: 'File search'
 	},
 	{
 	  name: 'grep_multiline_match',
@@ -101,8 +93,7 @@ export const tests: TestConfig[] = [
 	  command: 'grep -e "Exception.*Caused by"',
 	  correctCommands: ['grep -Pzo "Exception(.|\n)*?Caused by" *.log'],
 	  isLlmAssisted: true,
-	  category: 'Text search',
-	  preCommand: 'echo -e "java.lang.Exception: Could not process request\\n    at Service.process()\\n    Caused by: NullPointerException" > error.log'
+	  category: 'Text search'
 	},
   
 	// File viewing
@@ -112,8 +103,7 @@ export const tests: TestConfig[] = [
 	  command: 'tail json.log',
 	  correctCommands: ['tail -f json.log | jq .'],
 	  isLlmAssisted: true,
-	  category: 'File viewing',
-	  preCommand: 'echo \'{"status": "running", "timestamp": "2023-06-01T12:00:00Z"}\' > json.log'
+	  category: 'File viewing'
 	},
 	{
 	  name: 'preview_large_file_fast',
@@ -121,8 +111,7 @@ export const tests: TestConfig[] = [
 	  command: 'less -n 100 bigfile.txt',
 	  correctCommands: ['head -n 100 bigfile.txt'],
 	  isLlmAssisted: false,
-	  category: 'File viewing',
-	  preCommand: 'for i in {1..200}; do echo "Line $i of the big file" >> bigfile.txt; done'
+	  category: 'File viewing'
 	},
   
 	// Text processing
@@ -132,8 +121,7 @@ export const tests: TestConfig[] = [
 	  command: 'cut -f2 file.txt',
 	  correctCommands: ['cut -d "·" -f2 file.txt'],
 	  isLlmAssisted: true,
-	  category: 'Text processing',
-	  preCommand: 'echo -e "name·age·location\\njohn·25·london\\nanna·34·paris" > file.txt'
+	  category: 'Text processing'
 	},
 	{
 	  name: 'sort_human_numerical',
@@ -141,8 +129,7 @@ export const tests: TestConfig[] = [
 	  command: 'ls -lh | sort -k5n',
 	  correctCommands: ['ls -lh | sort -h -k5'],
 	  isLlmAssisted: true,
-	  category: 'Text processing',
-	  preCommand: 'dd if=/dev/zero of=file1 bs=1K count=10 && dd if=/dev/zero of=file2 bs=1M count=1 && dd if=/dev/zero of=file3 bs=10K count=10'
+	  category: 'Text processing'
 	},
   
 	// System information
@@ -152,8 +139,7 @@ export const tests: TestConfig[] = [
 	  command: 'df --inodes',
 	  correctCommands: ['df -i'],
 	  isLlmAssisted: false,
-	  category: 'Disk usage',
-	  preCommand: ''
+	  category: 'Disk usage'
 	},
 	{
 	  name: 'check_large_files',
@@ -161,8 +147,7 @@ export const tests: TestConfig[] = [
 	  command: 'ls -lh * > 1G',
 	  correctCommands: ['find . -type f -size +1G -exec ls -lh {} +'],
 	  isLlmAssisted: true,
-	  category: 'Disk space',
-	  preCommand: 'mkdir -p test_dir && touch test_dir/small.txt && truncate -s 50M large_file.bin'
+	  category: 'Disk space'
 	},
   
 	// Process management
@@ -172,8 +157,7 @@ export const tests: TestConfig[] = [
 	  command: 'kill -9 maxmem',
 	  correctCommands: ['kill -9 $(ps aux --sort=-%mem | awk \'NR==2{print $2}\')'],
 	  isLlmAssisted: true,
-	  category: 'Process management',
-	  preCommand: ''
+	  category: 'Process management'
 	},
   
 	// Networking
@@ -183,8 +167,7 @@ export const tests: TestConfig[] = [
 	  command: 'netstat -p',
 	  correctCommands: ['ss -tuln', 'lsof -i -P -n'],
 	  isLlmAssisted: true,
-	  category: 'Networking',
-	  preCommand: ''
+	  category: 'Networking'
 	},
   
 	// Advanced
@@ -194,8 +177,7 @@ export const tests: TestConfig[] = [
 	  command: 'wget archive.tar.gz | tar -xzf',
 	  correctCommands: ['curl -L http://example.com/archive.tar.gz | tar xz'],
 	  isLlmAssisted: true,
-	  category: 'Archiving',
-	  preCommand: 'mkdir -p /tmp/test_archive && echo "test content" > /tmp/test_archive/test.txt && tar -czf /tmp/archive.tar.gz -C /tmp test_archive'
+	  category: 'Archiving'
 	},
 	{
 	  name: 'run_background_limit_cpu',
@@ -203,8 +185,7 @@ export const tests: TestConfig[] = [
 	  command: './heavy-task.sh & cpu-limit 20',
 	  correctCommands: ['cpulimit -l 20 -- ./heavy-task.sh &'],
 	  isLlmAssisted: true,
-	  category: 'Output splitting',
-	  preCommand: 'echo "#!/bin/bash\\nwhile true; do echo \\"Running...\\"; sleep 1; done" > heavy-task.sh && chmod +x heavy-task.sh'
+	  category: 'Output splitting'
 	}
   ];
   

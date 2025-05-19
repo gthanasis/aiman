@@ -5,6 +5,11 @@ import {getShortHelpForFailedCommand, getHelpForFailedCommand} from './llm.ts'
 import ora from "ora";
 import {createProgressIndicator} from './utils.ts'
 
+// Simple logging wrapper
+function logDebug(message: string) {
+	// console.log(chalk.magenta(`[DEBUG ${new Date().toISOString()}] ${message}`));
+}
+
 // Handle user input
 export async function handleUserInput(input: string, rl: readline.Interface, isLlmAssisted: boolean = true) {
 	const command = input.trim();
@@ -21,22 +26,27 @@ export async function handleUserInput(input: string, rl: readline.Interface, isL
 	}
 
 	const [executable, ...args] = command.split(" ");
+	logDebug(`Executing: ${command}, LLM assistance: ${isLlmAssisted}`);
 
 	try {
 		// Execute the command and capture output
 		const { stdout, stderr, code } = await runCommand(executable, args);
+		logDebug(`Command execution complete. Exit code: ${code}, stdout length: ${stdout.length}, stderr length: ${stderr.length}`);
 
-		// Intercept output and perform async operations if LLM assistance is enabled
-		if (isLlmAssisted) {
-			await processCommandOutput(command, stdout, stderr, code);
-		} else {
-			// Just output results without LLM assistance
-			if (stderr) {
-				console[code !== 0 ? 'error': 'log'](`\n${chalk.red(stderr)}`);
-			}
-			if (stdout) {
-				console.log(chalk.white(stdout));
-			}
+		// Always display output first
+		if (stderr) {
+			logDebug(`Displaying stderr in handleUserInput`);
+			console[code !== 0 ? 'error': 'log'](`\n${chalk.red(stderr)}`);
+		}
+		if (stdout) {
+			logDebug(`Displaying stdout in handleUserInput`);
+			console.log(chalk.white(stdout));
+		}
+
+		// Provide LLM assistance for failed commands if enabled
+		if (isLlmAssisted && code !== 0) {
+			logDebug(`Command failed with LLM assistance enabled, requesting help`);
+			await processCommandOutput(command, stderr, code);
 		}
 
 		return { command, stdout, stderr, code };
@@ -52,18 +62,15 @@ export function handleExit() {
 	process.exit(0);
 }
 
-// Process command output (async)
-async function processCommandOutput(command: string, stdout: string, stderr: string, code: number | null) {
+// Process command output (async) - only for LLM assistance
+async function processCommandOutput(command: string, stderr: string, code: number | null) {
+	logDebug(`Inside processCommandOutput - command: ${command}, code: ${code}`);
 	const progress = createProgressIndicator(
 		"Fetching help from LLM for the failed command"
 	);
-	if (stderr) {
-		console[code !== 0 ? 'error': 'log'](`\n${chalk.red(stderr)}`);
-	}
-	if (stdout) {
-		console.log(chalk.white(stdout));
-	}
+	
 	if (code !== 0) {
+		logDebug(`Starting LLM help request`);
 		progress.start();
 		try {
 			const {cost, help} = await getShortHelpForFailedCommand({ command, errorOutput: stderr });

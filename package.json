@@ -7,8 +7,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "node --loader ts-node/esm src/cli.ts",
-    "user:test": "node --loader ts-node/esm src/evaluation/user-tests.ts",
-    "user:test:docker": "docker build --no-cache -t aiman . && docker run -it --rm -e OPENAI_API_KEY -v $(pwd)/output:/app/output aiman /bin/sh"
+    "test": "node --loader ts-node/esm src/evaluation/user-tests.ts",
+    "docker": "docker build --no-cache -t aiman . && docker run -it --rm -e OPENAI_API_KEY -v $(pwd)/output:/app/output aiman /bin/sh"
   },
   "dependencies": {
     "@inquirer/prompts": "^7.2.1",

@@ -1,12 +1,17 @@
 import readline from "readline";
 import chalk from "chalk";
 import { handleUserInput, handleExit } from "./events.ts";
+import { getCommandsFromPath, createCompleter } from "./utils/completer.ts";
+
+// Cache the commands for better performance
+const availableCommands = getCommandsFromPath();
 
 // Create a readline interface for input/output
 const rl = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout,
 	prompt: chalk.greenBright("> "),
+	completer: createCompleter(availableCommands)
 });
 
 // Parse command line arguments for LLM assistance
