@@ -77,5 +77,45 @@ export function createProgressIndicator(text: string, intervalMs: number = 500) 
 	return { start, stop };
 }
 
+/**
+ * Sets up graceful Ctrl+C handling to prevent accidental exits
+ * Requires two Ctrl+C presses within 2 seconds to actually exit
+ * @param customMessage Optional custom message to show on first interrupt
+ * @param onExit Optional callback to run before exiting
+ */
+export function setupCtrlCHandler(customMessage?: string, onExit?: () => void): () => void {
+	let firstInterrupt = true;
+	
+	const handler = () => {
+		if (firstInterrupt) {
+			const message = customMessage || '⚠️  Press Ctrl+C again within 2 seconds to exit.';
+			console.log(chalk.yellow(`\n${message}`));
+			firstInterrupt = false;
+			setTimeout(() => {
+				firstInterrupt = true;
+			}, 2000);
+		} else {
+			console.log(chalk.cyan('\n👋 Exiting...'));
+			if (onExit) {
+				try {
+					onExit();
+				} catch (error) {
+					console.error(chalk.red('Error during cleanup:'), error);
+				}
+			}
+			process.exit(0);
+		}
+	};
+	
+	// Remove any existing SIGINT listeners to avoid conflicts
+	process.removeAllListeners('SIGINT');
+	process.on('SIGINT', handler);
+	
+	// Return cleanup function
+	return () => {
+		process.removeListener('SIGINT', handler);
+	};
+}
+
 
 

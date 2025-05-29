@@ -8,7 +8,9 @@
     "build": "tsc",
     "dev": "node --loader ts-node/esm src/cli.ts",
     "test": "node --loader ts-node/esm src/evaluation/user-tests.ts",
-    "docker": "docker build --no-cache -t aiman . && docker run -it --rm -e OPENAI_API_KEY -v $(pwd)/output:/app/output aiman /bin/sh"
+    "docker:clean": "docker stop $(docker ps -q --filter ancestor=aiman) 2>/dev/null || true && docker container prune -f",
+    "docker": "npm run docker:clean && docker build --no-cache -t aiman . && docker run -it --rm --name aiman-container -e OPENAI_API_KEY -v $(pwd)/output:/app/output aiman /bin/sh",
+    "docker:kill": "docker stop $(docker ps -q --filter ancestor=aiman) 2>/dev/null || true"
   },
   "dependencies": {
     "@inquirer/prompts": "^7.2.1",

@@ -2,6 +2,7 @@ import readline from "readline";
 import chalk from "chalk";
 import { handleUserInput, handleExit } from "./events.ts";
 import { getCommandsFromPath, createCompleter } from "./utils/completer.ts";
+import { setupCtrlCHandler } from "./utils.ts";
 
 // Cache the commands for better performance
 const availableCommands = getCommandsFromPath();
@@ -25,6 +26,9 @@ if (args.includes('--help') || args.includes('-h')) {
 	console.log(chalk.cyan('  --help, -h') + ': Show this help text\n');
 	process.exit(0);
 }
+
+// Set up graceful Ctrl+C handling
+setupCtrlCHandler('⚠️  Press Ctrl+C again within 2 seconds to exit.');
 
 // Banner message
 console.log(chalk.blueBright("Welcome to the TypeScript CLI Tool!"));

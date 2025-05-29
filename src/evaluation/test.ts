@@ -58,6 +58,13 @@ export class Test {
 			prompt: chalk.hex(colors.cyan).bold(wordingConfig.test.promptSymbol + " "), 
 			completer: createCompleter(this.availableCommands)
 		});
+
+		// Handle Ctrl+C directly on the readline interface
+		this.rl.on('SIGINT', () => {
+			// disable ctrl+c
+			// this.promptReadline();
+		});
+
 		return new Promise<void>((resolve) => {
 			this.print();
 			this.promptReadline();
