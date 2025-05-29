@@ -72,6 +72,20 @@ export class Test {
 			this.store.startTest(this.name, this.description, this.isLlmAssisted, this.category);
 
 			this.rl?.on("line", async (line) => {
+				// Check if user wants to skip before processing
+				if (line.trim().toLowerCase() === "skip") {
+					// Record this as a skipped attempt
+					this.store.addAttempt(
+						line,
+						'',
+						'',
+						'skipped'
+					);
+					// Close the test
+					setTimeout(() => this.closeReadline(), 500);
+					return;
+				}
+
 				const out = await handleUserInput(line, this.rl!, this.isLlmAssisted);
 				if (!out || out?.code !== 0) {
 					this.store.addAttempt(
