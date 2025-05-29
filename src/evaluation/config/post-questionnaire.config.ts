@@ -27,39 +27,39 @@ export const postQuestionnaireConfig: QuestionConfig[] = [
     sectionIcon: '😊',
     sectionColor: '#f39c12', // warning color
     type: 'select',
-    question: 'Rate the ease of use (1 = Very Difficult, 5 = Very Easy):',
+    question: 'Which CLI was easier to use?',
     options: [
-      { value: 1, label: '1 (Very Difficult)' },
-      { value: 2 },
-      { value: 3 },
-      { value: 4 },
-      { value: 5, label: '5 (Very Easy)' }
+      { value: 1, label: 'Traditional CLI was much easier' },
+      { value: 2, label: 'Traditional CLI was somewhat easier' },
+      { value: 3, label: 'Both were equally easy to use' },
+      { value: 4, label: 'LLM-assisted CLI was somewhat easier' },
+      { value: 5, label: 'LLM-assisted CLI was much easier' }
     ]
   },
   {
     id: 'satisfaction.confidence',
     section: 'SATISFACTION',
     type: 'select',
-    question: 'Rate your confidence in using the CLI (1 = Not Confident, 5 = Very Confident):',
+    question: 'Which CLI made you feel more confident?',
     options: [
-      { value: 1, label: '1 (Not Confident)' },
-      { value: 2 },
-      { value: 3 },
-      { value: 4 },
-      { value: 5, label: '5 (Very Confident)' }
+      { value: 1, label: 'Much more confident with traditional CLI' },
+      { value: 2, label: 'Somewhat more confident with traditional CLI' },
+      { value: 3, label: 'Felt equally confident with both' },
+      { value: 4, label: 'Somewhat more confident with LLM-assisted CLI' },
+      { value: 5, label: 'Much more confident with LLM-assisted CLI' }
     ]
   },
   {
     id: 'satisfaction.frustration',
     section: 'SATISFACTION',
     type: 'select',
-    question: 'Rate your level of frustration (1 = No Frustration, 5 = Very Frustrated):',
+    question: 'Which CLI was more frustrating to use?',
     options: [
-      { value: 1, label: '1 (No Frustration)' },
-      { value: 2 },
-      { value: 3 },
-      { value: 4 },
-      { value: 5, label: '5 (Very Frustrated)' }
+      { value: 1, label: 'Traditional CLI was much more frustrating' },
+      { value: 2, label: 'Traditional CLI was somewhat more frustrating' },
+      { value: 3, label: 'Both were equally frustrating' },
+      { value: 4, label: 'LLM-assisted CLI was somewhat more frustrating' },
+      { value: 5, label: 'LLM-assisted CLI was much more frustrating' }
     ]
   },
 
@@ -70,6 +70,6 @@ export const postQuestionnaireConfig: QuestionConfig[] = [
     sectionIcon: '💬',
     sectionColor: '#e67e22', // secondary color
     type: 'input',
-    question: 'Please provide any additional comments or feedback:'
+    question: 'Please provide any additional comments or feedback about your experience with both CLIs:'
   }
 ]; 
