@@ -67,7 +67,7 @@ export class Test {
 
 		return new Promise<void>((resolve) => {
 			this.print();
-			this.promptReadline();
+			this.promptReadlineWithPrefill();
 			this.startTypingTime = Date.now();
 			this.store.startTest(this.name, this.description, this.isLlmAssisted, this.category);
 
@@ -122,6 +122,14 @@ export class Test {
 
 	private promptReadline() {
 		this.rl?.prompt();
+	}
+
+	private promptReadlineWithPrefill() {
+		this.rl?.prompt();
+		// Prefill with the example command from the test configuration
+		if (this.command) {
+			this.rl?.write(this.command);
+		}
 	}
 
 	private closeReadline() {
