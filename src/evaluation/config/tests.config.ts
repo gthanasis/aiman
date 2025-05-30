@@ -56,7 +56,7 @@ export const tests: TestConfig[] = [
 		'find . -maxdepth 1 -type f -printf "%s %p\n" | sort -nr | cut -d" " -f2- | xargs ls -lh',
 		'ls -l --human-readable --sort=size'
 	  ],
-	  isLlmAssisted: true,
+	  isLlmAssisted: false,
 	  category: 'File navigation',
 	  preCommand: 'dd if=/dev/zero of=large.bin bs=1M count=10 2>/dev/null; dd if=/dev/zero of=medium.bin bs=1M count=5 2>/dev/null; dd if=/dev/zero of=small.bin bs=10k count=1 2>/dev/null'
 	},
@@ -92,7 +92,8 @@ export const tests: TestConfig[] = [
 		'install -d src/components/buttons src/components/forms src/utils',
 		'mkdir -p src/components/{buttons,forms} src/utils',
 		'for dir in src/components/buttons src/components/forms src/utils; do mkdir -p "$dir"; done',
-		'mkdir -p src/components/buttons && mkdir -p src/components/forms && mkdir -p src/utils'
+		'mkdir -p src/components/buttons && mkdir -p src/components/forms && mkdir -p src/utils',
+		'mkdir src/components/buttons src/components/forms src/utils -p'
 	  ],
 	  isLlmAssisted: false,
 	  category: 'File management',
@@ -100,7 +101,7 @@ export const tests: TestConfig[] = [
 	},
 	{
 	  name: 'safe_copy_overwrite',
-	  description: 'We need to copy a file interactively only if the target exists!\nCorrect the following command:',
+	  description: 'We need to copy file.txt to backup.txt interactively!\nCorrect the following command:',
 	  command: 'cp -i backup.txt file.txt',
 	  correctCommands: [
 		'cp -i file.txt backup.txt',
@@ -187,30 +188,12 @@ export const tests: TestConfig[] = [
 	  category: 'File viewing',
 	  preCommand: 'for i in {1..20}; do echo "Line $i" >> log.txt; done'
 	},
-	{
-	  name: 'highlight_error_lines',
-	  description: 'We need to search through the log file and highlight any lines containing "ERROR"!\nCorrect the following command:',
-	  command: 'grep -color error app.log',
-	  correctCommands: [
-		'grep --color=auto -i "ERROR" app.log',
-		'grep --color=always -i "ERROR" app.log',
-		'GREP_COLORS="ms=01;31" grep --color=always -i "ERROR" app.log',
-		'egrep --color=always -i "ERROR" app.log',
-		'grep --color=always -i "ERROR" -A 1 -B 1 app.log',
-		'awk \'/ERROR/i {print "\x1b[31m" $0 "\x1b[0m"}\' app.log',
-		'perl -pe \'s/(ERROR)/\x1b[31m$1\x1b[0m/gi\' app.log',
-		'grep -i "ERROR" app.log | sed "s/.*ERROR.*/\x1b[31m&\x1b[0m/"'
-	  ],
-	  isLlmAssisted: false,
-	  category: 'File viewing',
-	  preCommand: 'echo "Starting application..." > app.log && echo "INFO: Configuration loaded" >> app.log && echo "ERROR: Failed to connect" >> app.log && echo "System initialized" >> app.log'
-	},
   
 	// Text processing
 	{
 	  name: 'count_non_empty_lines',
 	  description: 'We need to count the number of non-empty lines in the log file!\nCorrect the following command:',
-	  command: 'grep -v ^$ logfile.txt | wc -l',
+	  command: 'grep -v ^$ logfle.txt | wc -l',
 	  correctCommands: [
 		'grep -v "^$" logfile.txt | wc -l',
 		'sed "/^$/d" logfile.txt | wc -l',
@@ -228,7 +211,7 @@ export const tests: TestConfig[] = [
 	{
 	  name: 'sort_csv_by_number',
 	  description: 'We need to sort this CSV file by the numeric values in the second column (descending order)!\nCorrect the following command:',
-	  command: 'sort -k2 -r data.csv',
+	  command: 'sort -c2,2nr data.csv',
 	  correctCommands: [
 		'sort -t, -k2,2nr data.csv',
 		'sort -t, -k2nr data.csv',
@@ -248,7 +231,7 @@ export const tests: TestConfig[] = [
 	{
 	  name: 'find_largest_subdirectories',
 	  description: 'We need to find the top 3 largest subdirectories and show their sizes in human-readable format!\nCorrect the following command:',
-	  command: 'du -h | sort -hr | head -3',
+	  command: 'du -h --depth=1 | sort -hr | head --3',
 	  correctCommands: [
 		'du -h --max-depth=1 | sort -hr | head -3',
 		'du -h --max-depth=1 . | sort -hr | head -n 3',
@@ -266,7 +249,7 @@ export const tests: TestConfig[] = [
 	{
 	  name: 'find_low_disk_space',
 	  description: 'We need to identify filesystems with less than 20% free space remaining!\nCorrect the following command:',
-	  command: 'df -h | awk \'$5 > "80%"\'',
+	  command: 'df -h | awk \'$5 > 80%\'',
 	  correctCommands: [
 		'df -h | awk \'$5 > "80%"\'',
 		'df -h | awk \'{if(NR>1)if($5+0>80)print}\'',
@@ -285,7 +268,7 @@ export const tests: TestConfig[] = [
 	{
 	  name: 'find_memory_intensive_processes',
 	  description: 'We need to find the top 5 processes consuming the most memory!\nCorrect the following command:',
-	  command: 'ps aux | sort -k4 -r | head -5',
+	  command: 'ps aux | sorter --k4 -r | head -5',
 	  correctCommands: [
 		'ps aux --sort=-%mem | head -5',
 		'ps aux | sort -k4nr | head -5',
@@ -298,42 +281,6 @@ export const tests: TestConfig[] = [
 	  ],
 	  isLlmAssisted: false,
 	  category: 'Process management'
-	},
-  
-	// Networking
-	{
-	  name: 'download_with_retry',
-	  description: 'We need to download a file, automatically retrying up to 3 times if it fails, and showing a progress bar!\nCorrect the following command:',
-	  command: 'curl --retry 3 -o data.json https://api.example.com/data',
-	  correctCommands: [
-		'curl --retry 3 --progress-bar -o data.json https://api.example.com/data',
-		'curl -L --retry 3 --progress-bar -o data.json https://api.example.com/data',
-		'wget -t 3 --show-progress -O data.json https://api.example.com/data',
-		'curl --retry 3 --retry-delay 2 --progress-bar -o data.json https://api.example.com/data',
-		'curl --retry 3 --retry-all-errors --progress-bar -o data.json https://api.example.com/data',
-		'wget -t 3 --show-progress --retry-connrefused -O data.json https://api.example.com/data',
-		'curl --retry 3 --retry-max-time 30 --progress-bar -o data.json https://api.example.com/data',
-		'wget -t 3 --show-progress --timeout=30 -O data.json https://api.example.com/data'
-	  ],
-	  isLlmAssisted: true,
-	  category: 'Networking'
-	},
-	{
-	  name: 'find_user_login_history',
-	  description: 'We need to see login history for a specific user (jsmith) during the last week!\nCorrect the following command:',
-	  command: 'last jsmith | head -n 7',
-	  correctCommands: [
-		'last jsmith -s -7days',
-		'last jsmith -t $(date -d "7 days ago" +\\%Y\\%m\\%d)',
-		'last jsmith | awk -v d="$(date -d \\"7 days ago\\" +\\%Y\\%m\\%d)" \'$4 >= d\'',
-		'last jsmith | awk -v d="$(date -d \\"7 days ago\\" +\\%s)" \'$4 >= d\'',
-		'last -F jsmith | awk -v d="$(date -d \\"7 days ago\\" +\\%Y\\%m\\%d\\ %H:%M)" \'$4 >= d\'',
-		'last jsmith | grep "$(date -d \\"7 days ago\\" +\\%Y\\%m\\%d)"',
-		'last jsmith | awk -v d="$(date -d \\"7 days ago\\" +\\%Y\\%m\\%d)" \'$4 >= d {print}\'',
-		'last jsmith | awk -v d="$(date -d \\"7 days ago\\" +\\%s)" \'$4 >= d {print; count++} count >= 20 {exit}\''
-	  ],
-	  isLlmAssisted: false,
-	  category: 'System information'
 	}
   ];
   

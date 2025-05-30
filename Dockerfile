@@ -2,7 +2,7 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Install tools required for tests
+# Install tools required for tests and man pages
 RUN apk add --no-cache \
     curl \
     wget \
@@ -17,7 +17,15 @@ RUN apk add --no-cache \
     iproute2 \
     lsof \
     tar \
-    bash
+    bash \
+    man-pages \
+    docs \
+    mandoc \
+    less
+
+# Configure man pages
+RUN echo "MANPATH_MAP /usr/bin /usr/share/man" >> /etc/manpath.config && \
+    echo "MANPATH_MAP /usr/local/bin /usr/local/share/man" >> /etc/manpath.config
 
 # Install dependencies
 COPY package.json yarn.lock ./
@@ -32,4 +40,4 @@ RUN mkdir -p output
 VOLUME ["/app/output"]
 
 # never fail for debug
-CMD tail -f /dev/null
+CMD ["tail", "-f", "/dev/null"]
