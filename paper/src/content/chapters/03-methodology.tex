@@ -1,0 +1,233 @@
+\section{AI-CLI Implementation}
+
+\subsection{System Architecture and Workflow}
+
+The AI-CLI tool is built using TypeScript and implements an intelligent command-line interface that helps users learn and correct command-line operations. Here's a detailed breakdown of the system:
+
+\subsubsection{Core Components}
+
+\textbf{CLI Interface (src/cli.ts)}
+\begin{itemize}
+	\item Provides the main entry point for user interaction
+	\item Uses readline for input handling
+	\item Implements a colorful, user-friendly interface using chalk
+\end{itemize}
+
+\textbf{Command Execution (src/commands.ts)}
+\begin{itemize}
+	\item Handles command execution through Node.js child processes
+	\item Captures stdout, stderr, and exit codes
+	\item Returns structured output for further processing
+\end{itemize}
+
+Figure~\ref{fig:system_architecture} illustrates the high-level architecture of the AI-CLI system, showing the interaction flow between user input, AI processing, and command execution.
+
+\begin{figure}[h]
+	\centering
+	\begin{verbatim}
+    [User Input] → [CLI Interface] → [AI Processor]
+                        ↓               ↓
+                 [Command Executor] ← [Error Handler]
+                        ↓
+                 [System Response] → [User Feedback]
+	\end{verbatim}
+	\caption{AI-CLI System Architecture Flow}
+	\label{fig:system_architecture}
+\end{figure}
+
+\textbf{Event Handling (src/events.ts)}
+\begin{itemize}
+	\item Manages user input processing
+	\item Coordinates between command execution and AI assistance
+	\item Handles error scenarios and AI help requests
+\end{itemize}
+
+\subsection{How AI Generates and Corrects Commands}
+
+The AI correction system follows a structured workflow:
+
+\subsubsection{AI Processing Pipeline (src/llm.ts)}
+
+\textbf{Command Analysis}
+
+When a command fails, the system captures:
+\begin{itemize}
+	\item Original command
+	\item Error output
+	\item System environment information
+\end{itemize}
+
+\textbf{AI Help Generation}
+
+Two levels of assistance are provided:
+
+\textit{Short Help (getShortHelpForFailedCommand)}
+\begin{verbatim}
+{
+    error_explanation: string;
+    corrected_command: string;
+    explanation: string;
+    tips: string;
+}
+\end{verbatim}
+
+\textit{Detailed Help (getHelpForFailedCommand)}
+\begin{verbatim}
+{
+    error_explanation: string;
+    corrected_command: string;
+    arguments_explanation: string;
+    best_practices: string;
+}
+\end{verbatim}
+
+\textbf{Response Processing}
+\begin{itemize}
+	\item Validates JSON responses
+	\item Calculates API usage costs
+	\item Formats output with color coding
+\end{itemize}
+
+\subsubsection{Environment Awareness}
+
+The system (environments.ts):
+\begin{itemize}
+	\item Detects OS type and version
+	\item Identifies terminal environment
+	\item Adapts AI responses based on environment
+	\item Ensures command compatibility
+\end{itemize}
+
+\subsection{Data Storage and Analytics}
+
+The Store class (evaluation/store.ts) implements:
+
+Features:
+\begin{itemize}
+	\item UUID-based session tracking
+	\item CSV-based persistent storage
+	\item Performance metrics collection
+	\item Timestamp-based analysis
+	\item User progress tracking
+\end{itemize}
+
+\subsection{Testing Framework}
+
+The system includes a comprehensive testing framework in \texttt{src/evaluation} that:
+\begin{itemize}
+	\item Tracks user performance
+	\item Stores metrics in CSV format
+	\item Uses AI to validate command equivalence
+\end{itemize}
+
+\subsection{Error Handling and User Assistance}
+
+The system implements a robust error handling mechanism that:
+\begin{itemize}
+	\item Provides context-aware error messages
+	\item Suggests corrections based on common patterns
+	\item Offers best practices to prevent future errors
+	\item Maintains a helpful and educational tone
+\end{itemize}
+
+This implementation creates an intelligent CLI environment that not only executes commands but also serves as an educational tool for command-line learning and mastery.
+
+\subsubsection{Cost Management and Optimization}
+
+The system implements cost tracking through calculateCost in utils.ts:
+\begin{itemize}
+	\item Tracks prompt and completion tokens separately
+	\item Uses different rates for different token types
+	\item Provides transparency by showing costs to users
+\end{itemize}
+
+\subsubsection{Extensibility}
+
+The system is designed for easy extension:
+\begin{itemize}
+	\item Modular architecture
+	\item Plugin system support
+	\item Custom command handlers
+	\item Extensible metrics system
+\end{itemize}
+
+These additional points highlight the extensibility of the AI-CLI implementation, showing how it goes beyond simple command execution to provide a comprehensive learning and development environment and provide researchers a tool to facilitate experiments based on their assumptions.
+
+\section{Comparative Testing Framework}
+
+This experiment will compare different command-line interfaces (CLI) in terms of usability, learning, and cost. The study will evaluate three variations to capture nuanced effects of AI assistance:
+
+\begin{enumerate}
+	\item \textbf{Traditional CLI (Control / Placebo):} The native Linux/macOS terminal without AI assistance.
+	\item \textbf{AI Assistance on Error:} The AI provides suggestions only when the user enters an invalid or failing command.
+	\item \textbf{AI Assistance on Input:} The AI proactively suggests commands based on user intent or partial input, before errors occur.
+\end{enumerate}
+
+\subsection{Primary Objectives (Dependent Variables)}
+
+\textbf{Efficiency:} Measure how efficiently users complete CLI tasks (task completion time, number of errors, retries, etc.).
+
+\textbf{Learning and Adaptation:} Evaluate how quickly users learn and adapt to CLI usage in each condition, including retention of command knowledge over time.
+
+\textbf{Cost:} Measure the AI token usage or inference cost associated with each AI-assisted condition, providing insights into the trade-off between AI support and resource consumption.
+
+Command-line interfaces (CLIs) offer powerful capabilities, but their usability is often limited by a steep learning curve, requiring memorization of syntax, flags, and command structures. Prior research highlights how users—especially novices—struggle with syntactic errors, conceptual mismatches, and the indirectness of interaction \cite{margono1987}. To mitigate these challenges, intelligent agents that learn from user behavior and suggest or correct commands have been proposed. For example, Davison \& Hirsh (1998) embedded a predictive assistant in tcsh that suggested next commands based on history, achieving up to 67\% prediction accuracy. Their system demonstrated the feasibility of integrating machine learning into interactive CLI environments to support user intent.
+
+Building on this idea of predictive and corrective CLI support, our work evaluates whether real-time AI assistance can improve usability in error-prone scenarios. Unlike Davison \& Hirsh, who focused on prediction accuracy, we focus on user outcomes—task success, correction time, and satisfaction—aligning with calls in their paper for more meaningful performance measures. Our task set is grounded in empirical studies of real-world shell usage: Gharehyazie et al. (2016) analyzed over 1 million shell commands and identified cd, ls, grep, find, and others as core tasks across domains. Additionally, we incorporate the educational structure proposed by Software Carpentry (2015), which defines canonical task sequences for novices.
+
+\subsection{Participants}
+
+\textbf{Target Users:} The study will involve experienced software engineers (5–10 years of professional experience) as the primary participant group. These users are proficient with computers and likely familiar with CLI basics, which helps focus the study on efficiency gains and subtle improvements.
+
+\textbf{Sample Size:} We aim for a sufficient number of participants to yield meaningful comparisons. Within-subjects designs typically require fewer participants than between-subject because each person serves as their own control. We plan to recruit N participants (e.g. 5-10), balancing practical feasibility with statistical power.
+
+All participants should have basic familiarity with using a terminal (to ensure they can attempt the tasks), but not necessarily expert-level CLI mastery. Prior to the experiment, each participant will fill out a pre-survey detailing their background (years of experience, self-rated CLI proficiency, etc.), which will help contextualize the results.
+
+\subsection{Apparatus and Environment}
+
+\textbf{Operating System:} The experiment will be conducted on a Unix-like OS (Linux or macOS) as these provide a standard CLI environment. All participants will use the same type of system to ensure consistency (e.g. a provided MacBook or Linux VM configured for the study).
+
+\textbf{Traditional CLI Tool:} The baseline interface is the native terminal (e.g. Bash or Zsh shell on a typical Terminal app). This provides no special assistance beyond standard shell features.
+
+\textbf{AI-Assisted CLI Tool:} This tool integrates a generative AI assistant into the terminal, which can detect command errors or incomplete commands and suggest corrections or completions in real-time. Key features of the AI CLI may include:
+\begin{itemize}
+	\item Syntax correction and suggestions when a command fails or is likely incorrect.
+	\item Enhanced help or examples when the user is unsure of a command.
+\end{itemize}
+
+\textbf{Interactive Task Harness:} An interactive testing harness (included in the AI CLI codebase) will be used to present tasks and record data. This harness can present a task description to the user in the terminal, accept their command input, and automatically log outcomes:
+\begin{itemize}
+	\item In traditional mode, it simply records the commands entered and whether the task was completed successfully (perhaps by checking the command output or exit code).
+	\item In AI-assisted mode, it also logs AI suggestions made and whether the user accepted or ignored them.
+\end{itemize}
+
+\textbf{Hardware and Setup:} All sessions will be conducted on similar hardware to avoid performance differences. Internet access will be available if required for certain tasks (e.g. downloading a file), and the network conditions will be consistent. Screen and command logging tools will be active.
+
+Before starting, each system will be reset to a clean state (e.g. clearing any command history that could give hints) and loaded with any files or directories needed for the tasks (for example, sample directories to search in, or specific files to manipulate).
+
+\section{Data Collection \& Evaluation Metrics}
+
+Multiple quantitative metrics will be collected to evaluate performance on each task and across conditions. Table \ref{tab:metrics} summarizes the key metrics and their definitions:
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|p{3cm}|p{5cm}|p{4cm}|}
+		\hline
+		\textbf{Metric}              & \textbf{Description and Definition}                                                                                                                                         & \textbf{Collection Method}                                                                                                                                                                                    \\
+		\hline
+		Task Completion Time         & The time (in seconds) from when a task is presented to the participant until it is successfully completed. Lower times indicate higher efficiency.                          & Automatically tracked by the testing harness (timestamps when task is given and when correct output is achieved or user signals completion).                                                                  \\
+		\hline
+		Success Rate                 & Whether the participant successfully completes the task without irrecoverable error. This can be binary (success/failure) or a percentage if partial credit is considered.  & Derived from logs (whether the correct command was eventually executed). In traditional CLI, success means the user found a correct solution on their own; in AI CLI, success may be with or without AI help. \\
+		\hline
+		Number of Errors/Corrections & How many incorrect attempts or corrections were made before completing the task. This includes syntax errors, mis-typed commands, and uses of the AI's correction features. & From the command log: count the number of times a command had to be re-entered or corrected. In AI CLI, if the user accepts an AI suggestion, that counts as one correction instance.                         \\
+		\hline
+		Learning Retention           & An indicator of how well users retain command knowledge or improved skill over time. This can be measured by comparing performance on repeated tasks.                       & Computed from repeated task data. For example, if a user initially needed help or erred on a task but later completed it solo correctly, we measure the improvement in time or reduction in errors.           \\
+		\hline
+		User Satisfaction            & The subjective satisfaction of the user with the interface and their performance. This typically encompasses ease of use, confidence, and frustration level.                & Measured via post-task Likert scale questionnaire (e.g., rating statements like "Using this CLI was easy" or "I am satisfied with how I completed the tasks" for each interface).                             \\
+		\hline
+	\end{tabular}
+	\caption{Key Metrics for Evaluation}
+	\label{tab:metrics}
+\end{table}
+
+All these metrics align with standard usability measures: efficiency (time), effectiveness (success and errors), and satisfaction (subjective feedback). Data will be collected through a combination of automated logging and manual observation.

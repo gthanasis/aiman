@@ -1,0 +1,193 @@
+\documentclass[a4paper,11pt,oneside,openany]{styles/ioniothesis}
+
+
+\usepackage[dvips]{graphicx}
+\usepackage{makeidx}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{color}
+\usepackage{styles/ioniostyle}
+\usepackage{pifont}
+
+
+\def\tl{\textlatin}
+\def\tg{\textgreek}
+
+
+\parindent=0pt
+
+\makeindex
+\evensidemargin=0 cm
+\oddsidemargin=1 cm
+\textwidth=15 cm
+
+
+\newtheorem{theo}{Theorem}[chapter]
+\newtheorem{define}{Definition}[chapter]
+\newtheorem{collary}{Corollary}[chapter]
+\newtheorem{algorithm}{Algorithm}[chapter]
+\newtheorem{example}{Example}[chapter]
+
+
+%The following line is for one and half spacing
+%\linespread{1.3}
+%The following line is for double spacing
+%\linespread{1.6}
+\linespread{1.3}
+
+\usepackage{styles/drop}
+
+
+\begin{document}
+
+
+\author{\textbf{Thanassis Gliatis} \\ \textbf{Supervisor:}  -- Academic Supervisor Name --}
+\title{
+	\textbf{\LARGE{\textsc{Ionian University}}
+		\bigskip \\
+		\large{\textsc{Department of Informatics}}
+		\bigskip \\ \bigskip \bigskip \bigskip
+		\bigskip \bigskip
+		\includegraphics[width=0.2\textwidth]{./assets/figures/ionio_logo.pdf}
+		\bigskip \\ \bigskip
+		\texttt{\large{-- Master's Thesis --}}
+		\bigskip \\ \bigskip
+		\textbf{\Large{\texttt{
+			AI-Assisted CLI vs Traditional CLI \\
+			A Comparative Analysis
+		}}}
+		\bigskip \\ \bigskip}
+}
+\maketitle
+
+
+\pagestyle{empty}
+\cleardoublepage
+
+
+\chapter*{}
+\thispagestyle{empty}
+
+\begin{center}
+	\Large{\textbf{Supervisor}}
+\end{center}
+\prof{Professor Name}{Title}{Department}
+
+\begin{center}
+	\Large{\textbf{Examination Committee}}
+\end{center}
+\prof{Professor Name}{Title}{Department}
+\prof{Professor Name}{Title}{Department}
+\prof{Professor Name}{Title}{Department}
+
+
+\pagestyle{empty}
+\cleardoublepage
+
+
+\chapter*{}
+\thispagestyle{empty}
+\begin{center}
+	\texttt{This thesis is submitted in partial fulfillment of the requirements for the degree of Master of Science in Computer Science}
+\end{center}
+
+\cleardoublepage
+
+
+\pagenumbering{roman}
+
+
+%Abstract
+\chapter*{Abstract} \pagestyle{headings}
+\input{content/front-matter/abstract}
+
+
+\cleardoublepage
+
+%Acknowledgments
+\chapter*{Acknowledgments} \pagestyle{headings}
+\input{content/front-matter/acknowledgments}
+
+
+\cleardoublepage
+
+\tableofcontents
+\cleardoublepage
+
+
+\listoffigures
+\cleardoublepage
+\listoftables
+
+\setlength{\parskip}{5pt}
+
+
+\pagestyle{headings}
+\cleardoublepage
+
+
+\newpage
+\pagenumbering{arabic}
+
+
+\cleardoublepage
+
+
+\chapter{Introduction} \label{chapter:intro}
+\input{content/chapters/01-introduction}
+
+
+\chapter{Literature Review} \label{chapter:literature}
+\input{content/chapters/02-literature-review}
+
+
+\chapter{Methodology} \label{chapter:methodology}
+\input{content/chapters/03-methodology}
+
+
+\chapter{Experimentation \& User Testing} \label{chapter:experiments}
+\input{content/chapters/04-experiments}
+
+
+\chapter{Results \& Discussion} \label{chapter:results}
+\input{content/chapters/05-results}
+
+
+\chapter{Conclusion \& Future Work} \label{chapter:conclusion}
+\input{content/chapters/06-conclusion}
+
+
+%APPENDIX
+\chapter*{Appendix A} \pagestyle{empty}
+\addcontentsline{toc}{chapter}{Appendix A}
+Additional technical implementation details.
+Further information and data analysis.
+
+
+%Bibliography
+\begin{thebibliography}{99} \addcontentsline{toc}{chapter}{Bibliography}
+	\pagestyle{headings}
+	\input{content/back-matter/bibliography}
+\end{thebibliography}
+
+
+%CHAPTER
+\chapter*{Abbreviations} \pagestyle{empty}
+\addcontentsline{toc}{chapter}{Abbreviations}
+\input{content/back-matter/abbreviations}
+
+
+%CHAPTER
+\chapter*{Glossary} \pagestyle{empty}
+\addcontentsline{toc}{chapter}{Glossary}
+\input{content/back-matter/glossary}
+
+
+\newpage
+\addcontentsline{toc}{chapter}{Index}
+\printindex
+
+
+\end{document}

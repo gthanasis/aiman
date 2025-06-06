@@ -1,0 +1,27 @@
+Thu Jun  5 22:55:38 2025
+latexindent version 2.1R, a script to indent .tex files
+latexindent lives here: /usr/share/texlive/texmf-dist/scripts/latexindent/
+
+Directory for backup files and indent.log: src
+Reading defaultSettings.yaml from /usr/share/texlive/texmf-dist/scripts/latexindent/defaultSettings.yaml
+
+Home directory is /root
+To specify user settings you would put indentconfig.yaml here: 
+	/root/indentconfig.yaml
+
+Alternatively, you can use the hidden file .indentconfig.yaml as: 
+	/root/.indentconfig.yaml
+
+
+Backup procedure:
+	 src/thesis.bak0 already exists, incrementing by 1...
+
+	 copying src/thesis.tex to src/thesis.bak1
+
+	 Backup file: src/thesis.bak1
+	 Overwriting file: src/thesis.tex
+
+Line Count of src/thesis.tex: 193
+Line Count of indented src/thesis.tex: 193
+
+Line counts of original file and indented file match

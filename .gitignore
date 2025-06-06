@@ -4,3 +4,4 @@ papers
 output/
 docs/
 .idea/
+!paper/output/thesis.pdf
