@@ -1,0 +1,2797 @@
+[
+    {
+      "runId": "b3d420e1-ee8b-4f91-bbf0-29e69c45d1ee",
+      "userName": "---------",
+      "startTime": "2025-05-30T06:46:44.048Z",
+      "tests": [
+        {
+          "testName": "create_nested_directory_if_missing",
+          "description": "We need to create a directory structure for a new project, but only create directories that don't already exist!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "mkdir src/components/buttons src/components/forms src/utils",
+              "timestamp": "2025-05-30T06:49:00.539Z",
+              "stdout": "",
+              "stderr": "mkdir: cannot create directory 'src/utils': File exists\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "man mkdir",
+              "timestamp": "2025-05-30T06:49:12.694Z",
+              "stdout": "",
+              "stderr": "/bin/sh: man: not found\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "mkdir -p src/components/buttons src/components/forms src/utils",
+              "timestamp": "2025-05-30T06:49:42.332Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 73376,
+              "success": true
+            },
+            {
+              "attemptNumber": 4,
+              "command": "",
+              "timestamp": "2025-05-30T06:49:45.208Z",
+              "errorType": "execution_error"
+            }
+          ],
+          "totalTimeMs": 73376,
+          "totalAttempts": 4,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T06:48:28.957Z",
+          "endTime": "2025-05-30T06:49:45.835Z",
+          "isLlmAssisted": false,
+          "category": "File management"
+        },
+        {
+          "testName": "safe_copy_overwrite",
+          "description": "We need to copy a file interactively only if the target exists!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "cp -i backup.txt file.txt",
+              "timestamp": "2025-05-30T06:49:58.708Z",
+              "stdout": "",
+              "stderr": "cp: cannot stat 'backup.txt': No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "",
+              "timestamp": "2025-05-30T06:49:58.795Z",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "cp -i -u  backup.txt file.txt",
+              "timestamp": "2025-05-30T06:50:51.547Z",
+              "stdout": "",
+              "stderr": "cp: cannot stat 'backup.txt': No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 4,
+              "command": "man cp",
+              "timestamp": "2025-05-30T06:51:26.161Z",
+              "stdout": "",
+              "stderr": "/bin/sh: man: not found\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 5,
+              "command": "cp -i file.txt backup.txt",
+              "timestamp": "2025-05-30T06:55:46.937Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 361075,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 361075,
+          "totalAttempts": 5,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T06:49:45.862Z",
+          "endTime": "2025-05-30T06:55:50.441Z",
+          "isLlmAssisted": false,
+          "category": "File management"
+        },
+        {
+          "testName": "highlight_error_lines",
+          "description": "We need to search through the log file and highlight any lines containing \"ERROR\"!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "grep -color error app.log",
+              "timestamp": "2025-05-30T06:56:26.767Z",
+              "stdout": "",
+              "stderr": "",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "grep --color=auto \"ERROR\" app.log",
+              "timestamp": "2025-05-30T06:58:17.466Z",
+              "stdout": "ERROR: Failed to connect\n",
+              "stderr": "",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "grep --color=auto \"error\" app.log",
+              "timestamp": "2025-05-30T06:59:16.311Z",
+              "stdout": "",
+              "stderr": "",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 4,
+              "command": "grep -i --color=auto \"error\" app.log",
+              "timestamp": "2025-05-30T06:59:38.945Z",
+              "stdout": "ERROR: Failed to connect\n",
+              "stderr": "",
+              "timeMs": 228486,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 228486,
+          "totalAttempts": 4,
+          "errorTypes": [
+            "execution_error",
+            "incorrect_command"
+          ],
+          "startTime": "2025-05-30T06:55:50.459Z",
+          "endTime": "2025-05-30T06:59:42.448Z",
+          "isLlmAssisted": false,
+          "category": "File viewing"
+        },
+        {
+          "testName": "change_directory_with_spaces",
+          "description": "We need to change to the directory named 'Project Files' which contains spaces!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "cd Project Files",
+              "timestamp": "2025-05-30T07:00:06.589Z",
+              "stdout": "",
+              "stderr": "/bin/sh: cd: line 0: can't cd to Project: No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "cd 'Project Files'",
+              "timestamp": "2025-05-30T07:00:27.142Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 44675,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 44675,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T06:59:42.467Z",
+          "endTime": "2025-05-30T07:00:30.648Z",
+          "isLlmAssisted": true,
+          "category": "File navigation"
+        },
+        {
+          "testName": "list_files_by_size",
+          "description": "We need to list all files sorted by size (largest first) with human-readable sizes!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "ls -lS --size-human",
+              "timestamp": "2025-05-30T07:00:44.234Z",
+              "stdout": "",
+              "stderr": "ls: unrecognized option '--size-human'\nTry 'ls --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "ls -lhSn",
+              "timestamp": "2025-05-30T07:01:06.757Z",
+              "stdout": "total 16M\n-rw-r--r--  1 0 0  10M May 30 07:00 large.bin\n-rw-r--r--  1 0 0 5.0M May 30 07:00 medium.bin\n-rw-rw-r--  1 0 0  26K May 19 18:27 yarn.lock\n-rw-r--r--  1 0 0  10K May 30 07:00 small.bin\n-rwxrwxr-x  1 0 0 6.0K May 19 18:27 README.md\ndrwxr-xr-x  2 0 0 4.0K May 30 06:59 Project Files\ndrwxr-xr-x 59 0 0 4.0K May 30 06:46 node_modules\ndrwxr-xr-x  2 0 0 4.0K May 29 19:57 output\ndrwxrwxr-x  1 0 0 4.0K May 30 06:48 src\n-rw-rw-r--  1 0 0  965 May 29 19:02 package.json\n-rw-rw-r--  1 0 0  522 May 29 18:07 Dockerfile\n-rw-rw-r--  1 0 0  420 May 19 18:27 tsconfig.json\n-rw-r--r--  1 0 0   95 May 30 06:55 app.log\n-rw-r--r--  1 0 0    0 May 30 06:55 backup.txt\n-rw-r--r--  1 0 0    0 May 30 06:49 file.txt\n",
+              "stderr": "",
+              "timeMs": 36058,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 36058,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T07:00:30.699Z",
+          "endTime": "2025-05-30T07:01:10.259Z",
+          "isLlmAssisted": true,
+          "category": "File navigation"
+        },
+        {
+          "testName": "find_empty_directories",
+          "description": "We need to find and remove all empty directories under the current directory!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "find . -type d -empty --delete",
+              "timestamp": "2025-05-30T07:01:15.664Z",
+              "stdout": "",
+              "stderr": "find: unknown predicate `--delete'\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "find . -type d -empty -exec rmdir {} \\;",
+              "timestamp": "2025-05-30T07:01:59.045Z",
+              "stdout": "",
+              "stderr": "find: './src/components/buttons' No such file or directory\nfind: './src/components/forms' No such file or directory\nfind: './empty_dir1' No such file or directory\nfind: './Project Files' No such file or directory\nfind: './dir3/empty_subdir' No such file or directory\nfind: './empty_dir2' No such file or directory\nfind: './.git/branches' No such file or directory\nfind: './.git/refs/tags' No such file or directory\nfind: './.git/objects/info' No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "find . -type d -empty | xargs -r rmdir",
+              "timestamp": "2025-05-30T07:02:23.946Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 73667,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 73667,
+          "totalAttempts": 3,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T07:01:10.279Z",
+          "endTime": "2025-05-30T07:02:27.450Z",
+          "isLlmAssisted": true,
+          "category": "File management"
+        },
+        {
+          "testName": "copy_unique_lines",
+          "description": "We need to copy only unique lines from file1.txt to file2.txt (removing duplicates)!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "sort file1.txt | unique > file2.txt",
+              "timestamp": "2025-05-30T07:02:35.510Z",
+              "stdout": "",
+              "stderr": "/bin/sh: unique: not found\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "sort file1.txt | uniq > file2.txt",
+              "timestamp": "2025-05-30T07:02:46.392Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 18924,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 18924,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T07:02:27.468Z",
+          "endTime": "2025-05-30T07:02:49.897Z",
+          "isLlmAssisted": true,
+          "category": "File management"
+        },
+        {
+          "testName": "find_recent_text_files",
+          "description": "We need to find all .txt files modified in the last 7 days!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "find . -name \"*.txt\" -mtime < 7",
+              "timestamp": "2025-05-30T07:02:58.484Z",
+              "stdout": "",
+              "stderr": "/bin/sh: can't open 7: no such file\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "find . -name \"*.txt\" -mtime -7",
+              "timestamp": "2025-05-30T07:03:04.771Z",
+              "stdout": "./file1.txt\n./file2.txt\n./test1.txt\n./backup.txt\n./file.txt\n./test2.txt\n./dir3/file.txt\n./node_modules/typescript/LICENSE.txt\n./node_modules/typescript/ThirdPartyNoticeText.txt\n./node_modules/ansi-align/node_modules/emoji-regex/LICENSE-MIT.txt\n./node_modules/emoji-regex/LICENSE-MIT.txt\n./node_modules/@inquirer/core/node_modules/emoji-regex/LICENSE-MIT.txt\n./node_modules/signal-exit/LICENSE.txt\n./node_modules/readline/test/fixtures/afile.txt\n./node_modules/readline/test/fixtures/nmbr.txt\n./node_modules/readline/test/fixtures/file-in-win1251.txt\n",
+              "stderr": "",
+              "timeMs": 14853,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 14853,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T07:02:49.918Z",
+          "endTime": "2025-05-30T07:03:08.275Z",
+          "isLlmAssisted": true,
+          "category": "File search"
+        },
+        {
+          "testName": "grep_with_context",
+          "description": "We need to search for the word \"error\" in log files, showing 2 lines of context before and after each match!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "grep -c 2 \"error\" *.log",
+              "timestamp": "2025-05-30T07:03:21.415Z",
+              "stdout": "app.log:1\nexample.log:0\n",
+              "stderr": "grep: error: No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "grep -c 'error' *.log",
+              "timestamp": "2025-05-30T07:03:39.556Z",
+              "stdout": "app.log:1\nexample.log:0\n",
+              "stderr": "",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "grep -C 2 'error' *.log",
+              "timestamp": "2025-05-30T07:04:41.195Z",
+              "stdout": "app.log-Line {1..10}\napp.log:Line 11 with an error message\napp.log-Line {12..15}\n",
+              "stderr": "",
+              "timeMs": 92899,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 92899,
+          "totalAttempts": 3,
+          "errorTypes": [
+            "execution_error",
+            "incorrect_command"
+          ],
+          "startTime": "2025-05-30T07:03:08.296Z",
+          "endTime": "2025-05-30T07:04:44.699Z",
+          "isLlmAssisted": true,
+          "category": "Text search"
+        },
+        {
+          "testName": "view_specific_lines",
+          "description": "We need to extract lines 7-12 from a log file!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "head -n 12 log.txt | tail --n 6",
+              "timestamp": "2025-05-30T07:04:57.454Z",
+              "stdout": "",
+              "stderr": "tail: unrecognized option '--n'\nTry 'tail --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "head -n 12 log.txt | tail -n 6",
+              "timestamp": "2025-05-30T07:05:03.980Z",
+              "stdout": "Line {1..20}\n",
+              "stderr": "",
+              "timeMs": 19261,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 19261,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T07:04:44.719Z",
+          "endTime": "2025-05-30T07:05:07.483Z",
+          "isLlmAssisted": true,
+          "category": "File viewing"
+        }
+      ],
+      "conditionOrder": "traditional-first",
+      "preQuestionnaire": {
+        "demographics": {
+          "name": "---------",
+          "age": "35–44",
+          "gender": "Male",
+          "education": "Master's degree"
+        },
+        "professional": {
+          "role": "---------",
+          "experience": "5–10 years",
+          "field": "Software Engineering"
+        },
+        "cliProficiency": {
+          "usageFrequency": "Daily",
+          "proficiencyLevel": 3,
+          "environments": [
+            "Bash",
+            "Fish",
+            "Windows Command Prompt / PowerShell"
+          ]
+        },
+        "aiExperience": {
+          "hasUsedAI": true,
+          "experienceDescription": "IDEs and stuff"
+        },
+        "learningPreferences": {
+          "preferredMethod": "Trial and error"
+        }
+      },
+      "postQuestionnaire": {
+        "satisfaction": {
+          "easeOfUse": 5,
+          "confidence": 2,
+          "frustration": 2
+        },
+        "effectiveness": {},
+        "comments": ""
+      }
+    },
+    {
+      "runId": "2ebfabff-8c4a-452d-9101-b78e61237d01",
+      "userName": "---------",
+      "startTime": "2025-05-30T09:11:35.005Z",
+      "tests": [
+        {
+          "testName": "change_directory_with_spaces",
+          "description": "We need to change to the directory named 'Project Files' which contains spaces!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "cd Project Files",
+              "timestamp": "2025-05-30T09:14:03.037Z",
+              "stdout": "",
+              "stderr": "/bin/sh: cd: line 0: can't cd to Project: No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "cd 'Project Files'",
+              "timestamp": "2025-05-30T09:14:19.332Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 42606,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 42606,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T09:13:36.726Z",
+          "endTime": "2025-05-30T09:14:22.837Z",
+          "isLlmAssisted": true,
+          "category": "File navigation"
+        },
+        {
+          "testName": "list_files_by_size",
+          "description": "We need to list all files sorted by size (largest first) with human-readable sizes!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "ls -lS --size-human",
+              "timestamp": "2025-05-30T09:14:39.075Z",
+              "stdout": "",
+              "stderr": "ls: unrecognized option '--size-human'\nTry 'ls --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "ls -lhS",
+              "timestamp": "2025-05-30T09:14:47.768Z",
+              "stdout": "total 16M\n-rw-r--r--  1 root root  10M May 30 09:14 large.bin\n-rw-r--r--  1 root root 5.0M May 30 09:14 medium.bin\n-rw-rw-r--  1 root root  26K May 19 18:27 yarn.lock\n-rw-r--r--  1 root root  10K May 30 09:14 small.bin\n-rwxrwxr-x  1 root root 6.0K May 19 18:27 README.md\ndrwxr-xr-x  2 root root 4.0K May 30 09:13 Project Files\ndrwxr-xr-x 59 root root 4.0K May 30 09:11 node_modules\ndrwxr-xr-x  2 root root 4.0K May 29 19:57 output\ndrwxrwxr-x  4 root root 4.0K May 29 19:02 src\n-rw-rw-r--  1 root root  965 May 29 19:02 package.json\n-rw-rw-r--  1 root root  522 May 29 18:07 Dockerfile\n-rw-rw-r--  1 root root  420 May 19 18:27 tsconfig.json\n",
+              "stderr": "",
+              "timeMs": 24891,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 24891,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T09:14:22.877Z",
+          "endTime": "2025-05-30T09:14:51.274Z",
+          "isLlmAssisted": true,
+          "category": "File navigation"
+        },
+        {
+          "testName": "find_empty_directories",
+          "description": "We need to find and remove all empty directories under the current directory!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "find . -type d -empty --delete",
+              "timestamp": "2025-05-30T09:15:17.113Z",
+              "stdout": "",
+              "stderr": "find: unknown predicate `--delete'\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "find . -type d -empty -delete",
+              "timestamp": "2025-05-30T09:15:35.531Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 44236,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 44236,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T09:14:51.295Z",
+          "endTime": "2025-05-30T09:15:39.036Z",
+          "isLlmAssisted": true,
+          "category": "File management"
+        },
+        {
+          "testName": "copy_unique_lines",
+          "description": "We need to copy only unique lines from file1.txt to file2.txt (removing duplicates)!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "sort file1.txt | unique > file2.txt",
+              "timestamp": "2025-05-30T09:15:57.751Z",
+              "stdout": "",
+              "stderr": "/bin/sh: unique: not found\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "cat file1.txt | uniq > file2.txt",
+              "timestamp": "2025-05-30T09:16:36.600Z",
+              "stdout": "",
+              "stderr": "",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "sort file1.txt | uniq > file2.txt",
+              "timestamp": "2025-05-30T09:16:54.970Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 75918,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 75918,
+          "totalAttempts": 3,
+          "errorTypes": [
+            "execution_error",
+            "incorrect_command"
+          ],
+          "startTime": "2025-05-30T09:15:39.052Z",
+          "endTime": "2025-05-30T09:16:58.475Z",
+          "isLlmAssisted": true,
+          "category": "File management"
+        },
+        {
+          "testName": "find_recent_text_files",
+          "description": "We need to find all .txt files modified in the last 7 days!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "find . -name \"*.txt\" -mtime < 7",
+              "timestamp": "2025-05-30T09:17:10.066Z",
+              "stdout": "",
+              "stderr": "/bin/sh: can't open 7: no such file\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "find . -name \"*.txt\" -mtime -7",
+              "timestamp": "2025-05-30T09:17:25.217Z",
+              "stdout": "./file1.txt\n./file2.txt\n./test1.txt\n./test2.txt\n./dir3/file.txt\n./node_modules/typescript/LICENSE.txt\n./node_modules/typescript/ThirdPartyNoticeText.txt\n./node_modules/ansi-align/node_modules/emoji-regex/LICENSE-MIT.txt\n./node_modules/emoji-regex/LICENSE-MIT.txt\n./node_modules/@inquirer/core/node_modules/emoji-regex/LICENSE-MIT.txt\n./node_modules/signal-exit/LICENSE.txt\n./node_modules/readline/test/fixtures/afile.txt\n./node_modules/readline/test/fixtures/nmbr.txt\n./node_modules/readline/test/fixtures/file-in-win1251.txt\n",
+              "stderr": "",
+              "timeMs": 26725,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 26725,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T09:16:58.492Z",
+          "endTime": "2025-05-30T09:17:28.722Z",
+          "isLlmAssisted": true,
+          "category": "File search"
+        },
+        {
+          "testName": "grep_with_context",
+          "description": "We need to search for the word \"error\" in log files, showing 2 lines of context before and after each match!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "grep -c 2 \"error\" *.log",
+              "timestamp": "2025-05-30T09:17:42.483Z",
+              "stdout": "app.log:1\nexample.log:0\n",
+              "stderr": "grep: error: No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "grep -c 'error' 2*.log",
+              "timestamp": "2025-05-30T09:17:51.143Z",
+              "stdout": "",
+              "stderr": "grep: 2*.log: No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "grep -c 'error' -n 2 *.log",
+              "timestamp": "2025-05-30T09:18:57.272Z",
+              "stdout": "app.log:1\nexample.log:0\n",
+              "stderr": "grep: 2: No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 4,
+              "command": "skip",
+              "timestamp": "2025-05-30T09:19:15.168Z",
+              "stdout": "",
+              "stderr": "",
+              "errorType": "skipped"
+            }
+          ],
+          "totalTimeMs": 0,
+          "totalAttempts": 4,
+          "errorTypes": [
+            "execution_error",
+            "skipped"
+          ],
+          "startTime": "2025-05-30T09:17:28.761Z",
+          "endTime": "2025-05-30T09:19:15.670Z",
+          "isLlmAssisted": true,
+          "category": "Text search"
+        },
+        {
+          "testName": "view_specific_lines",
+          "description": "We need to extract lines 7-12 from a log file!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "head -n 12 log.txt | tail --n 6",
+              "timestamp": "2025-05-30T09:19:25.028Z",
+              "stdout": "",
+              "stderr": "tail: unrecognized option '--n'\nTry 'tail --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "head -n 12 log.txt | tail -n 6",
+              "timestamp": "2025-05-30T09:19:32.905Z",
+              "stdout": "Line {1..20}\n",
+              "stderr": "",
+              "timeMs": 17218,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 17218,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T09:19:15.686Z",
+          "endTime": "2025-05-30T09:19:36.409Z",
+          "isLlmAssisted": true,
+          "category": "File viewing"
+        },
+        {
+          "testName": "create_nested_directory_if_missing",
+          "description": "We need to create a directory structure for a new project, but only create directories that don't already exist!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "mkdir src/components/buttons src/components/forms src/utils",
+              "timestamp": "2025-05-30T09:19:44.391Z",
+              "stdout": "",
+              "stderr": "mkdir: cannot create directory 'src/utils': File exists\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "mkdir -h",
+              "timestamp": "2025-05-30T09:19:57.275Z",
+              "stdout": "",
+              "stderr": "mkdir: invalid option -- 'h'\nTry 'mkdir --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "mkdir src/components/buttons src/components/forms src/utils -p",
+              "timestamp": "2025-05-30T09:20:13.786Z",
+              "stdout": "",
+              "stderr": "",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 4,
+              "command": "mkdir -p src/components/buttons src/components/forms src/utils",
+              "timestamp": "2025-05-30T09:20:27.935Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 51494,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 51494,
+          "totalAttempts": 4,
+          "errorTypes": [
+            "execution_error",
+            "incorrect_command"
+          ],
+          "startTime": "2025-05-30T09:19:36.441Z",
+          "endTime": "2025-05-30T09:20:31.440Z",
+          "isLlmAssisted": false,
+          "category": "File management"
+        },
+        {
+          "testName": "safe_copy_overwrite",
+          "description": "We need to copy a file interactively only if the target exists!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "cp -i backup.txt file.txt",
+              "timestamp": "2025-05-30T09:20:38.675Z",
+              "stdout": "",
+              "stderr": "cp: cannot stat 'backup.txt': No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "cp -i file.txt backup.txt",
+              "timestamp": "2025-05-30T09:21:34.683Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 63225,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 63225,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T09:20:31.458Z",
+          "endTime": "2025-05-30T09:21:38.187Z",
+          "isLlmAssisted": false,
+          "category": "File management"
+        },
+        {
+          "testName": "highlight_error_lines",
+          "description": "We need to search through the log file and highlight any lines containing \"ERROR\"!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "grep -color error app.log",
+              "timestamp": "2025-05-30T09:22:01.821Z",
+              "stdout": "",
+              "stderr": "",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "",
+              "timestamp": "2025-05-30T09:22:06.985Z",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "",
+              "timestamp": "2025-05-30T09:22:12.587Z",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 4,
+              "command": "",
+              "timestamp": "2025-05-30T09:22:13.092Z",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 5,
+              "command": "",
+              "timestamp": "2025-05-30T09:22:19.177Z",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 6,
+              "command": "",
+              "timestamp": "2025-05-30T09:22:19.493Z",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 7,
+              "command": "grep -color error app.log",
+              "timestamp": "2025-05-30T09:22:25.201Z",
+              "stdout": "",
+              "stderr": "",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 8,
+              "command": "",
+              "timestamp": "2025-05-30T09:22:26.460Z",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 9,
+              "command": "man grep",
+              "timestamp": "2025-05-30T09:23:04.898Z",
+              "stdout": "",
+              "stderr": "/bin/sh: man: not found\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 10,
+              "command": "skip",
+              "timestamp": "2025-05-30T09:24:04.201Z",
+              "stdout": "",
+              "stderr": "",
+              "errorType": "skipped"
+            }
+          ],
+          "totalTimeMs": 0,
+          "totalAttempts": 10,
+          "errorTypes": [
+            "execution_error",
+            "skipped"
+          ],
+          "startTime": "2025-05-30T09:21:38.205Z",
+          "endTime": "2025-05-30T09:24:04.704Z",
+          "isLlmAssisted": false,
+          "category": "File viewing"
+        }
+      ],
+      "conditionOrder": "ai-first",
+      "preQuestionnaire": {
+        "demographics": {
+          "name": "---------",
+          "age": "25–34",
+          "gender": "Male",
+          "education": "High school"
+        },
+        "professional": {
+          "role": "---------",
+          "experience": "5–10 years",
+          "field": "Data Science / ML Engineering"
+        },
+        "cliProficiency": {
+          "usageFrequency": "Daily",
+          "proficiencyLevel": 4,
+          "environments": [
+            "Zsh",
+            "Bash"
+          ]
+        },
+        "aiExperience": {
+          "hasUsedAI": true,
+          "experienceDescription": "Used copilot "
+        },
+        "learningPreferences": {
+          "preferredMethod": "Asking AI assistants"
+        }
+      },
+      "postQuestionnaire": {
+        "satisfaction": {
+          "easeOfUse": 5,
+          "confidence": 5,
+          "frustration": 2
+        },
+        "effectiveness": {},
+        "comments": ""
+      }
+    },
+    {
+      "runId": "613b75f4-ddcd-41fe-aaa7-a0b8ebb0052e",
+      "userName": "---------",
+      "startTime": "2025-05-30T11:07:24.238Z",
+      "tests": [
+        {
+          "testName": "list_files_by_size",
+          "description": "We need to list all files sorted by size (largest first) with human-readable sizes!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "ls -lS --size-human",
+              "timestamp": "2025-05-30T11:11:03.171Z",
+              "stdout": "",
+              "stderr": "ls: unrecognized option '--size-human'\nTry 'ls --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "ls -lS",
+              "timestamp": "2025-05-30T11:11:21.129Z",
+              "stdout": "total 15432\n-rw-r--r--  1 root root 10485760 May 30 11:09 large.bin\n-rw-r--r--  1 root root  5242880 May 30 11:09 medium.bin\n-rw-rw-r--  1 root root    26296 May 19 18:27 yarn.lock\n-rw-r--r--  1 root root    10240 May 30 11:09 small.bin\n-rwxrwxr-x  1 root root     6086 May 19 18:27 README.md\ndrwxr-xr-x 59 root root     4096 May 30 11:07 node_modules\ndrwxr-xr-x  2 root root     4096 May 29 19:57 output\ndrwxrwxr-x  4 root root     4096 May 29 19:02 src\n-rw-rw-r--  1 root root      965 May 29 19:02 package.json\n-rw-rw-r--  1 root root      777 May 30 10:52 Dockerfile\n-rw-rw-r--  1 root root      420 May 19 18:27 tsconfig.json\n",
+              "stderr": "",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "ls -lS",
+              "timestamp": "2025-05-30T11:12:05.648Z",
+              "stdout": "total 15432\n-rw-r--r--  1 root root 10485760 May 30 11:09 large.bin\n-rw-r--r--  1 root root  5242880 May 30 11:09 medium.bin\n-rw-rw-r--  1 root root    26296 May 19 18:27 yarn.lock\n-rw-r--r--  1 root root    10240 May 30 11:09 small.bin\n-rwxrwxr-x  1 root root     6086 May 19 18:27 README.md\ndrwxr-xr-x 59 root root     4096 May 30 11:07 node_modules\ndrwxr-xr-x  2 root root     4096 May 29 19:57 output\ndrwxrwxr-x  4 root root     4096 May 29 19:02 src\n-rw-rw-r--  1 root root      965 May 29 19:02 package.json\n-rw-rw-r--  1 root root      777 May 30 10:52 Dockerfile\n-rw-rw-r--  1 root root      420 May 19 18:27 tsconfig.json\n",
+              "stderr": "",
+              "timeMs": 178863,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 178863,
+          "totalAttempts": 3,
+          "errorTypes": [
+            "execution_error",
+            "incorrect_command"
+          ],
+          "startTime": "2025-05-30T11:09:06.785Z",
+          "endTime": "2025-05-30T11:12:09.153Z",
+          "isLlmAssisted": false,
+          "category": "File navigation"
+        },
+        {
+          "testName": "create_nested_directory_if_missing",
+          "description": "We need to create a directory structure for a new project, but only create directories that don't already exist!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "mkdir src/components/buttons src/components/forms src/utils",
+              "timestamp": "2025-05-30T11:12:39.387Z",
+              "stdout": "",
+              "stderr": "mkdir: cannot create directory 'src/utils': File exists\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": " ",
+              "timestamp": "2025-05-30T11:13:31.210Z",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "mkdir -p src/components/buttons src/components/forms src/utils",
+              "timestamp": "2025-05-30T11:13:39.184Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 89996,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 89996,
+          "totalAttempts": 3,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T11:12:09.188Z",
+          "endTime": "2025-05-30T11:13:42.690Z",
+          "isLlmAssisted": false,
+          "category": "File management"
+        },
+        {
+          "testName": "safe_copy_overwrite",
+          "description": "We need to copy file.txt to backup.txt interactively!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "cp backup.txt file.txt",
+              "timestamp": "2025-05-30T11:13:51.934Z",
+              "stdout": "",
+              "stderr": "cp: cannot stat 'backup.txt': No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "cp -i backup.txt file.txt",
+              "timestamp": "2025-05-30T11:13:57.875Z",
+              "stdout": "",
+              "stderr": "cp: cannot stat 'backup.txt': No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "cp -i file.txt backup.txt",
+              "timestamp": "2025-05-30T11:14:36.768Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 54056,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 54056,
+          "totalAttempts": 3,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T11:13:42.712Z",
+          "endTime": "2025-05-30T11:14:40.273Z",
+          "isLlmAssisted": false,
+          "category": "File management"
+        },
+        {
+          "testName": "find_largest_subdirectories",
+          "description": "We need to find the top 3 largest subdirectories and show their sizes in human-readable format!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "du -h --depth=1 | sort -hr | head --3",
+              "timestamp": "2025-05-30T11:14:52.193Z",
+              "stdout": "",
+              "stderr": "du: unrecognized option '--depth=1'\nhead: unrecognized option '--3'\nTry 'du --help' for more information.\nTry 'head --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "du -a . | sort -nr | head --3",
+              "timestamp": "2025-05-30T11:15:55.648Z",
+              "stdout": "",
+              "stderr": "head: unrecognized option '--3'\nTry 'head --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "du -a --depth 1 | sort -hr | head -n 3",
+              "timestamp": "2025-05-30T11:16:35.234Z",
+              "stdout": "",
+              "stderr": "du: unrecognized option '--depth'\nTry 'du --help' for more information.\n",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 4,
+              "command": "du -h --max-depth=1 | sort -hr | head -3",
+              "timestamp": "2025-05-30T11:17:02.805Z",
+              "stdout": "69M\t.\n35M\t./node_modules\n11M\t./dir2\n",
+              "stderr": "",
+              "timeMs": 142483,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 142483,
+          "totalAttempts": 4,
+          "errorTypes": [
+            "execution_error",
+            "incorrect_command"
+          ],
+          "startTime": "2025-05-30T11:14:40.322Z",
+          "endTime": "2025-05-30T11:17:06.310Z",
+          "isLlmAssisted": false,
+          "category": "Disk usage"
+        },
+        {
+          "testName": "find_low_disk_space",
+          "description": "We need to identify filesystems with less than 20% free space remaining!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "df -h | awk '$5 > 80%'",
+              "timestamp": "2025-05-30T11:17:25.921Z",
+              "stdout": "",
+              "stderr": "awk: cmd. line:1: Unexpected token\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "dh -h",
+              "timestamp": "2025-05-30T11:18:17.069Z",
+              "stdout": "",
+              "stderr": "/bin/sh: dh: not found\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "skip",
+              "timestamp": "2025-05-30T11:20:19.028Z",
+              "stdout": "",
+              "stderr": "",
+              "errorType": "skipped"
+            }
+          ],
+          "totalTimeMs": 0,
+          "totalAttempts": 3,
+          "errorTypes": [
+            "execution_error",
+            "skipped"
+          ],
+          "startTime": "2025-05-30T11:17:06.325Z",
+          "endTime": "2025-05-30T11:20:19.530Z",
+          "isLlmAssisted": false,
+          "category": "Disk usage"
+        },
+        {
+          "testName": "find_memory_intensive_processes",
+          "description": "We need to find the top 5 processes consuming the most memory!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "ps aux | sorter --k4 -r | head -5",
+              "timestamp": "2025-05-30T11:20:31.385Z",
+              "stdout": "",
+              "stderr": "/bin/sh: sorter: not found\n",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "ps aux | sort --k4 -r | head -5",
+              "timestamp": "2025-05-30T11:21:47.841Z",
+              "stdout": "",
+              "stderr": "sort: unrecognized option '--k4'\nTry 'sort --help' for more information.\n",
+              "timeMs": 88278,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 88278,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "incorrect_command"
+          ],
+          "startTime": "2025-05-30T11:20:19.563Z",
+          "endTime": "2025-05-30T11:21:51.345Z",
+          "isLlmAssisted": false,
+          "category": "Process management"
+        },
+        {
+          "testName": "change_directory_with_spaces",
+          "description": "We need to change to the directory named 'Project Files' which contains spaces!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "cd Project Files",
+              "timestamp": "2025-05-30T11:22:15.182Z",
+              "stdout": "",
+              "stderr": "/bin/sh: cd: line 0: can't cd to Project: No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "cd 'Project Files'",
+              "timestamp": "2025-05-30T11:23:13.730Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 82366,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 82366,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T11:21:51.364Z",
+          "endTime": "2025-05-30T11:23:17.236Z",
+          "isLlmAssisted": true,
+          "category": "File navigation"
+        },
+        {
+          "testName": "find_empty_directories",
+          "description": "We need to find and remove all empty directories under the current directory!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "find . -type d -empty --delete",
+              "timestamp": "2025-05-30T11:23:26.798Z",
+              "stdout": "",
+              "stderr": "find: unknown predicate `--delete'\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "find . -type d -empty -exec rmdir {} \\;",
+              "timestamp": "2025-05-30T11:24:06.853Z",
+              "stdout": "",
+              "stderr": "find: './src/components/buttons' No such file or directory\nfind: './src/components/forms' No such file or directory\nfind: './empty_dir1' No such file or directory\nfind: './Project Files' No such file or directory\nfind: './dir3/empty_subdir' No such file or directory\nfind: './empty_dir2' No such file or directory\nfind: './.git/branches' No such file or directory\nfind: './.git/refs/tags' No such file or directory\nfind: './.git/objects/info' No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "find . -type d -empty -delete -exec rmdir {} \\;",
+              "timestamp": "2025-05-30T11:24:49.446Z",
+              "stdout": "",
+              "stderr": "rmdir: failed to remove './src/components': No such file or directory\n",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 4,
+              "command": "find . -type d -empty -delete",
+              "timestamp": "2025-05-30T11:24:57.094Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 99833,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 99833,
+          "totalAttempts": 4,
+          "errorTypes": [
+            "execution_error",
+            "incorrect_command"
+          ],
+          "startTime": "2025-05-30T11:23:17.261Z",
+          "endTime": "2025-05-30T11:25:00.600Z",
+          "isLlmAssisted": true,
+          "category": "File management"
+        },
+        {
+          "testName": "copy_unique_lines",
+          "description": "We need to copy only unique lines from file1.txt to file2.txt (removing duplicates)!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "sort file1.txt | unique > file2.txt",
+              "timestamp": "2025-05-30T11:25:23.976Z",
+              "stdout": "",
+              "stderr": "/bin/sh: unique: not found\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "sort file1.txt | uniq > file2.txt",
+              "timestamp": "2025-05-30T11:25:36.297Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 35678,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 35678,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T11:25:00.619Z",
+          "endTime": "2025-05-30T11:25:39.802Z",
+          "isLlmAssisted": true,
+          "category": "File management"
+        },
+        {
+          "testName": "find_recent_text_files",
+          "description": "We need to find all .txt files modified in the last 7 days!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "find . -name \"*.txt\" -mtime < 7",
+              "timestamp": "2025-05-30T11:25:51.955Z",
+              "stdout": "",
+              "stderr": "/bin/sh: can't open 7: no such file\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "find . -name \"*.txt\" -mtime -7",
+              "timestamp": "2025-05-30T11:26:07.323Z",
+              "stdout": "./file1.txt\n./file2.txt\n./test1.txt\n./backup.txt\n./file.txt\n./test2.txt\n./dir3/file.txt\n./node_modules/typescript/LICENSE.txt\n./node_modules/typescript/ThirdPartyNoticeText.txt\n./node_modules/ansi-align/node_modules/emoji-regex/LICENSE-MIT.txt\n./node_modules/emoji-regex/LICENSE-MIT.txt\n./node_modules/@inquirer/core/node_modules/emoji-regex/LICENSE-MIT.txt\n./node_modules/signal-exit/LICENSE.txt\n./node_modules/readline/test/fixtures/afile.txt\n./node_modules/readline/test/fixtures/nmbr.txt\n./node_modules/readline/test/fixtures/file-in-win1251.txt\n",
+              "stderr": "",
+              "timeMs": 27499,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 27499,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T11:25:39.824Z",
+          "endTime": "2025-05-30T11:26:10.829Z",
+          "isLlmAssisted": true,
+          "category": "File search"
+        },
+        {
+          "testName": "grep_with_context",
+          "description": "We need to search for the word \"error\" in log files, showing 2 lines of context before and after each match!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "grep -c 2 \"error\" *.log",
+              "timestamp": "2025-05-30T11:26:20.601Z",
+              "stdout": "app.log:1\nexample.log:0\n",
+              "stderr": "grep: error: No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "grep -c 2 \"error\" 2*.log",
+              "timestamp": "2025-05-30T11:26:48.724Z",
+              "stdout": "",
+              "stderr": "grep: error: No such file or directory\ngrep: 2*.log: No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "grep -C 2 \"error\" *.log",
+              "timestamp": "2025-05-30T11:28:47.986Z",
+              "stdout": "app.log-Line {1..10}\napp.log:Line 11 with an error message\napp.log-Line {12..15}\n",
+              "stderr": "",
+              "timeMs": 157118,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 157118,
+          "totalAttempts": 3,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T11:26:10.868Z",
+          "endTime": "2025-05-30T11:28:51.491Z",
+          "isLlmAssisted": true,
+          "category": "Text search"
+        },
+        {
+          "testName": "view_specific_lines",
+          "description": "We need to extract lines 7-12 from a log file!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "head -n 12 log.txt | tail --n 6",
+              "timestamp": "2025-05-30T11:29:02.538Z",
+              "stdout": "",
+              "stderr": "tail: unrecognized option '--n'\nTry 'tail --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "head -n 12 log.txt | tail -n 6",
+              "timestamp": "2025-05-30T11:29:22.464Z",
+              "stdout": "Line {1..20}\n",
+              "stderr": "",
+              "timeMs": 30957,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 30957,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-05-30T11:28:51.507Z",
+          "endTime": "2025-05-30T11:29:25.969Z",
+          "isLlmAssisted": true,
+          "category": "File viewing"
+        },
+        {
+          "testName": "count_non_empty_lines",
+          "description": "We need to count the number of non-empty lines in the log file!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "grep -v ^$ logfle.txt | wc -l",
+              "timestamp": "2025-05-30T11:29:35.516Z",
+              "stdout": "0\n",
+              "stderr": "grep: logfle.txt: No such file or directory\n",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "grep -v ^$ logfle.txt | wc -l",
+              "timestamp": "2025-05-30T11:29:40.341Z",
+              "stdout": "0\n",
+              "stderr": "grep: logfle.txt: No such file or directory\n",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "grep -v '^$' logfile.txt | wc -l",
+              "timestamp": "2025-05-30T11:30:29.249Z",
+              "stdout": "3\n",
+              "stderr": "",
+              "timeMs": 63259,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 63259,
+          "totalAttempts": 3,
+          "errorTypes": [
+            "incorrect_command"
+          ],
+          "startTime": "2025-05-30T11:29:25.990Z",
+          "endTime": "2025-05-30T11:30:32.754Z",
+          "isLlmAssisted": true,
+          "category": "Text processing"
+        },
+        {
+          "testName": "sort_csv_by_number",
+          "description": "We need to sort this CSV file by the numeric values in the second column (descending order)!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "sort -c2,2nr data.csv",
+              "timestamp": "2025-05-30T11:30:41.660Z",
+              "stdout": "",
+              "stderr": "sort: invalid option -- '2'\nTry 'sort --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "sort -k2,2nr data.csv",
+              "timestamp": "2025-05-30T11:30:59.357Z",
+              "stdout": "apple,5,red\nbanana,10,yellow\ncherry,7,red\ndate,2,brown\n",
+              "stderr": "",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "sort --help | grep column",
+              "timestamp": "2025-05-30T11:31:33.598Z",
+              "stdout": "",
+              "stderr": "",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 4,
+              "command": "sort -t, -k2,2nr filename.csv",
+              "timestamp": "2025-05-30T11:32:30.889Z",
+              "stdout": "",
+              "stderr": "sort: cannot read: filename.csv: No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 5,
+              "command": "sort -t, -k2,2nr data.csv",
+              "timestamp": "2025-05-30T11:32:38.404Z",
+              "stdout": "banana,10,yellow\ncherry,7,red\napple,5,red\ndate,2,brown\n",
+              "stderr": "",
+              "timeMs": 125629,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 125629,
+          "totalAttempts": 5,
+          "errorTypes": [
+            "execution_error",
+            "incorrect_command"
+          ],
+          "startTime": "2025-05-30T11:30:32.775Z",
+          "endTime": "2025-05-30T11:32:41.910Z",
+          "isLlmAssisted": true,
+          "category": "Text processing"
+        }
+      ],
+      "conditionOrder": "traditional-first",
+      "preQuestionnaire": {
+        "demographics": {
+          "name": "---------",
+          "age": "25–34",
+          "gender": "Male",
+          "education": "Bachelor's degree"
+        },
+        "professional": {
+          "role": "---------",
+          "experience": "5–10 years",
+          "field": "Software Engineering"
+        },
+        "cliProficiency": {
+          "usageFrequency": "Daily",
+          "proficiencyLevel": 3,
+          "environments": [
+            "Bash",
+            "Windows Command Prompt / PowerShell"
+          ]
+        },
+        "aiExperience": {
+          "hasUsedAI": false
+        },
+        "learningPreferences": {
+          "preferredMethod": "Documentation / Manuals"
+        }
+      },
+      "postQuestionnaire": {
+        "satisfaction": {
+          "easeOfUse": 4,
+          "confidence": 4,
+          "frustration": 2
+        },
+        "effectiveness": {},
+        "comments": ""
+      }
+    },
+    {
+      "runId": "0dcda6c9-8e40-41b7-87ab-949e2306fa3f",
+      "userName": "---------",
+      "startTime": "2025-06-05T13:36:36.499Z",
+      "tests": [
+        {
+          "testName": "change_directory_with_spaces",
+          "description": "We need to change to the directory named 'Project Files' which contains spaces!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "cd Project Files",
+              "timestamp": "2025-06-05T13:39:52.622Z",
+              "stdout": "",
+              "stderr": "/bin/sh: cd: line 0: can't cd to Project: No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "cd 'Projet Files'",
+              "timestamp": "2025-06-05T13:40:37.220Z",
+              "stdout": "",
+              "stderr": "/bin/sh: cd: line 0: can't cd to Projet Files: No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "cd 'Project Files'",
+              "timestamp": "2025-06-05T13:40:44.120Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 92104,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 92104,
+          "totalAttempts": 3,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-06-05T13:39:12.016Z",
+          "endTime": "2025-06-05T13:40:47.627Z",
+          "isLlmAssisted": true,
+          "category": "File navigation"
+        },
+        {
+          "testName": "find_empty_directories",
+          "description": "We need to find and remove all empty directories under the current directory!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "find . -type d -empty --delete",
+              "timestamp": "2025-06-05T13:41:10.073Z",
+              "stdout": "",
+              "stderr": "find: unknown predicate `--delete'\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "find . -type d -empty -delete",
+              "timestamp": "2025-06-05T13:41:28.184Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 40532,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 40532,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-06-05T13:40:47.652Z",
+          "endTime": "2025-06-05T13:41:31.690Z",
+          "isLlmAssisted": true,
+          "category": "File management"
+        },
+        {
+          "testName": "copy_unique_lines",
+          "description": "We need to copy only unique lines from file1.txt to file2.txt (removing duplicates)!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "sort file1.txt | unique > file2.txt",
+              "timestamp": "2025-06-05T13:41:48.600Z",
+              "stdout": "",
+              "stderr": "/bin/sh: unique: not found\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "sort file1.txt | uniq > file2.txt",
+              "timestamp": "2025-06-05T13:42:11.800Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 40091,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 40091,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-06-05T13:41:31.709Z",
+          "endTime": "2025-06-05T13:42:15.306Z",
+          "isLlmAssisted": true,
+          "category": "File management"
+        },
+        {
+          "testName": "find_recent_text_files",
+          "description": "We need to find all .txt files modified in the last 7 days!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "find . -name \"*.txt\" -mtime < 7",
+              "timestamp": "2025-06-05T13:42:30.507Z",
+              "stdout": "",
+              "stderr": "/bin/sh: can't open 7: no such file\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "find . -name \"*.txt\" -mtime -7",
+              "timestamp": "2025-06-05T13:42:46.800Z",
+              "stdout": "./file1.txt\n./file2.txt\n./test1.txt\n./test2.txt\n./dir3/file.txt\n./node_modules/typescript/LICENSE.txt\n./node_modules/typescript/ThirdPartyNoticeText.txt\n./node_modules/ansi-align/node_modules/emoji-regex/LICENSE-MIT.txt\n./node_modules/emoji-regex/LICENSE-MIT.txt\n./node_modules/@inquirer/core/node_modules/emoji-regex/LICENSE-MIT.txt\n./node_modules/signal-exit/LICENSE.txt\n./node_modules/readline/test/fixtures/afile.txt\n./node_modules/readline/test/fixtures/nmbr.txt\n./node_modules/readline/test/fixtures/file-in-win1251.txt\n",
+              "stderr": "",
+              "timeMs": 31470,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 31470,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-06-05T13:42:15.329Z",
+          "endTime": "2025-06-05T13:42:50.305Z",
+          "isLlmAssisted": true,
+          "category": "File search"
+        },
+        {
+          "testName": "grep_with_context",
+          "description": "We need to search for the word \"error\" in log files, showing 2 lines of context before and after each match!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "grep -c 2 \"error\" *.log",
+              "timestamp": "2025-06-05T13:43:09.263Z",
+              "stdout": "app.log:1\nexample.log:0\n",
+              "stderr": "grep: error: No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "grep -c 'error' *.log",
+              "timestamp": "2025-06-05T13:43:33.416Z",
+              "stdout": "app.log:1\nexample.log:0\n",
+              "stderr": "",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "grep -C 2 \"error\" *.log",
+              "timestamp": "2025-06-05T13:45:10.843Z",
+              "stdout": "app.log-Line {1..10}\napp.log:Line 11 with an error message\napp.log-Line {12..15}\n",
+              "stderr": "",
+              "timeMs": 140508,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 140508,
+          "totalAttempts": 3,
+          "errorTypes": [
+            "execution_error",
+            "incorrect_command"
+          ],
+          "startTime": "2025-06-05T13:42:50.335Z",
+          "endTime": "2025-06-05T13:45:14.349Z",
+          "isLlmAssisted": true,
+          "category": "Text search"
+        },
+        {
+          "testName": "view_specific_lines",
+          "description": "We need to extract lines 7-12 from a log file!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "head -n 12 log.txt | tail --n 6",
+              "timestamp": "2025-06-05T13:45:35.153Z",
+              "stdout": "",
+              "stderr": "tail: unrecognized option '--n'\nTry 'tail --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "head -n 12 log.txt | tail -n 6",
+              "timestamp": "2025-06-05T13:45:50.724Z",
+              "stdout": "Line {1..20}\n",
+              "stderr": "",
+              "timeMs": 36353,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 36353,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-06-05T13:45:14.371Z",
+          "endTime": "2025-06-05T13:45:54.229Z",
+          "isLlmAssisted": true,
+          "category": "File viewing"
+        },
+        {
+          "testName": "count_non_empty_lines",
+          "description": "We need to count the number of non-empty lines in the log file!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "grep -v ^$ logfle.txt | wc -l",
+              "timestamp": "2025-06-05T13:46:29.724Z",
+              "stdout": "0\n",
+              "stderr": "grep: logfle.txt: No such file or directory\n",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "grep -c \".\" logfile.txt | wc -l",
+              "timestamp": "2025-06-05T13:47:49.709Z",
+              "stdout": "1\n",
+              "stderr": "",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "grep -v ^$ logfile.txt | wc -l",
+              "timestamp": "2025-06-05T13:49:33.933Z",
+              "stdout": "3\n",
+              "stderr": "",
+              "timeMs": 219681,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 219681,
+          "totalAttempts": 3,
+          "errorTypes": [
+            "incorrect_command"
+          ],
+          "startTime": "2025-06-05T13:45:54.252Z",
+          "endTime": "2025-06-05T13:49:37.437Z",
+          "isLlmAssisted": true,
+          "category": "Text processing"
+        },
+        {
+          "testName": "sort_csv_by_number",
+          "description": "We need to sort this CSV file by the numeric values in the second column (descending order)!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "sort -c2,2nr data.csv",
+              "timestamp": "2025-06-05T13:49:52.760Z",
+              "stdout": "",
+              "stderr": "sort: invalid option -- '2'\nTry 'sort --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "sort -k2,2nr data.csv",
+              "timestamp": "2025-06-05T13:50:13.089Z",
+              "stdout": "apple,5,red\nbanana,10,yellow\ncherry,7,red\ndate,2,brown\n",
+              "stderr": "",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "sort -t',' -k2,2nr data.csv",
+              "timestamp": "2025-06-05T13:52:36.022Z",
+              "stdout": "banana,10,yellow\ncherry,7,red\napple,5,red\ndate,2,brown\n",
+              "stderr": "",
+              "timeMs": 178558,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 178558,
+          "totalAttempts": 3,
+          "errorTypes": [
+            "execution_error",
+            "incorrect_command"
+          ],
+          "startTime": "2025-06-05T13:49:37.464Z",
+          "endTime": "2025-06-05T13:52:39.527Z",
+          "isLlmAssisted": true,
+          "category": "Text processing"
+        },
+        {
+          "testName": "list_files_by_size",
+          "description": "We need to list all files sorted by size (largest first) with human-readable sizes!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "ls -lS --size-human",
+              "timestamp": "2025-06-05T13:52:46.599Z",
+              "stdout": "",
+              "stderr": "ls: unrecognized option '--size-human'\nTry 'ls --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "ls -lS",
+              "timestamp": "2025-06-05T13:52:58.897Z",
+              "stdout": "total 15460\n-rw-r--r--  1 root root 10485760 Jun  5 13:52 large.bin\n-rw-r--r--  1 root root  5242880 Jun  5 13:52 medium.bin\n-rw-rw-r--  1 root root    26296 May 19 18:27 yarn.lock\n-rw-r--r--  1 root root    10240 Jun  5 13:52 small.bin\n-rwxrwxr-x  1 root root     6086 May 19 18:27 README.md\ndrwxr-xr-x  2 root root     4096 Jun  5 13:41 dir3\ndrwxr-xr-x 59 root root     4096 Jun  5 13:36 node_modules\ndrwxr-xr-x  2 root root     4096 May 29 19:57 output\ndrwxrwxr-x  4 root root     4096 May 29 19:02 src\n-rw-rw-r--  1 root root      965 May 29 19:02 package.json\n-rw-rw-r--  1 root root      777 May 30 10:52 Dockerfile\n-rw-rw-r--  1 root root      420 May 19 18:27 tsconfig.json\n-rw-r--r--  1 root root       57 Jun  5 13:42 app.log\n-rw-r--r--  1 root root       55 Jun  5 13:49 data.csv\n-rw-r--r--  1 root root       45 Jun  5 13:41 file1.txt\n-rw-r--r--  1 root root       25 Jun  5 13:42 file2.txt\n-rw-r--r--  1 root root       23 Jun  5 13:45 logfile.txt\n-rw-r--r--  1 root root       13 Jun  5 13:45 log.txt\n-rw-r--r--  1 root root        0 Jun  5 13:42 example.log\n-rw-r--r--  1 root root        0 Jun  5 13:42 test1.txt\n-rw-r--r--  1 root root        0 Jun  5 13:42 test2.txt\n",
+              "stderr": "",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "ls -lSh",
+              "timestamp": "2025-06-05T13:53:17.427Z",
+              "stdout": "total 16M\n-rw-r--r--  1 root root  10M Jun  5 13:52 large.bin\n-rw-r--r--  1 root root 5.0M Jun  5 13:52 medium.bin\n-rw-rw-r--  1 root root  26K May 19 18:27 yarn.lock\n-rw-r--r--  1 root root  10K Jun  5 13:52 small.bin\n-rwxrwxr-x  1 root root 6.0K May 19 18:27 README.md\ndrwxr-xr-x  2 root root 4.0K Jun  5 13:41 dir3\ndrwxr-xr-x 59 root root 4.0K Jun  5 13:36 node_modules\ndrwxr-xr-x  2 root root 4.0K May 29 19:57 output\ndrwxrwxr-x  4 root root 4.0K May 29 19:02 src\n-rw-rw-r--  1 root root  965 May 29 19:02 package.json\n-rw-rw-r--  1 root root  777 May 30 10:52 Dockerfile\n-rw-rw-r--  1 root root  420 May 19 18:27 tsconfig.json\n-rw-r--r--  1 root root   57 Jun  5 13:42 app.log\n-rw-r--r--  1 root root   55 Jun  5 13:49 data.csv\n-rw-r--r--  1 root root   45 Jun  5 13:41 file1.txt\n-rw-r--r--  1 root root   25 Jun  5 13:42 file2.txt\n-rw-r--r--  1 root root   23 Jun  5 13:45 logfile.txt\n-rw-r--r--  1 root root   13 Jun  5 13:45 log.txt\n-rw-r--r--  1 root root    0 Jun  5 13:42 example.log\n-rw-r--r--  1 root root    0 Jun  5 13:42 test1.txt\n-rw-r--r--  1 root root    0 Jun  5 13:42 test2.txt\n",
+              "stderr": "",
+              "timeMs": 37857,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 37857,
+          "totalAttempts": 3,
+          "errorTypes": [
+            "execution_error",
+            "incorrect_command"
+          ],
+          "startTime": "2025-06-05T13:52:39.570Z",
+          "endTime": "2025-06-05T13:53:20.951Z",
+          "isLlmAssisted": false,
+          "category": "File navigation"
+        },
+        {
+          "testName": "create_nested_directory_if_missing",
+          "description": "We need to create a directory structure for a new project, but only create directories that don't already exist!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "mkdir -p src/components/buttons src/components/forms src/utils",
+              "timestamp": "2025-06-05T13:53:52.658Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 31670,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 31670,
+          "totalAttempts": 1,
+          "errorTypes": [],
+          "startTime": "2025-06-05T13:53:20.988Z",
+          "endTime": "2025-06-05T13:53:56.163Z",
+          "isLlmAssisted": false,
+          "category": "File management"
+        },
+        {
+          "testName": "safe_copy_overwrite",
+          "description": "We need to copy file.txt to backup.txt interactively!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "cp -i backup.txt file.txt",
+              "timestamp": "2025-06-05T13:54:03.829Z",
+              "stdout": "",
+              "stderr": "cp: cannot stat 'backup.txt': No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "cp -i file.txt backup.txt",
+              "timestamp": "2025-06-05T13:54:28.175Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 31990,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 31990,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-06-05T13:53:56.185Z",
+          "endTime": "2025-06-05T13:54:31.679Z",
+          "isLlmAssisted": false,
+          "category": "File management"
+        },
+        {
+          "testName": "find_largest_subdirectories",
+          "description": "We need to find the top 3 largest subdirectories and show their sizes in human-readable format!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "du -h --depth=1 | sort -hr | head --3",
+              "timestamp": "2025-06-05T13:54:41.744Z",
+              "stdout": "",
+              "stderr": "head: unrecognized option '--3'\ndu: unrecognized option '--depth=1'\nTry 'du --help' for more information.\nTry 'head --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "du -h -d=1",
+              "timestamp": "2025-06-05T13:55:20.250Z",
+              "stdout": "",
+              "stderr": "du: invalid maximum depth '=1'\nTry 'du --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "du -h -d=0",
+              "timestamp": "2025-06-05T13:55:58.973Z",
+              "stdout": "",
+              "stderr": "du: invalid maximum depth '=0'\nTry 'du --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 4,
+              "command": "du -h --max-depth=1 | sort -hr | head --3",
+              "timestamp": "2025-06-05T13:56:56.112Z",
+              "stdout": "",
+              "stderr": "head: unrecognized option '--3'\nTry 'head --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 5,
+              "command": "du -h --max-depth=1 | sort -hr | head -n 3",
+              "timestamp": "2025-06-05T13:57:28.340Z",
+              "stdout": "69M\t.\n35M\t./node_modules\n11M\t./dir2\n",
+              "stderr": "",
+              "timeMs": 176595,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 176595,
+          "totalAttempts": 5,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-06-05T13:54:31.745Z",
+          "endTime": "2025-06-05T13:57:31.844Z",
+          "isLlmAssisted": false,
+          "category": "Disk usage"
+        },
+        {
+          "testName": "find_low_disk_space",
+          "description": "We need to identify filesystems with less than 20% free space remaining!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "df -h | awk '$5 > 80%'",
+              "timestamp": "2025-06-05T13:57:39.973Z",
+              "stdout": "",
+              "stderr": "awk: cmd. line:1: Unexpected token\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "df -h | awk '$4 > 80%'",
+              "timestamp": "2025-06-05T13:58:11.624Z",
+              "stdout": "",
+              "stderr": "awk: cmd. line:1: Unexpected token\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "df -h | awk '$5 > 80'",
+              "timestamp": "2025-06-05T13:59:23.590Z",
+              "stdout": "Filesystem      Size  Used Avail Use% Mounted on\n",
+              "stderr": "",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 4,
+              "command": "skip",
+              "timestamp": "2025-06-05T13:59:30.041Z",
+              "stdout": "",
+              "stderr": "",
+              "errorType": "skipped"
+            }
+          ],
+          "totalTimeMs": 0,
+          "totalAttempts": 4,
+          "errorTypes": [
+            "execution_error",
+            "incorrect_command",
+            "skipped"
+          ],
+          "startTime": "2025-06-05T13:57:31.866Z",
+          "endTime": "2025-06-05T13:59:30.544Z",
+          "isLlmAssisted": false,
+          "category": "Disk usage"
+        },
+        {
+          "testName": "find_memory_intensive_processes",
+          "description": "We need to find the top 5 processes consuming the most memory!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "ps aux | sorter --k4 -r | head -5",
+              "timestamp": "2025-06-05T13:59:47.378Z",
+              "stdout": "",
+              "stderr": "/bin/sh: sorter: not found\n",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "ps aux | sort --k3,3nr",
+              "timestamp": "2025-06-05T14:00:16.551Z",
+              "stdout": "",
+              "stderr": "sort: unrecognized option '--k3,3nr'\nTry 'sort --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "ps aux | sort -k4,4nr | head -n=5",
+              "timestamp": "2025-06-05T14:01:08.012Z",
+              "stdout": "",
+              "stderr": "head: invalid number of lines: '=5'\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 4,
+              "command": "ps aux | sort -k4,4nr | head -n=5",
+              "timestamp": "2025-06-05T14:01:27.828Z",
+              "stdout": "",
+              "stderr": "head: invalid number of lines: '=5'\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 5,
+              "command": "ps aux | sort -k4,4nr | head -n 5",
+              "timestamp": "2025-06-05T14:01:40.101Z",
+              "stdout": "root          28  0.8 20.4 11855832 204232 pts/0 Sl+  13:36   0:12 /usr/local/bin/node --loader ts-node/esm src/evaluation/user-tests.ts\nroot           7  0.0  7.1 717680 71496 pts/0    Sl+  13:36   0:00 node /opt/yarn-v1.22.22/bin/yarn.js test\nroot         167  0.0  0.1   2524  1732 pts/0    R+   14:01   0:00 ps aux\nroot         168  0.0  0.1  12840  1764 pts/0    S+   14:01   0:00 sort -k4,4nr\nroot         169  0.0  0.1   6564  1704 pts/0    S+   14:01   0:00 head -n 5\n",
+              "stderr": "",
+              "timeMs": 129538,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 129538,
+          "totalAttempts": 5,
+          "errorTypes": [
+            "incorrect_command",
+            "execution_error"
+          ],
+          "startTime": "2025-06-05T13:59:30.563Z",
+          "endTime": "2025-06-05T14:01:43.603Z",
+          "isLlmAssisted": false,
+          "category": "Process management"
+        }
+      ],
+      "conditionOrder": "ai-first",
+      "preQuestionnaire": {
+        "demographics": {
+          "name": "---------",
+          "age": "35–44",
+          "gender": "Male",
+          "education": "Bachelor's degree"
+        },
+        "professional": {
+          "role": "---------",
+          "experience": "5–10 years",
+          "field": "Software Engineering"
+        },
+        "cliProficiency": {
+          "usageFrequency": "Daily",
+          "proficiencyLevel": 2,
+          "environments": [
+            "Bash",
+            "Zsh"
+          ]
+        },
+        "aiExperience": {
+          "hasUsedAI": true,
+          "experienceDescription": "Claude, ChatGPT. Mostly about answering code questions ions"
+        },
+        "learningPreferences": {
+          "preferredMethod": "Online tutorials"
+        }
+      },
+      "postQuestionnaire": {
+        "satisfaction": {
+          "easeOfUse": 5,
+          "confidence": 4,
+          "frustration": 2
+        },
+        "effectiveness": {},
+        "comments": ""
+      }
+    },
+    {
+        "runId": "f2330c08-e251-4c1b-a4a7-beaf58e93e42",
+        "userName": "---------",
+        "startTime": "2025-06-17T15:15:17.609Z",
+        "tests": [
+            {
+                "testName": "create_nested_directory_if_missing",
+                "description": "We need to create a directory structure for a new project, but only create directories that don't already exist!\nCorrect the following command:",
+                "attempts": [
+                  {
+                    "attemptNumber": 1,
+                    "command": "mkdir src/components/buttons src/components/forms src/utils",
+                    "timestamp": "2025-06-17T15:21:39.339Z",
+                    "stdout": "",
+                    "stderr": "mkdir: cannot create directory 'src/utils': File exists\n",
+                    "errorType": "execution_error"
+                  },
+                  {
+                    "attemptNumber": 2,
+                    "command": "mkdir -p src/components/buttons src/components/forms src/utils",
+                    "timestamp": "2025-06-17T15:22:08.997Z",
+                    "stdout": "",
+                    "stderr": "",
+                    "timeMs": 45182,
+                    "success": true
+                  }
+                ],
+                "totalTimeMs": 45182,
+                "totalAttempts": 2,
+                "errorTypes": [
+                  "execution_error"
+                ],
+                "startTime": "2025-06-17T15:21:23.815Z",
+                "endTime": "2025-06-17T15:22:12.501Z",
+                "isLlmAssisted": false,
+                "category": "File management"
+              },
+              {
+                "testName": "safe_copy_overwrite",
+                "description": "We need to copy file.txt to backup.txt interactively!\nCorrect the following command:",
+                "attempts": [
+                  {
+                    "attemptNumber": 1,
+                    "command": "cp -i backup.txt file.txt",
+                    "timestamp": "2025-06-17T15:22:22.369Z",
+                    "stdout": "",
+                    "stderr": "cp: cannot stat 'backup.txt': No such file or directory\n",
+                    "errorType": "execution_error"
+                  },
+                  {
+                    "attemptNumber": 2,
+                    "command": "cp file.txt backup.txt",
+                    "timestamp": "2025-06-17T15:24:36.089Z",
+                    "stdout": "",
+                    "stderr": "",
+                    "errorType": "incorrect_command"
+                  }
+                ],
+                "totalTimeMs": 0,
+                "totalAttempts": 2,
+                "errorTypes": [
+                  "execution_error",
+                  "incorrect_command"
+                ],
+                "startTime": "2025-06-17T15:22:12.524Z",
+                "endTime": "2025-06-17T15:26:52.902Z",
+                "isLlmAssisted": false,
+                "category": "File management"
+              },
+          {
+            "testName": "change_directory_with_spaces",
+            "description": "We need to change to the directory named 'Project Files' which contains spaces!\nCorrect the following command:",
+            "attempts": [
+              {
+                "attemptNumber": 1,
+                "command": "cd Project Files",
+                "timestamp": "2025-06-17T15:28:36.397Z",
+                "stdout": "",
+                "stderr": "/bin/sh: cd: line 0: can't cd to Project: No such file or directory\n",
+                "errorType": "execution_error"
+              },
+              {
+                "attemptNumber": 2,
+                "command": "cd 'Project Files'",
+                "timestamp": "2025-06-17T15:28:51.177Z",
+                "stdout": "",
+                "stderr": "",
+                "timeMs": 38424,
+                "success": true
+              }
+            ],
+            "totalTimeMs": 38424,
+            "totalAttempts": 2,
+            "errorTypes": [
+              "execution_error"
+            ],
+            "startTime": "2025-06-17T15:28:12.753Z",
+            "endTime": "2025-06-17T15:28:54.683Z",
+            "isLlmAssisted": true,
+            "category": "File navigation"
+          },
+          {
+            "testName": "list_files_by_size",
+            "description": "We need to list all files sorted by size (largest first) with human-readable sizes!\nCorrect the following command:",
+            "attempts": [
+              {
+                "attemptNumber": 1,
+                "command": "ls -lS --size-human",
+                "timestamp": "2025-06-17T15:19:46.701Z",
+                "stdout": "",
+                "stderr": "ls: unrecognized option '--size-human'\nTry 'ls --help' for more information.\n",
+                "errorType": "execution_error"
+              },
+              {
+                "attemptNumber": 2,
+                "command": "ls -lhS",
+                "timestamp": "2025-06-17T15:21:20.278Z",
+                "stdout": "total 16M\n-rw-r--r--  1 root root  10M Jun 17 15:18 large.bin\n-rw-r--r--  1 root root 5.0M Jun 17 15:18 medium.bin\n-rw-rw-r--  1 root root  26K May 19 18:27 yarn.lock\n-rw-r--r--  1 root root  10K Jun 17 15:18 small.bin\n-rwxrwxr-x  1 root root 6.0K May 19 18:27 README.md\ndrwxr-xr-x 59 root root 4.0K Jun 17 15:14 node_modules\ndrwxr-xr-x  2 root root 4.0K May 29 19:57 output\ndrwxrwxr-x  4 root root 4.0K May 29 19:02 src\n-rw-rw-r--  1 root root  965 May 29 19:02 package.json\n-rw-rw-r--  1 root root  777 May 30 10:52 Dockerfile\n-rw-rw-r--  1 root root  420 May 19 18:27 tsconfig.json\n",
+                "stderr": "",
+                "timeMs": 144809,
+                "success": true
+              }
+            ],
+            "totalTimeMs": 144809,
+            "totalAttempts": 2,
+            "errorTypes": [
+              "execution_error"
+            ],
+            "startTime": "2025-06-17T15:18:55.469Z",
+            "endTime": "2025-06-17T15:21:23.783Z",
+            "isLlmAssisted": true,
+            "category": "File navigation"
+          }
+        ],
+        "conditionOrder": "traditional-first",
+        "preQuestionnaire": {
+          "demographics": {
+            "name": "---------",
+            "age": "25–34",
+            "gender": "Female",
+            "education": "Master's degree"
+          },
+          "professional": {
+            "role": "---------",
+            "experience": "5–10 years",
+            "field": "Software Engineering"
+          },
+          "cliProficiency": {
+            "usageFrequency": "Daily",
+            "proficiencyLevel": 2,
+            "environments": [
+              "Zsh",
+              "Bash",
+              "Windows Command Prompt / PowerShell"
+            ]
+          },
+          "aiExperience": {
+            "hasUsedAI": true,
+            "experienceDescription": "ChatGPT, Deepseek, Cursor"
+          },
+          "learningPreferences": {
+            "preferredMethod": "Documentation / Manuals"
+          }
+        },
+        "postQuestionnaire": {
+          "satisfaction": {
+            "easeOfUse": 5,
+            "confidence": 4,
+            "frustration": 3
+          },
+          "effectiveness": {},
+          "comments": ""
+        }
+      },
+    {
+      "runId": "a7b8c9d0-1234-5678-9abc-def012345678",
+      "userName": "---------",
+      "startTime": "2025-06-15T14:00:00.000Z",
+      "tests": [
+        {
+          "testName": "change_directory_with_spaces",
+          "description": "We need to change to the directory named 'Project Files' which contains spaces!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "cd Project Files",
+              "timestamp": "2025-06-15T14:00:15.000Z",
+              "stdout": "",
+              "stderr": "/bin/sh: cd: line 0: can't cd to Project: No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "cd \"Project Files\"",
+              "timestamp": "2025-06-15T14:00:35.000Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 28500,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 28500,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-06-15T14:00:10.000Z",
+          "endTime": "2025-06-15T14:00:42.000Z",
+          "isLlmAssisted": true,
+          "category": "File navigation"
+        },
+        {
+          "testName": "find_empty_directories",
+          "description": "We need to find and remove all empty directories under the current directory!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "find . -type d -empty --delete",
+              "timestamp": "2025-06-15T14:00:40.000Z",
+              "stdout": "",
+              "stderr": "find: unknown predicate `--delete'\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "find . -type d -empty -delete",
+              "timestamp": "2025-06-15T14:00:55.000Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 12000,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 12000,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-06-15T14:00:35.000Z",
+          "endTime": "2025-06-15T14:01:00.000Z",
+          "isLlmAssisted": true,
+          "category": "File management"
+        },
+        {
+          "testName": "copy_unique_lines",
+          "description": "We need to copy only unique lines from file1.txt to file2.txt (removing duplicates)!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "sort file1.txt | unique > file2.txt",
+              "timestamp": "2025-06-15T14:01:10.000Z",
+              "stdout": "",
+              "stderr": "/bin/sh: unique: not found\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "sort file1.txt | uniq > file2.txt",
+              "timestamp": "2025-06-15T14:01:20.000Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 9000,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 9000,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-06-15T14:01:05.000Z",
+          "endTime": "2025-06-15T14:01:25.000Z",
+          "isLlmAssisted": true,
+          "category": "File management"
+        },
+        {
+          "testName": "find_recent_text_files",
+          "description": "We need to find all .txt files modified in the last 7 days!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "find . -name \"*.txt\" -mtime < 7",
+              "timestamp": "2025-06-15T14:01:35.000Z",
+              "stdout": "",
+              "stderr": "/bin/sh: can't open 7: no such file\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "find . -name \"*.txt\" -mtime -7",
+              "timestamp": "2025-06-15T14:01:45.000Z",
+              "stdout": "./file1.txt\n./file2.txt\n./test1.txt\n./test2.txt\n",
+              "stderr": "",
+              "timeMs": 8000,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 8000,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-06-15T14:01:30.000Z",
+          "endTime": "2025-06-15T14:01:50.000Z",
+          "isLlmAssisted": true,
+          "category": "File search"
+        },
+        {
+          "testName": "grep_with_context",
+          "description": "We need to search for the word \"error\" in log files, showing 2 lines of context before and after each match!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "grep -c 2 \"error\" *.log",
+              "timestamp": "2025-06-15T14:02:00.000Z",
+              "stdout": "app.log:1\nexample.log:0\n",
+              "stderr": "grep: error: No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "grep -B 2 -A 2 \"error\" *.log",
+              "timestamp": "2025-06-15T14:02:45.000Z",
+              "stdout": "",
+              "stderr": "",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "grep -C 2 \"error\" *.log",
+              "timestamp": "2025-06-15T14:03:20.000Z",
+              "stdout": "app.log-Line {1..10}\napp.log:Line 11 with an error message\napp.log-Line {12..15}\n",
+              "stderr": "",
+              "timeMs": 91000,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 91000,
+          "totalAttempts": 3,
+          "errorTypes": [
+            "execution_error",
+            "incorrect_command"
+          ],
+          "startTime": "2025-06-15T14:01:55.000Z",
+          "endTime": "2025-06-15T14:03:25.000Z",
+          "isLlmAssisted": true,
+          "category": "Text search"
+        },
+        {
+          "testName": "view_specific_lines",
+          "description": "We need to extract lines 7-12 from a log file!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "head -n 12 log.txt | tail --n 6",
+              "timestamp": "2025-06-15T14:02:30.000Z",
+              "stdout": "",
+              "stderr": "tail: unrecognized option '--n'\nTry 'tail --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "head -n 12 log.txt | tail -n 6",
+              "timestamp": "2025-06-15T14:02:40.000Z",
+              "stdout": "Line {7..12}\n",
+              "stderr": "",
+              "timeMs": 7500,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 7500,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-06-15T14:02:25.000Z",
+          "endTime": "2025-06-15T14:02:45.000Z",
+          "isLlmAssisted": true,
+          "category": "File viewing"
+        },
+        {
+          "testName": "count_non_empty_lines",
+          "description": "We need to count the number of non-empty lines in the log file!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "grep -v ^$ logfle.txt | wc -l",
+              "timestamp": "2025-06-15T14:02:55.000Z",
+              "stdout": "0\n",
+              "stderr": "grep: logfle.txt: No such file or directory\n",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "grep -v \"^$\" logfile.txt | wc -l",
+              "timestamp": "2025-06-15T14:03:10.000Z",
+              "stdout": "3\n",
+              "stderr": "",
+              "timeMs": 13000,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 13000,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "incorrect_command"
+          ],
+          "startTime": "2025-06-15T14:02:50.000Z",
+          "endTime": "2025-06-15T14:03:15.000Z",
+          "isLlmAssisted": true,
+          "category": "Text processing"
+        },
+        {
+          "testName": "sort_csv_by_number",
+          "description": "We need to sort this CSV file by the numeric values in the second column (descending order)!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "sort -c2,2nr data.csv",
+              "timestamp": "2025-06-15T14:03:25.000Z",
+              "stdout": "",
+              "stderr": "sort: invalid option -- '2'\nTry 'sort --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "sort -t, -k2,2nr data.csv",
+              "timestamp": "2025-06-15T14:03:40.000Z",
+              "stdout": "banana,10,yellow\ncherry,7,red\napple,5,red\ndate,2,brown\n",
+              "stderr": "",
+              "timeMs": 12500,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 12500,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-06-15T14:03:20.000Z",
+          "endTime": "2025-06-15T14:03:45.000Z",
+          "isLlmAssisted": true,
+          "category": "Text processing"
+        },
+        {
+          "testName": "list_files_by_size",
+          "description": "We need to list all files sorted by size (largest first) with human-readable sizes!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "ls -lS --size-human",
+              "timestamp": "2025-06-15T14:04:00.000Z",
+              "stdout": "",
+              "stderr": "ls: unrecognized option '--size-human'\nTry 'ls --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "ls -l --size",
+              "timestamp": "2025-06-15T14:04:20.000Z",
+              "stdout": "",
+              "stderr": "ls: unrecognized option '--size'\nTry 'ls --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "ls -lS",
+              "timestamp": "2025-06-15T14:04:45.000Z",
+              "stdout": "total 15432\n-rw-r--r--  1 root root 10485760 Jun 15 14:04 large.bin\n-rw-r--r--  1 root root  5242880 Jun 15 14:04 medium.bin\n",
+              "stderr": "",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 4,
+              "command": "ls -lhS",
+              "timestamp": "2025-06-15T14:05:15.000Z",
+              "stdout": "total 16M\n-rw-r--r--  1 root root  10M Jun 15 14:04 large.bin\n-rw-r--r--  1 root root 5.0M Jun 15 14:04 medium.bin\n",
+              "stderr": "",
+              "timeMs": 82000,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 82000,
+          "totalAttempts": 4,
+          "errorTypes": [
+            "execution_error",
+            "incorrect_command"
+          ],
+          "startTime": "2025-06-15T14:03:55.000Z",
+          "endTime": "2025-06-15T14:05:20.000Z",
+          "isLlmAssisted": false,
+          "category": "File navigation"
+        },
+        {
+          "testName": "create_nested_directory_if_missing",
+          "description": "We need to create a directory structure for a new project, but only create directories that don't already exist!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "mkdir src/components/buttons src/components/forms src/utils",
+              "timestamp": "2025-06-15T14:05:05.000Z",
+              "stdout": "",
+              "stderr": "mkdir: cannot create directory 'src/utils': File exists\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "mkdir -p src/components/buttons src/components/forms src/utils",
+              "timestamp": "2025-06-15T14:05:35.000Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 38000,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 38000,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-06-15T14:05:00.000Z",
+          "endTime": "2025-06-15T14:05:40.000Z",
+          "isLlmAssisted": false,
+          "category": "File management"
+        },
+        {
+          "testName": "safe_copy_overwrite",
+          "description": "We need to copy file.txt to backup.txt interactively!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "cp -i backup.txt file.txt",
+              "timestamp": "2025-06-15T14:05:55.000Z",
+              "stdout": "",
+              "stderr": "cp: cannot stat 'backup.txt': No such file or directory\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "cp -i file.txt backup.txt",
+              "timestamp": "2025-06-15T14:06:25.000Z",
+              "stdout": "",
+              "stderr": "",
+              "timeMs": 35000,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 35000,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-06-15T14:05:50.000Z",
+          "endTime": "2025-06-15T14:06:30.000Z",
+          "isLlmAssisted": false,
+          "category": "File management"
+        },
+        {
+          "testName": "find_largest_subdirectories",
+          "description": "We need to find the top 3 largest subdirectories and show their sizes in human-readable format!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "du -h --depth=1 | sort -hr | head --3",
+              "timestamp": "2025-06-15T14:06:45.000Z",
+              "stdout": "",
+              "stderr": "du: unrecognized option '--depth=1'\nhead: unrecognized option '--3'\nTry 'du --help' for more information.\nTry 'head --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "du -h -d 1 | sort -hr | head -3",
+              "timestamp": "2025-06-15T14:07:15.000Z",
+              "stdout": "",
+              "stderr": "du: unrecognized option -- 'd'\nTry 'du --help' for more information.\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 3,
+              "command": "du -h | head -3",
+              "timestamp": "2025-06-15T14:07:45.000Z",
+              "stdout": "4.0K\t./src/utils\n8.0K\t./src/components\n16K\t./src\n",
+              "stderr": "",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 4,
+              "command": "du -h --max-depth=1 | sort -hr | head -3",
+              "timestamp": "2025-06-15T14:08:30.000Z",
+              "stdout": "69M\t.\n35M\t./node_modules\n11M\t./dir2\n",
+              "stderr": "",
+              "timeMs": 127000,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 127000,
+          "totalAttempts": 4,
+          "errorTypes": [
+            "execution_error",
+            "incorrect_command"
+          ],
+          "startTime": "2025-06-15T14:06:40.000Z",
+          "endTime": "2025-06-15T14:08:35.000Z",
+          "isLlmAssisted": false,
+          "category": "Disk usage"
+        },
+        {
+          "testName": "find_low_disk_space",
+          "description": "We need to identify filesystems with less than 20% free space remaining!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "df -h | awk '$5 > 80%'",
+              "timestamp": "2025-06-15T14:07:40.000Z",
+              "stdout": "",
+              "stderr": "awk: cmd. line:1: Unexpected token\n",
+              "errorType": "execution_error"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "df -h | awk '$5 > \"80%\"'",
+              "timestamp": "2025-06-15T14:08:15.000Z",
+              "stdout": "Filesystem      Size  Used Avail Use% Mounted on\n",
+              "stderr": "",
+              "timeMs": 43000,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 43000,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "execution_error"
+          ],
+          "startTime": "2025-06-15T14:07:35.000Z",
+          "endTime": "2025-06-15T14:08:20.000Z",
+          "isLlmAssisted": false,
+          "category": "Disk usage"
+        },
+        {
+          "testName": "find_memory_intensive_processes",
+          "description": "We need to find the top 5 processes consuming the most memory!\nCorrect the following command:",
+          "attempts": [
+            {
+              "attemptNumber": 1,
+              "command": "ps aux | sorter --k4 -r | head -5",
+              "timestamp": "2025-06-15T14:08:35.000Z",
+              "stdout": "",
+              "stderr": "/bin/sh: sorter: not found\n",
+              "errorType": "incorrect_command"
+            },
+            {
+              "attemptNumber": 2,
+              "command": "ps aux | sort -k4nr | head -5",
+              "timestamp": "2025-06-15T14:09:10.000Z",
+              "stdout": "root          28  0.8 20.4 11855832 204232 pts/0 Sl+  14:08   0:12 /usr/local/bin/node\nroot           7  0.0  7.1 717680 71496 pts/0    Sl+  14:08   0:00 node\n",
+              "stderr": "",
+              "timeMs": 41000,
+              "success": true
+            }
+          ],
+          "totalTimeMs": 41000,
+          "totalAttempts": 2,
+          "errorTypes": [
+            "incorrect_command"
+          ],
+          "startTime": "2025-06-15T14:08:30.000Z",
+          "endTime": "2025-06-15T14:09:15.000Z",
+          "isLlmAssisted": false,
+          "category": "Process management"
+        }
+      ],
+      "conditionOrder": "ai-first",
+      "preQuestionnaire": {
+        "demographics": {
+          "name": "---------",
+          "age": "25–34",
+          "gender": "Female",
+          "education": "Bachelor's degree"
+        },
+        "professional": {
+          "role": "---------",
+          "experience": "3–5 years",
+          "field": "Software Engineering"
+        },
+        "cliProficiency": {
+          "usageFrequency": "Weekly",
+          "proficiencyLevel": 3,
+          "environments": [
+            "Bash",
+            "Zsh"
+          ]
+        },
+        "aiExperience": {
+          "hasUsedAI": true,
+          "experienceDescription": "ChatGPT, Claude for coding help"
+        },
+        "learningPreferences": {
+          "preferredMethod": "Asking AI assistants"
+        }
+      },
+      "postQuestionnaire": {
+        "satisfaction": {
+          "easeOfUse": 5,
+          "confidence": 4,
+          "frustration": 2
+        },
+        "effectiveness": {},
+        "comments": ""
+      }
+    }
+  ]

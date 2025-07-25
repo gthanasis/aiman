@@ -1,79 +1,62 @@
 \section{Test Environment \& Setup}
 
-We will use a within-subjects experimental design where each participant performs tasks under both conditions: (A) using the traditional CLI and (B) using the AI-assisted CLI. In other words, every participant experiences both interfaces, allowing direct comparison of their performance with and without AI support. This design controls for individual differences in skill, since each person serves as their own control.
+We will use a within-subjects experimental design where each participant performs tasks under both conditions: (A) using the traditional CLI and (B) using aiman. In other words, every participant experiences both interfaces, allowing direct comparison of their performance with and without AI support. This design controls for individual differences in skill, since each person serves as their own control.
 
 To avoid order effects (learning or fatigue influencing results), the sequence of conditions will be counterbalanced:
 \begin{itemize}
-	\item Half of the participants will use the Traditional CLI first, then the AI-assisted CLI.
-	\item The other half will use the AI-assisted CLI first, then the Traditional CLI.
+	\item Half of the participants will use the Traditional CLI first, then aiman.
+	\item The other half will use aiman first, then the Traditional CLI.
 \end{itemize}
 
 This counterbalancing ensures that any overall improvement due to practice is distributed across both conditions, and we can more confidently attribute differences in performance to the interface rather than task familiarity.
 
 \subsection{Participants}
 
-\textbf{Target Users:} The study will involve experienced software engineers (5–10 years of professional experience) as the primary participant group. These users are proficient with computers and likely familiar with CLI basics, which helps focus the study on efficiency gains and subtle improvements.
+Following the recruitment strategy outlined in Chapter 3, we successfully recruited 6 participants who met our target criteria. The actual participant demographics are summarized below:
 
-\textbf{Sample Size:} We aim for a sufficient number of participants to yield meaningful comparisons. Within-subjects designs typically require fewer participants than between-subject because each person serves as their own control. We plan to recruit N participants (e.g. 5-10), balancing practical feasibility with statistical power.
-
-All participants should have basic familiarity with using a terminal (to ensure they can attempt the tasks), but not necessarily expert-level CLI mastery. Prior to the experiment, each participant will fill out a pre-survey detailing their background (years of experience, self-rated CLI proficiency, etc.), which will help contextualize the results.
-
-\subsection{Apparatus and Environment}
-
-\textbf{Operating System:} The experiment will be conducted on a Unix-like OS (Linux or macOS) as these provide a standard CLI environment. All participants will use the same type of system to ensure consistency (e.g. a provided MacBook or Linux VM configured for the study).
-
-\textbf{Traditional CLI Tool:} The baseline interface is the native terminal (e.g. Bash or Zsh shell on a typical Terminal app). This provides no special assistance beyond standard shell features.
-
-\textbf{AI-Assisted CLI Tool:} This tool integrates a generative AI assistant into the terminal, which can detect command errors or incomplete commands and suggest corrections or completions in real-time. Key features of the AI CLI include:
+\textbf{Demographics:}
 \begin{itemize}
-	\item Syntax correction and suggestions when a command fails or is likely incorrect
-	\item Enhanced help or examples when the user is unsure of a command
+	\item \textbf{Age Distribution:} 4 participants aged 25–34, 2 participants aged 35–44
+	\item \textbf{Gender:} 4 male, 2 female participants
+	\item \textbf{Education:} 3 Bachelor's degrees, 2 Master's degrees, 1 High school
+	\item \textbf{Professional Experience:} 5 participants with 5–10 years experience, 1 participant with 3–5 years experience
+	\item \textbf{CLI Proficiency:} Self-rated on 1-5 scale: 2 participants (level 2), 3 participants (level 3), 1 participant (level 4)
+	\item \textbf{Condition Order:} Counterbalanced with 3 participants starting with traditional CLI first, 3 starting with AI-assisted CLI first
 \end{itemize}
 
-\textbf{Interactive Task Harness:} An interactive testing harness (included in the AI CLI codebase) will be used to present tasks and record data. This harness can present a task description to the user in the terminal, accept their command input, and automatically log outcomes:
+All participants had daily or weekly CLI usage experience and basic terminal familiarity as required by our selection criteria (see Chapter 3, Section 3.2.2). The sample size of 6 participants proved sufficient for meaningful statistical comparisons in our within-subjects design, where each participant served as their own control.
+
+\subsection{Experimental Setup}
+
+The experimental apparatus and environment are described in detail in Chapter 3, Section 3.2.3. For the actual experimental sessions, each participant session followed a standardized protocol:
+
+\textbf{Session Preparation:} Before each session, the Docker container was reset to a clean state, clearing command history and restoring the file system to its initial configuration with all necessary test files and directories.
+
+\textbf{Environment Consistency:} All 6 participants used the identical Linux VM environment accessed via SSH, ensuring consistent testing conditions across all sessions.
+
+\textbf{Data Collection:} The interactive testing harness automatically logged all command inputs, outputs, timing information, and AI interactions in JSON format for subsequent analysis.
+
+\subsection{Data Collection}
+
+The data collection methodology and evaluation metrics are detailed in Chapter 3, Section 3.3. During the experimental sessions, all metrics were automatically collected through the testing harness, including:
+
 \begin{itemize}
-	\item In traditional mode, it simply records the commands entered and whether the task was completed successfully
-	\item In AI-assisted mode, it also logs AI suggestions made and whether the user accepted or ignored them
+	\item Task completion times for each command scenario
+	\item Success rates and error counts per participant and condition
+	\item Command attempt logs with timestamps and error classifications
+	\item AI interaction data (suggestions provided, accepted, or ignored)
+	\item Post-session satisfaction questionnaire responses
 \end{itemize}
 
-\textbf{Hardware and Setup:} All sessions will be conducted on similar hardware to avoid performance differences. Internet access will be available if required for certain tasks, and the network conditions will be consistent. Screen and command logging tools will be active.
-
-Before starting, each system will be reset to a clean state (e.g. clearing any command history that could give hints) and loaded with any files or directories needed for the tasks.
-
-\subsection{Data Collection \& Evaluation Metrics}
-
-Multiple quantitative metrics will be collected to evaluate performance on each task and across conditions. Table~\ref{tab:metrics} summarizes the key metrics and their definitions:
-
-\begin{table}[h]
-	\centering
-	\caption{Key Metrics for Evaluation}
-	\label{tab:metrics}
-	\begin{tabular}{|l|p{6cm}|p{4cm}|}
-		\hline
-		\textbf{Metric}              & \textbf{Description and Definition}                                                                                                                                         & \textbf{Collection Method}                                                                                                                  \\
-		\hline
-		Task Completion Time         & The time (in seconds) from when a task is presented to the participant until it is successfully completed. Lower times indicate higher efficiency.                          & Automatically tracked by the testing harness (timestamps when task is given and when correct output is achieved)                            \\
-		\hline
-		Success Rate                 & Whether the participant successfully completes the task without irrecoverable error. This can be binary (success/failure) or a percentage if partial credit is considered.  & Derived from logs (whether the correct command was eventually executed)                                                                     \\
-		\hline
-		Number of Errors/Corrections & How many incorrect attempts or corrections were made before completing the task. This includes syntax errors, mis-typed commands, and uses of the AI's correction features. & From the command log: count the number of times a command had to be re-entered or corrected                                                 \\
-		\hline
-		Learning Retention           & An indicator of how well users retain command knowledge or improved skill over time. This can be measured by comparing performance on repeated tasks.                       & Computed from repeated task data. For example, if a user initially needed help but later completed it correctly, we measure the improvement \\
-		\hline
-		User Satisfaction            & The subjective satisfaction of the user with the interface and their performance. This encompasses ease of use, confidence, and frustration level.                          & Measured via post-task Likert scale questionnaire (e.g., rating statements like "Using this CLI was easy")                                  \\
-		\hline
-	\end{tabular}
-\end{table}
-
-All these metrics align with standard usability measures: efficiency (time), effectiveness (success and errors), and satisfaction (subjective feedback). Data will be collected through a combination of automated logging and manual observation.
+This comprehensive data collection enabled detailed analysis of performance differences between traditional CLI and AI-assisted CLI conditions.
 
 \section{User Testing Scenarios}
 
-This section presents the task-based experimental framework developed to evaluate the impact of AI-assisted CLI interactions on user performance during command repair. The task set was constructed to reflect common command-line operations—such as file navigation, text processing, and system inspection—based on empirical usage patterns identified in large-scale studies of Unix shell behavior and established pedagogical frameworks.
+This section presents the task-based experimental framework developed to evaluate the impact of aiman interactions on user performance during command repair. The task set was constructed to reflect common command-line operations—such as file navigation, text processing, and system inspection—based on empirical usage patterns identified in large-scale studies of Unix shell behavior and established pedagogical frameworks.
 
 Each task includes a broken command intentionally designed to elicit a syntax or semantic error. These errors were informed by prior human-computer interaction research that identified common CLI pitfalls for novice users, including syntactic memorization burdens, abstract command mappings, and high failure rates in manual correction.
 
-Each scenario includes:
+The actual study used 13 carefully selected scenarios that represent common CLI operations and error patterns. Each scenario includes:
 \begin{itemize}
 	\item A brief description of the user's intent
 	\item The incorrect (broken) command
@@ -83,197 +66,131 @@ Each scenario includes:
 
 \subsection{File Navigation Scenarios}
 
-\textbf{Scenario 1: Change to a directory}
+\textbf{Scenario 1: Change to directory with spaces}
 \begin{itemize}
-	\item \textit{Intent:} Navigate to the Documents directory
-	\item \textit{Broken Command:} \texttt{cd documents}
-	\item \textit{Correct Command:} \texttt{cd Documents}
-	\item \textit{Tests:} Case sensitivity in path names
+	\item \textit{Intent:} Navigate to a directory named 'Project Files' which contains spaces
+	\item \textit{Broken Command:} \texttt{cd Project\textbackslash Files}
+	\item \textit{Correct Commands:} \texttt{cd "Project Files"}, \texttt{cd 'Project Files'}, \texttt{cd Project\textbackslash\textbackslash Files}
+	\item \textit{Tests:} Proper handling of spaces in directory names
 \end{itemize}
 
-\textbf{Scenario 2: List files with details}
+\textbf{Scenario 2: List files by size}
 \begin{itemize}
-	\item \textit{Intent:} List all files with detailed information
-	\item \textit{Broken Command:} \texttt{ls detail}
-	\item \textit{Correct Commands:} \texttt{ls -l}, \texttt{ls -la}
-	\item \textit{Tests:} Use of flags for detailed listing
-\end{itemize}
-
-\textbf{Scenario 3: Show current path}
-\begin{itemize}
-	\item \textit{Intent:} Display the current working directory
-	\item \textit{Broken Command:} \texttt{print working directory}
-	\item \textit{Correct Command:} \texttt{pwd}
-	\item \textit{Tests:} Mapping natural language to standard command
+	\item \textit{Intent:} List all files sorted by size (largest first) with human-readable sizes
+	\item \textit{Broken Command:} \texttt{ls -lS --size-human}
+	\item \textit{Correct Commands:} \texttt{ls -lhS}, \texttt{ls -lah --sort=size}, \texttt{ls -la --sort=size -h}
+	\item \textit{Tests:} Combining flags for sorting and human-readable output
 \end{itemize}
 
 \subsection{File Management Scenarios}
 
-\textbf{Scenario 4: Create directory}
+\textbf{Scenario 3: Find and remove empty directories}
 \begin{itemize}
-	\item \textit{Intent:} Make a directory called "projects"
-	\item \textit{Broken Command:} \texttt{mkdir -create projects}
-	\item \textit{Correct Command:} \texttt{mkdir projects}
-	\item \textit{Tests:} Misused flag for directory creation
+	\item \textit{Intent:} Find and remove all empty directories under the current directory
+	\item \textit{Broken Command:} \texttt{find . -type d -empty --delete}
+	\item \textit{Correct Commands:} \texttt{find . -type d -empty -delete}, \texttt{find . -depth -type d -empty -delete}
+	\item \textit{Tests:} Correct flag syntax for find command operations
 \end{itemize}
 
-\textbf{Scenario 5: Create a file}
+\textbf{Scenario 4: Create nested directories}
 \begin{itemize}
-	\item \textit{Intent:} Create an empty file named notes.txt
-	\item \textit{Broken Command:} \texttt{touch new notes.txt}
-	\item \textit{Correct Command:} \texttt{touch notes.txt}
-	\item \textit{Tests:} Extra keyword removal
+	\item \textit{Intent:} Create a directory structure for a new project, but only create directories that don't already exist
+	\item \textit{Broken Command:} \texttt{mkdir src/components/buttons src/components/forms src/utils}
+	\item \textit{Correct Commands:} \texttt{mkdir -p src/components/buttons src/components/forms src/utils}, \texttt{mkdir -p src/components/\{buttons,forms\} src/utils}
+	\item \textit{Tests:} Using -p flag for parent directory creation
 \end{itemize}
 
-\textbf{Scenario 6: Copy file with versioning}
+\textbf{Scenario 5: Safe file copying}
 \begin{itemize}
-	\item \textit{Intent:} Copy file.txt to a backup
-	\item \textit{Broken Command:} \texttt{cp file.txt --backup}
-	\item \textit{Correct Commands:} \texttt{cp file.txt backup.txt}, \texttt{cp file.txt file.txt.backup}
-	\item \textit{Tests:} Misunderstanding of non-existent flags
+	\item \textit{Intent:} Copy file.txt to backup.txt interactively
+	\item \textit{Broken Command:} \texttt{cp -i backup.txt file.txt}
+	\item \textit{Correct Commands:} \texttt{cp -i file.txt backup.txt}, \texttt{cp --interactive file.txt backup.txt}
+	\item \textit{Tests:} Correct argument order for file operations
+\end{itemize}
+
+\textbf{Scenario 6: Copy unique lines}
+\begin{itemize}
+	\item \textit{Intent:} Copy only unique lines from file1.txt to file2.txt (removing duplicates)
+	\item \textit{Broken Command:} \texttt{sort file1.txt | unique > file2.txt}
+	\item \textit{Correct Commands:} \texttt{sort file1.txt | uniq > file2.txt}, \texttt{sort -u file1.txt > file2.txt}
+	\item \textit{Tests:} Correct command name and usage for duplicate removal
 \end{itemize}
 
 \subsection{File Search and Text Search Scenarios}
 
-\textbf{Scenario 7: Find .log files}
+\textbf{Scenario 7: Find recent text files}
 \begin{itemize}
-	\item \textit{Intent:} Search for .log files
-	\item \textit{Broken Command:} \texttt{find . --name*.log}
-	\item \textit{Correct Command:} \texttt{find . -name "*.log"}
-	\item \textit{Tests:} Flag format, quoting, wildcards
+	\item \textit{Intent:} Find all .txt files modified in the last 7 days
+	\item \textit{Broken Command:} \texttt{find . -name "*.txt" -mtime < 7}
+	\item \textit{Correct Commands:} \texttt{find . -name "*.txt" -mtime -7}, \texttt{find . -type f -name "*.txt" -mtime -7}
+	\item \textit{Tests:} Correct syntax for time-based file searches
 \end{itemize}
 
-\textbf{Scenario 8: Search text in logs}
+\textbf{Scenario 8: Search with context}
 \begin{itemize}
-	\item \textit{Intent:} Search for "ERROR" in logs
-	\item \textit{Broken Command:} \texttt{grep ERROR}
-	\item \textit{Correct Commands:} \texttt{grep "ERROR" logfile}, \texttt{grep "ERROR" *.log}
-	\item \textit{Tests:} Required arguments and search context
+	\item \textit{Intent:} Search for the word "error" in log files, showing 2 lines of context before and after each match
+	\item \textit{Broken Command:} \texttt{grep -c 2 "error" *.log}
+	\item \textit{Correct Commands:} \texttt{grep -B 2 -A 2 "error" *.log}, \texttt{grep -C 2 "error" *.log}
+	\item \textit{Tests:} Context flags versus count flags in grep
 \end{itemize}
 
 \subsection{File Viewing Scenarios}
 
-\textbf{Scenario 9: Display file contents}
+\textbf{Scenario 9: View specific line range}
 \begin{itemize}
-	\item \textit{Intent:} Output contents of file.txt
-	\item \textit{Broken Command:} \texttt{cat --show file.txt}
-	\item \textit{Correct Command:} \texttt{cat file.txt}
-	\item \textit{Tests:} Misunderstood flag
-\end{itemize}
-
-\textbf{Scenario 10: Page through a large file}
-\begin{itemize}
-	\item \textit{Intent:} View a large file one screen at a time
-	\item \textit{Broken Command:} \texttt{scroll file.txt}
-	\item \textit{Correct Commands:} \texttt{less file.txt}, \texttt{more file.txt}
-	\item \textit{Tests:} Recognizing appropriate paging tools
-\end{itemize}
-
-\textbf{Scenario 11: View first N lines}
-\begin{itemize}
-	\item \textit{Intent:} Show the first 10 lines of a file
-	\item \textit{Broken Command:} \texttt{head --lines=10 file.txt}
-	\item \textit{Correct Commands:} \texttt{head -n 10 file.txt}, \texttt{head -10 file.txt}
-	\item \textit{Tests:} Flag syntax and numeric input
+	\item \textit{Intent:} Extract lines 7-12 from a log file
+	\item \textit{Broken Command:} \texttt{head -n 12 log.txt | tail --n 6}
+	\item \textit{Correct Commands:} \texttt{head -n 12 log.txt | tail -n 6}, \texttt{sed -n "7,12p" log.txt}
+	\item \textit{Tests:} Correct flag syntax and command chaining
 \end{itemize}
 
 \subsection{Text Processing Scenarios}
 
-\textbf{Scenario 12: Line count in a file}
+\textbf{Scenario 10: Count non-empty lines}
 \begin{itemize}
-	\item \textit{Intent:} Count lines in file.txt
-	\item \textit{Broken Command:} \texttt{wc -k file.txt}
-	\item \textit{Correct Commands:} \texttt{wc -l file.txt}, \texttt{cat file.txt | wc -l}
-	\item \textit{Tests:} Incorrect flag, valid alternatives
+	\item \textit{Intent:} Count the number of non-empty lines in the log file
+	\item \textit{Broken Command:} \texttt{grep -v \^{}\$ logfle.txt | wc -l}
+	\item \textit{Correct Commands:} \texttt{grep -v "\^{}\$" logfile.txt | wc -l}, \texttt{awk "NF" logfile.txt | wc -l}
+	\item \textit{Tests:} Filename typos and regex quoting
 \end{itemize}
 
-\textbf{Scenario 13: Sort lines in a file}
+\textbf{Scenario 11: Sort CSV by numeric column}
 \begin{itemize}
-	\item \textit{Intent:} Alphabetically sort a text file
-	\item \textit{Broken Command:} \texttt{sort --alpha names.txt}
-	\item \textit{Correct Command:} \texttt{sort names.txt}
-	\item \textit{Tests:} Use of invented flags
-\end{itemize}
-
-\textbf{Scenario 14: Extract CSV column}
-\begin{itemize}
-	\item \textit{Intent:} Get the second column from data.csv
-	\item \textit{Broken Command:} \texttt{cut column 2 data.csv}
-	\item \textit{Correct Commands:} Variants of \texttt{cut -d "," -f2 data.csv}
-	\item \textit{Tests:} Quoting, delimiters, column syntax
+	\item \textit{Intent:} Sort this CSV file by the numeric values in the second column (descending order)
+	\item \textit{Broken Command:} \texttt{sort -c2,2nr data.csv}
+	\item \textit{Correct Commands:} \texttt{sort -t, -k2,2nr data.csv}, \texttt{sort -t, -k2nr data.csv}
+	\item \textit{Tests:} Field separator specification and key selection
 \end{itemize}
 
 \subsection{System Information Scenarios}
 
-\textbf{Scenario 15: Directory disk usage}
+\textbf{Scenario 12: Find largest subdirectories}
 \begin{itemize}
-	\item \textit{Intent:} Show size of current directory
-	\item \textit{Broken Command:} \texttt{du h .}
-	\item \textit{Correct Commands:} \texttt{du -h .}, \texttt{du -sh .}
-	\item \textit{Tests:} Flag formatting
+	\item \textit{Intent:} Find the top 3 largest subdirectories and show their sizes in human-readable format
+	\item \textit{Broken Command:} \texttt{du -h --depth=1 | sort -hr | head --3}
+	\item \textit{Correct Commands:} \texttt{du -h --max-depth=1 | sort -hr | head -3}, \texttt{du -sh */ | sort -hr | head -3}
+	\item \textit{Tests:} Correct flag names and argument syntax
 \end{itemize}
 
-\textbf{Scenario 16: Disk space usage}
+\textbf{Scenario 13: Find low disk space}
 \begin{itemize}
-	\item \textit{Intent:} View human-readable disk space
-	\item \textit{Broken Command:} \texttt{df size -h}
-	\item \textit{Correct Commands:} \texttt{df -h}, \texttt{df -Th}
-	\item \textit{Tests:} Flag usage and order
-\end{itemize}
-
-\textbf{Scenario 17: Display current user}
-\begin{itemize}
-	\item \textit{Intent:} Check which user is logged in
-	\item \textit{Broken Command:} \texttt{user}
-	\item \textit{Correct Command:} \texttt{whoami}
-	\item \textit{Tests:} Mapping to correct utility
+	\item \textit{Intent:} Identify filesystems with less than 20\% free space remaining (more than 80\% used)
+	\item \textit{Broken Command:} \texttt{df -h | awk '\$5 > 80\%'}
+	\item \textit{Correct Commands:} \texttt{df -h | awk '\$5 > "80\%"'}, \texttt{df -h | awk 'NR>1 \&\& \$5+0 > 80'}
+	\item \textit{Tests:} String comparison and numeric extraction in awk
 \end{itemize}
 
 \subsection{Process Management Scenarios}
 
-\textbf{Scenario 18: List running processes}
+\textbf{Scenario 14: Find memory-intensive processes}
 \begin{itemize}
-	\item \textit{Intent:} Show all processes
-	\item \textit{Broken Command:} \texttt{ps --all}
-	\item \textit{Correct Commands:} \texttt{ps aux}, \texttt{ps -ef}
-	\item \textit{Tests:} Platform differences, common alternatives
+	\item \textit{Intent:} Find the top 5 processes consuming the most memory
+	\item \textit{Broken Command:} \texttt{ps aux | sorter --k4 -r | head -5}
+	\item \textit{Correct Commands:} \texttt{ps aux --sort=-\%mem | head -5}, \texttt{ps aux | sort -k4nr | head -5}
+	\item \textit{Tests:} Command name correction and sorting by memory usage
 \end{itemize}
 
-\textbf{Scenario 19: Kill a process}
-\begin{itemize}
-	\item \textit{Intent:} Terminate process ID [1234]
-	\item \textit{Broken Command:} \texttt{kill --terminate [1234]}
-	\item \textit{Correct Commands:} \texttt{kill 1234}, \texttt{kill -9 1234}, \texttt{kill -TERM [1234]}
-	\item \textit{Tests:} Flag syntax and force variants
-\end{itemize}
-
-\subsection{Networking and Archiving Scenarios}
-
-\textbf{Scenario 20: Download from URL}
-\begin{itemize}
-	\item \textit{Intent:} Download file from web
-	\item \textit{Broken Command:} \texttt{curl get http://example.com/file}
-	\item \textit{Correct Commands:} \texttt{curl -O http://example.com/file}, \texttt{wget http://example.com/file}
-	\item \textit{Tests:} Tool equivalence, parameter understanding
-\end{itemize}
-
-\textbf{Scenario 21: Create archive}
-\begin{itemize}
-	\item \textit{Intent:} Compress a folder
-	\item \textit{Broken Command:} \texttt{tar zip folder/}
-	\item \textit{Correct Commands:} \texttt{tar -cvzf archive.tar.gz folder/}, \texttt{tar -czvf archive.tar.gz folder/}
-	\item \textit{Tests:} Correct archiving flags
-\end{itemize}
-
-\textbf{Scenario 22: Duplicate output to file and screen}
-\begin{itemize}
-	\item \textit{Intent:} Write output to file and screen
-	\item \textit{Broken Command:} \texttt{ls > output.txt --show}
-	\item \textit{Correct Command:} \texttt{ls | tee output.txt}
-	\item \textit{Tests:} Redirection versus piping
-\end{itemize}
-
-Each scenario is phrased as a goal for the user (e.g., "Download this webpage to a file", "Find all text files in this directory"). Participants will not be given the exact command, but they will have enough context to know what they need to accomplish. The tasks are designed to be achievable for someone with moderate CLI knowledge, but each has pitfalls where mistakes are common.
+Each scenario was designed to test specific CLI competencies while representing realistic tasks that software engineers encounter in their daily work. The broken commands contain common error patterns identified in CLI usage studies, including flag syntax errors, argument order mistakes, and command name confusion.
 
 \section{Procedure Flow}
 
@@ -283,7 +200,7 @@ Each participant will go through the following phases:
 
 \textbf{Training/Tutorial:} Before each interface, participants get a brief tutorial:
 \begin{itemize}
-	\item For the AI-assisted CLI, they will be shown how the tool works: for example, how it provides suggestions after an error, how to accept a suggestion, and any special commands to invoke help. They may practice with one simple example task to familiarize themselves with the AI features.
+	\item For aiman, they will be shown how the tool works: for example, how it provides suggestions after an error, how to accept a suggestion, and any special commands to invoke help. They may practice with one simple example task to familiarize themselves with the AI features.
 	\item The traditional CLI likely needs less introduction, but to ensure fairness, participants can be reminded of available manual help resources (e.g. man pages or --help flags) if they get stuck.
 \end{itemize}
 
@@ -295,19 +212,50 @@ Each participant will go through the following phases:
 	\item If they are truly stuck, they are allowed to ask for a hint or give up, but this will be recorded (with a reasonable maximum time per task, such as 5 minutes, to avoid endless frustration)
 \end{itemize}
 
-\textbf{Experimental Task Set (AI-Assisted CLI):} In the other session, the participant uses the AI-enabled terminal to perform another set of tasks (e.g. Tasks 12–22, or a differently ordered set to cover similar scenarios). They follow the same process, except now the AI assistant is active. If they make a mistake or pause, the AI might provide a suggestion or auto-correct common errors. The participant can choose to accept the suggestion, modify it, or ignore it. The system logs all AI interactions (e.g., number of suggestions shown, which suggestions were accepted).
+\textbf{Experimental Task Set (aiman):} In the other session, the participant uses the AI-enabled terminal to perform the same set of tasks using the aiman testing harness. The key difference is that AI assistance is provided reactively when command errors occur:
 
-\textbf{Repeated Tasks for Retention (Learning Evaluation):} To evaluate learning retention, some tasks may be repeated. For example, after using the AI-assisted CLI, we might ask the participant to redo one or two key tasks in the traditional CLI without assistance (possibly tasks they struggled with initially or tasks that the AI helped correct). The idea is to see if the correction or knowledge provided by the AI was retained. Improved performance on the second attempt (faster or fewer errors) would indicate learning. This can be done either at the end of the session or in a follow-up session (even a few days later to test longer-term retention).
-
-\textbf{Post-Task Survey \& Interview:} After completing all tasks in both conditions, participants will fill out a post-experiment questionnaire. This survey will capture subjective feedback:
 \begin{itemize}
-	\item \textit{Satisfaction and Preference:} Which interface did they prefer? How satisfied are they with their performance in each? (Likert scale ratings for statements like "I felt confident using the CLI" in each condition.)
-	\item \textit{Perceived Efficiency:} Did they feel faster or more efficient with AI assistance?
-	\item \textit{Learning and Confidence:} Do they feel the AI tool helped them learn CLI commands, or did it make them reliant on suggestions?
-	\item \textit{Comments:} Open-ended feedback on what they liked or disliked, any suggestions for improvement.
+	\item Participants receive the same task descriptions and attempt to execute commands normally
+	\item When a command fails (returns non-zero exit code), the aiman system automatically detects the failure and provides AI-generated suggestions for correction
+	\item The AI assistance includes:
+	\begin{itemize}
+		\item Error explanation describing why the command failed
+		\item Corrected command suggestion with proper syntax
+		\item Brief explanation of the correction
+		\item Additional tips for similar commands
+	\end{itemize}
+	\item Participants can choose to:
+	\begin{itemize}
+		\item Utilize the suggestion as is by copying and pasting it into the terminal
+		\item Modify the suggestion before executing
+		\item Ignore the suggestion and try their own approach
+	\end{itemize}
+	\item The system logs all AI interactions including:
+	\begin{itemize}
+		\item When AI suggestions were triggered (command failures)
+		\item What suggestions were provided
+	\end{itemize}
+	\item No AI assistance is provided for successful commands - the system only intervenes when errors occur
+	\item The same 10-minute time limit per task applies, with the same hint/give-up options available
 \end{itemize}
 
-A short structured interview may follow to discuss their experience, gather qualitative observations (e.g., "Did you trust the AI suggestions?", "How was the experience of fixing errors with vs. without AI?", etc.).
+This reactive approach ensures that AI assistance is provided precisely when users need it most - during error states - while maintaining the natural flow of command-line interaction for successful operations.
+
+\textbf{Post-Task Survey \& Interview:} After completing all tasks in both conditions, participants filled out a post-experiment questionnaire. The survey captured subjective feedback through the following structured questions:
+
+\textbf{Satisfaction Questions (5-point Likert scale):}
+\begin{itemize}
+	\item \textit{Ease of Use:} "Which CLI was easier to use?" (1 = Traditional CLI was much easier, 5 = LLM-assisted CLI was much easier)
+	\item \textit{Confidence:} "Which CLI made you feel more confident?" (1 = Much more confident with traditional CLI, 5 = Much more confident with LLM-assisted CLI)
+	\item \textit{Frustration:} "Which CLI was more frustrating to use?" (1 = Traditional CLI was much more frustrating, 5 = LLM-assisted CLI was much more frustrating)
+\end{itemize}
+
+\textbf{Additional Feedback:}
+\begin{itemize}
+	\item \textit{Open-ended Comments:} "Please provide any additional comments or feedback about your experience with both CLIs:"
+\end{itemize}
+
+The questionnaire was administered through an interactive terminal interface, with responses automatically logged to the JSON data storage system. No separate structured interview was conducted beyond the questionnaire responses, though participants were encouraged to provide detailed feedback in the open-ended comments section.
 
 Throughout the sessions, the experimenter will observe and take notes (without interfering). Notable observations, such as signs of frustration (sighs, repeated errors) or ease (quick task completion), will be recorded as qualitative data.
 
@@ -317,9 +265,9 @@ Once the data is collected, we will perform both quantitative and qualitative an
 
 \subsection{Efficiency Analysis}
 
-For each task, we'll compare how long it took to complete using the traditional CLI versus the AI-assisted CLI. Since the same people use both, we'll do paired comparisons—like a paired t-test (if the data looks normal) or the Wilcoxon signed-rank test (if not)—to see if the difference in times is significant.
+For each task, we'll compare how long it took to complete using the traditional CLI versus aiman. Since the same people use both, we'll do paired comparisons—like a paired t-test (if the data looks normal) or the Wilcoxon signed-rank test (if not)—to see if the difference in times is significant.
 
-We expect the AI CLI to help more with harder tasks, especially those with tricky syntax or ones where people usually pause to think. For simple tasks (like listing files), the difference might be small.
+We expect aiman to help more with harder tasks, especially those with tricky syntax or ones where people usually pause to think. For simple tasks (like listing files), the difference might be small.
 
 \subsection{Effectiveness and Error Analysis}
 
@@ -330,15 +278,8 @@ We will examine success rates and error counts:
 	\item Using the logs, we might also classify error types (e.g., syntax errors, wrong command approach, etc.) to see what kinds of mistakes the AI helps with most.
 \end{itemize}
 
-\subsection{Learning and Adaptation Analysis}
 
-To address the learning objective, we will analyze the learning curve in several ways:
-\begin{itemize}
-	\item \textbf{Within-Session Adaptation:} Plot each participant's task times in order for each condition.
-	\item \textbf{Retention in Repeated Tasks:} For the tasks that were repeated, we will compare each participant's performance on first attempt vs second attempt.
-	\item We will also analyze if certain task categories saw more improvement than others.
-\end{itemize}
 
 \subsection{Subjective Feedback Analysis}
 
-The Likert scale responses will be summarized (e.g., average satisfaction score for AI CLI vs traditional CLI). We anticipate higher satisfaction for the AI-assisted CLI if it indeed makes tasks easier. We will use a paired test on these ratings as well.
+The Likert scale responses will be summarized (e.g., average satisfaction score for aiman vs traditional CLI). We anticipate higher satisfaction for aiman if it indeed makes tasks easier. We will use a paired test on these ratings as well.

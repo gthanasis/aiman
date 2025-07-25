@@ -10,6 +10,7 @@
 \usepackage{color}
 \usepackage{styles/ioniostyle}
 \usepackage{pifont}
+\usepackage{array}
 
 
 \def\tl{\textlatin}
@@ -43,7 +44,7 @@
 \begin{document}
 
 
-\author{\textbf{Thanassis Gliatis} \\ \textbf{Supervisor:}  -- Academic Supervisor Name --}
+\author{\textbf{Thanasis Gliatis} \\ \textbf{Supervisor:}  Dr. Konstantinos Chorianopoulos}
 \title{
 	\textbf{\LARGE{\textsc{Ionian University}}
 		\bigskip \\
@@ -73,14 +74,14 @@
 \begin{center}
 	\Large{\textbf{Supervisor}}
 \end{center}
-\prof{Professor Name}{Title}{Department}
+\prof{Dr. Konstantinos Chorianopoulos}{Title}{Department}
 
 \begin{center}
 	\Large{\textbf{Examination Committee}}
 \end{center}
-\prof{Professor Name}{Title}{Department}
-\prof{Professor Name}{Title}{Department}
-\prof{Professor Name}{Title}{Department}
+\prof{Dr. Konstantinos Chorianopoulos}{Professor}{Department of Informatics}
+\prof{Dr. Katia - Lida Kermanidou}{Professor}{Department of Informatics}
+\prof{Dr. Stergios Palamas}{Professor}{Department of Informatics}
 
 
 \pagestyle{empty}
@@ -160,11 +161,9 @@
 
 
 %APPENDIX
-\chapter*{Appendix A} \pagestyle{empty}
-\addcontentsline{toc}{chapter}{Appendix A}
-Additional technical implementation details.
-Further information and data analysis.
-
+\chapter*{Appendix A: Technical Implementation Details} \pagestyle{empty}
+\addcontentsline{toc}{chapter}{Appendix A: Technical Implementation Details}
+\input{content/back-matter/appendix-a}
 
 %Bibliography
 \begin{thebibliography}{99} \addcontentsline{toc}{chapter}{Bibliography}

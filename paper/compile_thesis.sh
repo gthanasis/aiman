@@ -10,11 +10,13 @@ rm -f output/thesis.pdf
 
 run_latex() {
   if command -v latexmk >/dev/null 2>&1; then
+    export openout_any=a
     latexmk -pdf -interaction=nonstopmode -output-directory=../output -cd src/thesis.tex
   else
     cd src
+    export openout_any=a
     pdflatex -output-directory=../output -interaction=nonstopmode thesis.tex
-    makeindex ../output/thesis.idx
+    makeindex -o ../output/thesis.ind ../output/thesis.idx
     pdflatex -output-directory=../output -interaction=nonstopmode thesis.tex
     pdflatex -output-directory=../output -interaction=nonstopmode thesis.tex
     cd ..
@@ -34,10 +36,12 @@ if command -v docker >/dev/null 2>&1; then
   
   docker run --rm -v "$PWD":/thesis -w /thesis $LATEX_IMAGE \
     sh -c 'mkdir -p output && \
+           export openout_any=a && \
            latexmk -pdf -interaction=nonstopmode -output-directory=output -cd src/thesis.tex || \
            (cd src && \
+            export openout_any=a && \
             pdflatex -output-directory=../output -interaction=nonstopmode thesis.tex && \
-            makeindex ../output/thesis.idx && \
+            makeindex -o ../output/thesis.ind ../output/thesis.idx && \
             pdflatex -output-directory=../output -interaction=nonstopmode thesis.tex && \
             pdflatex -output-directory=../output -interaction=nonstopmode thesis.tex)'
 else

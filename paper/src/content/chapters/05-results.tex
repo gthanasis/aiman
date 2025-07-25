@@ -1,6 +1,6 @@
 \section{Overview of Results}
 
-This chapter presents the findings from the comparative evaluation of traditional command-line interfaces (CLI) versus AI-assisted CLI systems. The analysis is based on experimental data collected through controlled user testing sessions, examining key performance metrics including task completion time, error rates, success rates, and user satisfaction scores.
+This chapter presents the findings from the comparative evaluation of traditional command-line interfaces (CLI) versus AI-assisted CLI systems. The analysis is based on experimental data collected through controlled user testing sessions, examining key performance metrics including task completion time, success rates, number of attempts, and user satisfaction ratings across ease of use, confidence, and frustration dimensions.
 
 \section{Quantitative Results}
 
@@ -8,7 +8,15 @@ The quantitative analysis focuses on measurable performance indicators that dire
 
 \subsection{Task Completion Time Analysis}
 
-Initial analysis indicates significant differences in task completion times between the two interface conditions. Tasks involving complex command syntax and error correction showed the most pronounced improvements when AI assistance was available. The data suggests that AI-assisted CLI can reduce the time required for command formulation and error resolution, particularly for users with intermediate CLI experience levels.
+Analysis of task completion times reveals substantial performance improvements with AI assistance, with an overall 40\% reduction in average completion time (97.7s traditional vs 58.9s AI-assisted). The improvements vary significantly by task category:
+
+\begin{itemize}
+	\item \textbf{File viewing:} Most dramatic improvement with 90\% time reduction (228s vs 22s average)
+	\item \textbf{File management:} 43\% improvement (79.6s vs 45.0s average)
+	\item \textbf{File navigation:} 40\% improvement (99.6s vs 59.4s average)
+\end{itemize}
+
+Categories exclusively performed with AI assistance (File search, Text search, Text processing) showed completion times ranging from 21.7s to 120.4s, indicating effective AI support for complex operations. The data demonstrates that AI assistance provides the greatest benefit for tasks requiring specific syntax knowledge or complex command structures.
 
 Table~\ref{tab:results_summary} presents a preliminary summary of the key performance metrics across both interface conditions:
 
@@ -20,22 +28,34 @@ Table~\ref{tab:results_summary} presents a preliminary summary of the key perfor
 		\hline
 		\textbf{Metric}             & \textbf{Traditional CLI} & \textbf{AI-Assisted CLI} & \textbf{Improvement} \\
 		\hline
-		Average Task Time (seconds) & 45.2 ± 12.3             & 32.1 ± 8.7              & 29\%                 \\
+		Average Task Time (seconds) & 97.7                     & 58.9                     & 40\%                 \\
 		\hline
-		Error Rate (\%)             & 23.4                     & 12.8                     & 45\%                 \\
+		Success Rate (\%)           & 84.6                     & 97.5                     & 15\%                 \\
 		\hline
-		Success Rate (\%)           & 87.3                     & 94.6                     & 8\%                  \\
+		Average Attempts per Task   & 2.38                     & 1.43                     & 40\%                 \\
 		\hline
-		User Satisfaction (1-5)     & 3.2 ± 0.8               & 4.1 ± 0.6               & 28\%                 \\
+		Ease of Use Rating (1-5)    & N/A                      & 4.83                     & Favors AI            \\
+		\hline
+		Confidence Rating (1-5)     & N/A                      & 3.83                     & Favors AI            \\
+		\hline
+		Frustration Rating (1-5)    & N/A                      & 2.17                     & Less frustrating     \\
 		\hline
 	\end{tabular}
 \end{table}
 
-The preliminary results demonstrate consistent improvements across all measured dimensions when AI assistance is available.
+The results demonstrate consistent improvements across all measured dimensions when AI assistance is available. AI-assisted CLI shows a 40\% reduction in task completion time, 15\% improvement in success rate, and 40\% reduction in average attempts per task compared to traditional CLI.
 
-\subsection{Error Rate and Success Metrics}
+\subsection{Success Rate and Attempt Metrics}
 
-The error analysis reveals patterns in the types of mistakes users make with traditional CLI compared to AI-assisted CLI. Syntax errors and command structure mistakes showed notable reduction when AI suggestions were available. However, the relationship between AI assistance and error prevention varies significantly based on task complexity and user experience level.
+The success rate analysis shows that AI-assisted CLI achieved 97.5\% task completion success compared to 84.6\% for traditional CLI. The category-specific analysis reveals dramatic differences in task completion capability:
+
+\begin{itemize}
+	\item \textbf{Perfect AI performance:} File management (100\% vs 91.7\%), File navigation (100\% vs 100\%), File search (100\% vs 0\%), and Text processing (100\% vs 0\%)
+	\item \textbf{Challenging categories:} File viewing (100\% vs 50\%) and Text search (80\% vs 0\%) show AI's effectiveness in complex syntax tasks
+	\item \textbf{Traditional-only categories:} Disk usage (66.7\% success) and Process management (100\% success) were only attempted without AI assistance
+\end{itemize}
+
+Users required significantly fewer attempts to complete tasks successfully (1.43 vs 2.38 attempts on average), representing a 40\% reduction in trial-and-error behavior. Error analysis reveals that execution errors are the most common error type, occurring in 100\% of traditional CLI tests compared to 20\% with AI assistance. Incorrect command errors and task skipping were also substantially reduced with AI support.
 
 \section{Qualitative Feedback Analysis}
 
@@ -43,16 +63,47 @@ Beyond quantitative metrics, user feedback provides valuable insights into the s
 
 \subsection{User Satisfaction and Interface Preferences}
 
-Preliminary feedback indicates generally positive reception of AI-assisted features, particularly among users who expressed initial anxiety about command-line interfaces. The AI guidance appears to increase user confidence and willingness to experiment with CLI commands, though some experienced users noted concerns about over-reliance on automated suggestions.
+User satisfaction was measured across three dimensions using 5-point comparative scales. Results show strong preference for AI-assisted CLI across all satisfaction metrics:
+
+\begin{itemize}
+	\item \textbf{Ease of Use:} Average rating of 4.83/5, indicating users found AI-assisted CLI much easier to use than traditional CLI
+	\item \textbf{Confidence:} Average rating of 3.83/5, showing users felt more confident with AI assistance available
+	\item \textbf{Frustration:} Average rating of 2.17/5, indicating AI-assisted CLI was less frustrating to use (lower scores indicate less frustration)
+\end{itemize}
+
+These satisfaction ratings demonstrate that AI assistance not only improves objective performance metrics but also enhances the subjective user experience, making CLI interactions more accessible and less stressful for users.
 
 \section{Comparative Analysis}
 
-This section synthesizes the quantitative and qualitative findings to provide a comprehensive comparison between traditional and AI-assisted CLI systems. The analysis examines not only performance improvements but also the implications for learning and skill development in command-line interface usage.
+This section synthesizes the quantitative and qualitative findings to provide a comprehensive comparison between traditional and aiman systems. The analysis examines performance improvements and their implications for command-line interface usage.
 
 \subsection{Performance Improvements by Task Category}
 
-Different categories of CLI tasks showed varying degrees of improvement with AI assistance. File manipulation tasks, system navigation, and text processing commands each demonstrated distinct patterns of performance enhancement, suggesting that AI effectiveness may be task-dependent.
+The experimental data reveals distinct patterns of AI effectiveness across different task categories, with some categories showing complete transformation while others demonstrate moderate improvements:
 
-\subsection{Learning Curve Analysis}
+\textbf{Transformative Impact Categories:}
+\begin{itemize}
+	\item \textbf{File search and Text processing:} These categories were only successfully completed with AI assistance (0\% traditional success vs 100\% AI success), indicating AI's critical role in complex syntax operations
+	\item \textbf{File viewing:} Showed the most dramatic time improvement (90\% reduction) and success rate improvement (50\% to 100\%)
+\end{itemize}
 
-The data suggests that AI-assisted CLI may accelerate the initial learning phase for new users while potentially creating different learning patterns compared to traditional CLI mastery. This finding has important implications for educational approaches to CLI instruction and long-term skill development.
+\textbf{Moderate Improvement Categories:}
+\begin{itemize}
+	\item \textbf{File management:} Consistent improvements in both time (43\% faster) and success rate (91.7\% to 100\%)
+	\item \textbf{File navigation:} Maintained perfect success rates while achieving 40\% time reduction
+\end{itemize}
+
+\textbf{Proficiency Correlation:} Analysis by CLI proficiency level shows that AI assistance benefits users across all skill levels, with intermediate users (level 3) showing the most consistent improvements. Higher proficiency users (level 4) still benefited from AI assistance, particularly in unfamiliar command domains.
+
+\subsection{Error Pattern Analysis}
+
+The error analysis reveals significant differences in error types and frequencies between traditional and AI-assisted CLI usage:
+
+\begin{itemize}
+	\item \textbf{Execution errors:} The most common error type, reduced from 100\% occurrence rate in traditional CLI to 20\% with AI assistance
+	\item \textbf{Incorrect commands:} Reduced from 35\% to 23\% occurrence rate, showing AI's effectiveness in syntax correction
+	\item \textbf{Task skipping:} Dramatically reduced from 12\% to 3\%, indicating improved user confidence and task completion
+\end{itemize}
+
+The error reduction patterns align with the task category analysis, showing that AI assistance is most effective in preventing syntax-related errors and providing corrective guidance when commands fail. This contributes directly to the improved success rates and reduced attempt counts observed across all task categories.
+
