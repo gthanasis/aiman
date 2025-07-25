@@ -45,6 +45,15 @@ Table~\ref{tab:results_summary} presents a preliminary summary of the key perfor
 
 The results demonstrate consistent improvements across all measured dimensions when AI assistance is available. AI-assisted CLI shows a 40\% reduction in task completion time, 15\% improvement in success rate, and 40\% reduction in average attempts per task compared to traditional CLI.
 
+Figure~\ref{fig:performance_comparison} provides a comprehensive overview of the key performance metrics across both interface conditions.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{assets/figures/performance_comparison.pdf}
+	\caption{Overall Performance Comparison: Traditional vs AI-Assisted CLI}
+	\label{fig:performance_comparison}
+\end{figure}
+
 \subsection{Success Rate and Attempt Metrics}
 
 The success rate analysis shows that AI-assisted CLI achieved 97.5\% task completion success compared to 84.6\% for traditional CLI. The category-specific analysis reveals dramatic differences in task completion capability:
@@ -56,6 +65,24 @@ The success rate analysis shows that AI-assisted CLI achieved 97.5\% task comple
 \end{itemize}
 
 Users required significantly fewer attempts to complete tasks successfully (1.43 vs 2.38 attempts on average), representing a 40\% reduction in trial-and-error behavior. Error analysis reveals that execution errors are the most common error type, occurring in 100\% of traditional CLI tests compared to 20\% with AI assistance. Incorrect command errors and task skipping were also substantially reduced with AI support.
+
+Figure~\ref{fig:category_performance} shows the success rates across different task categories, highlighting the areas where AI assistance provides the most significant benefits.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\textwidth]{assets/figures/category_performance_horizontal.pdf}
+	\caption{Success Rate by Task Category}
+	\label{fig:category_performance}
+\end{figure}
+
+Figure~\ref{fig:error_analysis} provides a detailed breakdown of error types and their frequencies across both interface conditions.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{assets/figures/error_analysis.pdf}
+	\caption{Error Rate by Type (\% of Tests)}
+	\label{fig:error_analysis}
+\end{figure}
 
 \section{Qualitative Feedback Analysis}
 
@@ -72,6 +99,24 @@ User satisfaction was measured across three dimensions using 5-point comparative
 \end{itemize}
 
 These satisfaction ratings demonstrate that AI assistance not only improves objective performance metrics but also enhances the subjective user experience, making CLI interactions more accessible and less stressful for users.
+
+Figure~\ref{fig:user_satisfaction} illustrates the user preference ratings across the three satisfaction dimensions.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\textwidth]{assets/figures/user_satisfaction.pdf}
+	\caption{User Preference Comparison}
+	\label{fig:user_satisfaction}
+\end{figure}
+
+The study participants represented a diverse age distribution, as shown in Figure~\ref{fig:demographics_age}, ensuring that the results reflect a broad range of user experiences.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{assets/figures/demographics_age.pdf}
+	\caption{Participant Age Distribution}
+	\label{fig:demographics_age}
+\end{figure}
 
 \section{Comparative Analysis}
 
@@ -94,6 +139,24 @@ The experimental data reveals distinct patterns of AI effectiveness across diffe
 \end{itemize}
 
 \textbf{Proficiency Correlation:} Analysis by CLI proficiency level shows that AI assistance benefits users across all skill levels, with intermediate users (level 3) showing the most consistent improvements. Higher proficiency users (level 4) still benefited from AI assistance, particularly in unfamiliar command domains.
+
+Figure~\ref{fig:proficiency_correlation} demonstrates the relationship between CLI proficiency levels and success rates across both interface conditions.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{assets/figures/proficiency_correlation.pdf}
+	\caption{Success Rate by CLI Proficiency Level}
+	\label{fig:proficiency_correlation}
+\end{figure}
+
+The time comparison analysis by task category, shown in Figure~\ref{fig:time_comparison}, reveals the specific areas where AI assistance provides the most substantial time savings.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\textwidth]{assets/figures/time_comparison_by_category.pdf}
+	\caption{Average Completion Time by Task Category}
+	\label{fig:time_comparison}
+\end{figure}
 
 \subsection{Error Pattern Analysis}
 
